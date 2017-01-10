@@ -17,8 +17,6 @@ import org.htmlparser.Parser;
 import org.htmlparser.visitors.HtmlPage;
 import org.omg.CosNaming.NamingContextExtPackage.StringNameHelper;
 
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 public class NetUtil {
 
 	public static void main(String[] args) throws Exception {

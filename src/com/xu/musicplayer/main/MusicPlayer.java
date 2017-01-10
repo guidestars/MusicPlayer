@@ -12,22 +12,15 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
-import javax.media.ControllerEvent;
-import javax.media.ControllerListener;
-import javax.media.EndOfMediaEvent;
 import javax.media.Manager;
-import javax.media.NoPlayerException;
 import javax.media.Player;
-import javax.media.PrefetchCompleteEvent;
-import javax.media.RealizeCompleteEvent;
-import javax.media.StopEvent;
-import javax.print.attribute.standard.Media;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -44,6 +37,7 @@ import org.jaudiotagger.audio.AudioFileIO;
 import com.sun.media.util.MediaThread;
 import com.xu.musicplayer.bean.PlayerBean;
 import com.xu.musicplayer.bean.PlayerNotify;
+import com.xu.musicplayer.lyric.Analysis;
 import com.xu.musicplayer.thread.PlayerThread;
 import com.xu.musicplayer.trayutil.TrayUtil;
 
@@ -57,8 +51,10 @@ import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
-public class MusicPlayer implements ControllerListener {
+public class MusicPlayer {
 
 	protected Shell shell;
 	private Display display;
@@ -95,11 +91,14 @@ public class MusicPlayer implements ControllerListener {
 	private ProgressBar progressBar;
 
 	private Tray tray;
-	
-	private URL url;
-	
+
 	private MediaThread mThread=new MediaThread();
-	
+	private Table table_2;
+
+	private SashForm sashForm_1 ;
+
+	private List<String> netList=null;
+
 	/**
 	 * Launch the application.
 	 * @param args
@@ -162,7 +161,7 @@ public class MusicPlayer implements ControllerListener {
 		Composite composite_1 = new Composite(sashForm, SWT.NONE);
 		composite_1.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		SashForm sashForm_1 = new SashForm(composite_1, SWT.NONE);
+		sashForm_1 = new SashForm(composite_1, SWT.NONE);
 
 		Composite composite_3 = new Composite(sashForm_1, SWT.NONE);
 		composite_3.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -196,11 +195,25 @@ public class MusicPlayer implements ControllerListener {
 		tableColumn_3.setText("序号");
 
 		TableColumn tableColumn_2 = new TableColumn(table_1, SWT.CENTER);
-		tableColumn_2.setWidth(534);
+		tableColumn_2.setWidth(650);
 		tableColumn_2.setText("歌词");
 
 		Composite composite_5 = new Composite(sashForm_1, SWT.NONE);
-		sashForm_1.setWeights(new int[] {186, 543, 152});
+		composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
+
+		table_2 = new Table(composite_5, SWT.FULL_SELECTION);
+		table_2.setHeaderVisible(true);
+		table_2.setLinesVisible(true);
+
+		TableColumn tableColumn_4 = new TableColumn(table_2, SWT.CENTER);
+		tableColumn_4.setWidth(42);
+		tableColumn_4.setText("序号");
+
+		TableColumn tableColumn_5 = new TableColumn(table_2, SWT.NONE);
+		tableColumn_5.setWidth(145);
+		tableColumn_5.setText("歌词名称");
+		//sashForm_1.setWeights(new int[] {186, 521, 174});
+		sashForm_1.setWeights(new int[] {186, 693, 0});
 
 		Composite composite_2 = new Composite(sashForm, SWT.NONE);
 
@@ -233,7 +246,7 @@ public class MusicPlayer implements ControllerListener {
 
 		//获取本地歌曲库
 		getMusicPlayerFile();
-
+		getRegistry();
 
 		//退出
 		label_1.addMouseListener(new MouseAdapter() {
@@ -294,6 +307,7 @@ public class MusicPlayer implements ControllerListener {
 				shellmove=false;
 			}
 		});
+		
 		composite.addMouseMoveListener(new MouseMoveListener() {
 			public void mouseMove(MouseEvent arg0) {//当鼠标按下的时候执行这条语句
 				if(shellmove){
@@ -380,6 +394,25 @@ public class MusicPlayer implements ControllerListener {
 			}
 		});
 
+		//选择歌词
+		table_2.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				TableItem[] item=table_2.getSelection();
+				if(item!=null){
+					int index=Integer.parseInt(item[0].getText(0));
+					index=index-1;
+					String url=netList.get(index).substring(netList.get(index).toString().indexOf("$")+1);
+					String lyric="";
+					try {
+						lyric=new Analysis().getLyric(url.substring(0, url.lastIndexOf("."))+"/"+netList.get(index).substring(0, netList.get(index).toString().indexOf("$"))+".lrc");
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+					lyric(lyric);
+				}
+			}
+		});
 	}
 
 
@@ -388,13 +421,34 @@ public class MusicPlayer implements ControllerListener {
 	 * 开始播放音乐
 	 * @param play
 	 */
+	@SuppressWarnings("all")
 	private void start(String play){
 		File file=new File(play);
 		if(!file.exists()){
 			tool.beep();
 			MessageDialog.openError(shell, "错误提示", "歌曲不存在或者目录不正确!");
 		}else{
-			lyric(play);
+			lyric(file);
+			setRegistry(play);
+			if(!HAVELYRIC){
+				sashForm_1.setWeights(new int[] {186, 521, 174});
+				String name=play.substring(play.lastIndexOf(File.separator)+1, play.lastIndexOf("."));
+				try {
+					netList=new Analysis().getLyricList(name);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				if(netList!=null){
+					TableItem item=null;
+					table_2.removeAll();
+					for(int i=0;i<netList.size();i++){
+						item=new TableItem(table_2, SWT.NONE);
+						item.setText(new String []{(i+1)+"",netList.get(i).substring(0, netList.get(i).toString().indexOf("$"))});
+					}
+				}
+			}else{
+				sashForm_1.setWeights(new int[] {186, 693, 0});
+			}
 			try {
 				AudioFile getLength=AudioFileIO.read(file);//获取播放流
 				MUSICLENGTH=getLength.getAudioHeader().getTrackLength();//获取播放时间
@@ -413,8 +467,9 @@ public class MusicPlayer implements ControllerListener {
 									text_1.setText(bean.getReturnTime());
 									if(HAVELYRIC){
 										if(bean.getReturnIndex()!=0){
-											for(int i=0;i<table_1.getItemCount();i++){
-												if(i==bean.getReturnIndex()){//选中的歌曲
+											for(int i=0;i<table_1.getItemCount();i++){												
+												int time=Integer.parseInt(table_1.getItem(i).getText(0).trim());												
+												if(time==bean.getReturnIndex()){//选中的歌曲
 													table_1.getItem(i).setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
 												}else{//非选中的歌曲
 													table_1.getItem(i).setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
@@ -431,12 +486,10 @@ public class MusicPlayer implements ControllerListener {
 				}));
 				playThread.setDaemon(true);
 				playThread.start();
-
-				url=file.toURL();
 				mThread.start();
 				
-//				player=Manager.createPlayer(url);
-//				player.addControllerListener(this);
+				player=Manager.createPlayer(file.toURL());
+				player.start();
 
 			} catch (Exception e) {
 				logger.error(e.getMessage());
@@ -446,33 +499,33 @@ public class MusicPlayer implements ControllerListener {
 	}
 
 
-		public void controllerUpdate(ControllerEvent event) {
-	
-			if (event instanceof RealizeCompleteEvent) {//实现完成事件
-				logger.info("实现完成事件");
-				if(player.getState()==300){//表示播放器实例已经销毁
-					logger.info("播放器实例已经销毁");
-					try {
-						player=Manager.createPlayer(url);
-					} catch (NoPlayerException | IOException e) {
-						e.printStackTrace();
-					}
-				}else if(player.getState()==500){
-					logger.info("播放器开始播放");
-					player.close();
-				}
-				player.start();
-			} else if (event instanceof EndOfMediaEvent) {//歌曲播放结束事件
-				logger.info("歌曲播放结束事件");
-				player.close();
-			} else if (event instanceof StopEvent) {//歌曲播放停止事件
-				logger.info("歌曲播放停止事件");
-			} else if (event instanceof PrefetchCompleteEvent) {//预取完成事件
-				logger.info("预取完成事件");
-				
-			}
-			
-		}
+	//		public void controllerUpdate(ControllerEvent event) {
+	//	
+	//			if (event instanceof RealizeCompleteEvent) {//实现完成事件
+	//				logger.info("实现完成事件");
+	//				if(player.getState()==300){//表示播放器实例已经销毁
+	//					logger.info("播放器实例已经销毁");
+	//					try {
+	//						player=Manager.createPlayer(url);
+	//					} catch (NoPlayerException | IOException e) {
+	//						e.printStackTrace();
+	//					}
+	//				}else if(player.getState()==500){
+	//					logger.info("播放器开始播放");
+	//					player.close();
+	//				}
+	//				player.start();
+	//			} else if (event instanceof EndOfMediaEvent) {//歌曲播放结束事件
+	//				logger.info("歌曲播放结束事件");
+	//				player.close();
+	//			} else if (event instanceof StopEvent) {//歌曲播放停止事件
+	//				logger.info("歌曲播放停止事件");
+	//			} else if (event instanceof PrefetchCompleteEvent) {//预取完成事件
+	//				logger.info("预取完成事件");
+	//				
+	//			}
+	//			
+	//		}
 
 	/**
 	 * 播放框的图片改变
@@ -487,7 +540,7 @@ public class MusicPlayer implements ControllerListener {
 	 * @param play
 	 */
 	private void modifyListColor(String play){
-		String name=play.substring(play.lastIndexOf("\\")+1,play.lastIndexOf("."));		
+		String name=play.substring(play.lastIndexOf(File.separator)+1,play.lastIndexOf("."));		
 		for(int i=0;i<table.getItemCount();i++){
 			if(table.getItem(i).getText(1).equals(name)){//选中的歌曲
 				table.getItem(i).setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
@@ -501,7 +554,8 @@ public class MusicPlayer implements ControllerListener {
 	 * 获取歌曲歌词
 	 * @param play
 	 */
-	private void lyric(String play){
+	private void lyric(File musicfile){
+		String play=musicfile.toString();
 		LYRICLISTS.clear();
 		String lyricpath="";
 		for(String playlist:PLAYLISTS){
@@ -563,7 +617,32 @@ public class MusicPlayer implements ControllerListener {
 			tool.beep();
 			HAVELYRIC=false;
 		}
+	}
 
+	/**
+	 * 获取歌曲歌词
+	 * @param play
+	 */
+	private void lyric(String play){
+		String[] text=play.split("\r\n");
+		for(String txt:text){
+			if(txt.contains("00:")||txt.contains("01:")||txt.contains("02:")||txt.contains("03:")||txt.contains("04:")
+					||txt.contains("05:")||txt.contains("06:")||txt.contains("07:")){
+				String time=txt.substring(txt.indexOf("[")+1,txt.indexOf("[")+6);
+				String lyric=txt.substring(txt.lastIndexOf("]")+1);
+				LYRICLISTS.add(time+lyric);
+			}
+		}
+		TableItem tableItem=null;
+		table_1.removeAll();
+		int index=1;
+		for(String lyric:LYRICLISTS){
+			tableItem=new TableItem(table_1, SWT.NONE);
+			tableItem.setText(0, index+"");
+			tableItem.setText(1,lyric.substring(5));
+			index++;
+		}
+		HAVELYRIC=true;
 	}
 
 	/**
@@ -575,7 +654,7 @@ public class MusicPlayer implements ControllerListener {
 		String realpath="";
 		for(String playlist:PLAYLISTS){
 			if(playlist.toLowerCase().endsWith(".mp3")){
-				if(playlist.subSequence(playlist.lastIndexOf("\\")+1,playlist.lastIndexOf(".")).equals(musicname)){
+				if(playlist.subSequence(playlist.lastIndexOf(File.separator)+1,playlist.lastIndexOf(".")).equals(musicname)){
 					PLAYREALPATH=playlist;
 					realpath=playlist;
 					break;
@@ -605,7 +684,7 @@ public class MusicPlayer implements ControllerListener {
 					index++;
 				}
 			}
-			PLAYLISTS.add(fileDialog.getFilterPath()+"\\"+playlist[i]);
+			PLAYLISTS.add(fileDialog.getFilterPath()+File.separator+playlist[i]);
 		}
 
 		FileWriter FWriter=null;
@@ -663,7 +742,7 @@ public class MusicPlayer implements ControllerListener {
 				while((txt=BReader.readLine())!=null){
 					if(!txt.equals("") && !txt.toLowerCase().endsWith(".lrc")){
 						tableItem=new TableItem(table, SWT.NONE);
-						tableItem.setText(new String[]{index+"",txt.substring(txt.lastIndexOf("\\")+1, txt.lastIndexOf("."))});
+						tableItem.setText(new String[]{index+"",txt.substring(txt.lastIndexOf(File.separator)+1, txt.lastIndexOf("."))});
 						index++;
 					}
 					PLAYLISTS.add(txt);
@@ -689,5 +768,35 @@ public class MusicPlayer implements ControllerListener {
 			}
 		}
 	}
+
+	private void setRegistry(String path) {
+		Preferences preferences=Preferences.userNodeForPackage(MusicPlayer.class);
+		if(preferences.get("MusicPlayer", null)==null){
+			preferences.put("MusicPlayer", path);
+		}else if(preferences.get("MusicPlayer", null).equals(path)){
+
+		}else{
+			preferences.remove("MusicPlayer");			
+		}
+		try {
+			preferences.flush();
+		} catch (BackingStoreException e) {
+			logger.error(e.getMessage());
+			e.printStackTrace();
+		}
+	}
+
+	private void getRegistry(){
+		Preferences preferences=Preferences.userNodeForPackage(MusicPlayer.class);
+		if(preferences.get("MusicPlayer", null)!=null || !"".equals(preferences.get("MusicPlayer", null)) ){
+			String mu=preferences.get("MusicPlayer", null).toString();
+			System.out.println(mu);
+			start(mu);
+			text.setText(mu.substring(mu.lastIndexOf(File.separator)+1, mu.lastIndexOf(".")));
+			label_3.setImage(SWTResourceManager.getImage(Player.class, "/com/xu/musicplayer/image/start.png"));
+			click=false;
+		}
+	}
+	
 }
 
