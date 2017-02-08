@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.xu.musicplayer.bean.PlayerBean;
 import com.xu.musicplayer.bean.PlayerNotify;
+import com.xu.musicplayer.main.MusicPlayer;
 
 public class PlayerThread implements Runnable {
 
@@ -19,7 +20,7 @@ public class PlayerThread implements Runnable {
 	private int time;
 
 	private boolean isFinished=false;
-	private int     returnIndex=1;
+	private String     returnIndex="";
 	private String  returnTime="";
 	private int     returnLong=0;
 
@@ -31,26 +32,34 @@ public class PlayerThread implements Runnable {
 	}
 
 	public void run() {
-		for(int i=0;i<time;i++){
+		for(int i=0;i<=time;i++){
 
-			autoProBarTime++; //进度条的时间
+			autoProBarTime++; //进度条
 			autoLyricTime++;  //歌词的时间
 			autoShowTime++;   //文本框显示的歌曲播放的时间
 
 			if(HAVELYRIC){//如果该歌曲有歌词
 				for(int j=0,len=LYRICLISTS.size();j<len;j++){
 					if(getTime(autoLyricTime).equals(LYRICLISTS.get(j).substring(0, 5))){
-						returnIndex++;
-						System.out.println(j);
+						returnIndex=j+"";//LYRICLISTS.get(j).substring(5);
 						break;
 					}
+				}
+			}else{
+				if(new MusicPlayer().lyric()!=null && "".equals(new MusicPlayer().lyric())){
+					LYRICLISTS=new MusicPlayer().lyric();
+					HAVELYRIC=true;
 				}
 			}
 
 			returnLong=(int)((autoProBarTime+0.00)/time*100);//返回进度条的长度
-			returnTime=autoShowTime/60+" : "+autoShowTime%60+"/"+time/60+" : "+time%60;//在文本框中显示剩余时间
-
-			if(i>=(time-1)){
+			
+			if(autoShowTime%60<10){
+				returnTime=autoShowTime/60+" : 0"+autoShowTime%60+" / "+time/60+" : "+time%60;//在文本框中显示剩余时间
+			}else{
+				returnTime=autoShowTime/60+" : "+autoShowTime%60+" / "+time/60+" : "+time%60;//在文本框中显示剩余时间
+			}
+			if(i>=(time)){
 				isFinished=true;
 			}
 

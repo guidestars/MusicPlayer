@@ -18,6 +18,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.media.Manager;
 import javax.media.Player;
@@ -53,6 +55,10 @@ import org.eclipse.swt.events.MouseTrackAdapter;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.TouchListener;
+import org.eclipse.swt.events.TouchEvent;
 
 public class MusicPlayer {
 
@@ -98,6 +104,8 @@ public class MusicPlayer {
 	private SashForm sashForm_1 ;
 
 	private List<String> netList=null;
+
+	private boolean STARTPLAY=false;
 
 	/**
 	 * Launch the application.
@@ -240,13 +248,13 @@ public class MusicPlayer {
 		text_1 = new Text(composite_2, SWT.READ_ONLY);
 		text_1.setFont(SWTResourceManager.getFont("Microsoft YaHei UI", 12, SWT.NORMAL));
 		text_1.setEnabled(false);
-		text_1.setBounds(629, 21, 104, 23);
+		text_1.setBounds(610, 21, 123, 23);
 
 		sashForm.setWeights(new int[] {50, 342, 85});
 
 		//获取本地歌曲库
 		getMusicPlayerFile();
-		getRegistry();
+		//getRegistry();
 
 		//退出
 		label_1.addMouseListener(new MouseAdapter() {
@@ -307,7 +315,7 @@ public class MusicPlayer {
 				shellmove=false;
 			}
 		});
-		
+
 		composite.addMouseMoveListener(new MouseMoveListener() {
 			public void mouseMove(MouseEvent arg0) {//当鼠标按下的时候执行这条语句
 				if(shellmove){
@@ -325,6 +333,7 @@ public class MusicPlayer {
 				}else{//这里是暂停歌曲
 					label_3.setImage(SWTResourceManager.getImage(Player.class, "/com/xu/musicplayer/image/stop.png"));
 				}
+
 				if(click){
 					click=false;
 				}else{
@@ -332,7 +341,6 @@ public class MusicPlayer {
 				}
 			}
 			public void mouseUp(MouseEvent arg0) {
-				//TODO: playmusic
 				start(PLAYREALPATH);
 			}
 		});
@@ -413,10 +421,50 @@ public class MusicPlayer {
 				}
 			}
 		});
+
+		//自动播放
+		text_1.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				String time=text_1.getText().trim();
+				if(time!=null && "".equals(time)){
+					String [] judege=time.split("/");
+					System.out.println(judege[0]+"----"+judege[1]);
+					if(judege.length>=2){
+						if(judege[0].equals(judege[1])){
+							autoPlay();
+						}
+					}
+				}
+			}
+		});
+		
+		//进度条
+		progressBar.addTouchListener(new TouchListener() {
+			public void touch(TouchEvent arg0) {
+				System.out.println(arg0.time);
+			}
+		});
+		
 	}
 
+	/**
+	 * 自动播放
+	 */
+	public void autoPlay(){
+		String [] temp=new String[PLAYLISTS.size()];
+		PLAYLISTS.toArray(temp);
+		PLAYREALPATH=temp[new Random().nextInt(temp.length)];
+		while(PLAYREALPATH.toLowerCase().endsWith(".lrc")){
+			PLAYREALPATH=temp[new Random().nextInt(temp.length)];
+		}
+		modifyListColor(PLAYREALPATH);
+		start(PLAYREALPATH);
+		modifyImage();
+	}
 
-
+	public List<String> lyric(){
+		return LYRICLISTS;
+	}
 	/**
 	 * 开始播放音乐
 	 * @param play
@@ -433,19 +481,19 @@ public class MusicPlayer {
 			if(!HAVELYRIC){
 				sashForm_1.setWeights(new int[] {186, 521, 174});
 				String name=play.substring(play.lastIndexOf(File.separator)+1, play.lastIndexOf("."));
-				try {
-					netList=new Analysis().getLyricList(name);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				if(netList!=null){
-					TableItem item=null;
-					table_2.removeAll();
-					for(int i=0;i<netList.size();i++){
-						item=new TableItem(table_2, SWT.NONE);
-						item.setText(new String []{(i+1)+"",netList.get(i).substring(0, netList.get(i).toString().indexOf("$"))});
-					}
-				}
+//				try {
+//					netList=new Analysis().getLyricList(name);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				if(netList!=null){
+//					TableItem item=null;
+//					table_2.removeAll();
+//					for(int i=0;i<netList.size();i++){
+//						item=new TableItem(table_2, SWT.NONE);
+//						item.setText(new String []{(i+1)+"",netList.get(i).substring(0, netList.get(i).toString().indexOf("$"))});
+//					}
+//				}
 			}else{
 				sashForm_1.setWeights(new int[] {186, 693, 0});
 			}
@@ -457,6 +505,9 @@ public class MusicPlayer {
 				}else{
 					playThread.stop();
 				}
+				if(STARTPLAY){
+					player.close();
+				}
 				playThread=new Thread(new PlayerThread(MUSICLENGTH, LYRICLISTS, HAVELYRIC, new PlayerNotify() {
 					public void PlayerResult(Object object) {
 						final PlayerBean bean=(PlayerBean) object;
@@ -466,16 +517,14 @@ public class MusicPlayer {
 									progressBar.setSelection(bean.getReturnLong());
 									text_1.setText(bean.getReturnTime());
 									if(HAVELYRIC){
-										if(bean.getReturnIndex()!=0){
-											for(int i=0;i<table_1.getItemCount();i++){												
-												int time=Integer.parseInt(table_1.getItem(i).getText(0).trim());												
-												if(time==bean.getReturnIndex()){//选中的歌曲
-													table_1.getItem(i).setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
-												}else{//非选中的歌曲
-													table_1.getItem(i).setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
-												}
+										for(int i=0;i<table_1.getItemCount();i++){												
+											String lyric=table_1.getItem(i).getText(0).trim();
+											if(lyric.equals(bean.getReturnIndex())){//选中的歌曲
+												table_1.getItem(i).setBackground(SWTResourceManager.getColor(SWT.COLOR_LIST_SELECTION));
+											}else{//非选中的歌曲
+												table_1.getItem(i).setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_BACKGROUND));
 											}
-										}
+										}										
 									}
 								}else{
 									//TODO: dosomething
@@ -487,9 +536,10 @@ public class MusicPlayer {
 				playThread.setDaemon(true);
 				playThread.start();
 				mThread.start();
-				
+
 				player=Manager.createPlayer(file.toURL());
 				player.start();
+				STARTPLAY=true;
 
 			} catch (Exception e) {
 				logger.error(e.getMessage());
@@ -497,35 +547,6 @@ public class MusicPlayer {
 			} 
 		}
 	}
-
-
-	//		public void controllerUpdate(ControllerEvent event) {
-	//	
-	//			if (event instanceof RealizeCompleteEvent) {//实现完成事件
-	//				logger.info("实现完成事件");
-	//				if(player.getState()==300){//表示播放器实例已经销毁
-	//					logger.info("播放器实例已经销毁");
-	//					try {
-	//						player=Manager.createPlayer(url);
-	//					} catch (NoPlayerException | IOException e) {
-	//						e.printStackTrace();
-	//					}
-	//				}else if(player.getState()==500){
-	//					logger.info("播放器开始播放");
-	//					player.close();
-	//				}
-	//				player.start();
-	//			} else if (event instanceof EndOfMediaEvent) {//歌曲播放结束事件
-	//				logger.info("歌曲播放结束事件");
-	//				player.close();
-	//			} else if (event instanceof StopEvent) {//歌曲播放停止事件
-	//				logger.info("歌曲播放停止事件");
-	//			} else if (event instanceof PrefetchCompleteEvent) {//预取完成事件
-	//				logger.info("预取完成事件");
-	//				
-	//			}
-	//			
-	//		}
 
 	/**
 	 * 播放框的图片改变
@@ -554,6 +575,9 @@ public class MusicPlayer {
 	 * 获取歌曲歌词
 	 * @param play
 	 */
+	/**
+	 * @param musicfile
+	 */
 	private void lyric(File musicfile){
 		String play=musicfile.toString();
 		LYRICLISTS.clear();
@@ -574,15 +598,47 @@ public class MusicPlayer {
 			try {
 				fReader = new FileReader(file);
 				bReader=new BufferedReader(fReader);
-				String txt="";				
+				String txt="";
+				String reg="\\[(\\d{2}:\\d{2}\\.\\d{2})\\]";				
 				while((txt=bReader.readLine())!=null){
-					if(txt.contains("00:")||txt.contains("01:")||txt.contains("02:")||txt.contains("03:")||txt.contains("04:")
-							||txt.contains("05:")||txt.contains("06:")||txt.contains("07:")){
-						String time=txt.substring(txt.indexOf("[")+1,txt.indexOf("[")+6);
-						String lyric=txt.substring(txt.lastIndexOf("]")+1);
-						LYRICLISTS.add(time+lyric);
+					if(txt.contains("[ti:")) {       // 歌曲信息
+						LYRICLISTS.add("歌曲信息: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
+					}else if (txt.contains("[ar:")) {// 歌手信息
+						LYRICLISTS.add("歌手信息: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
+					}else if (txt.contains("[al:")) {// 专辑信息
+						LYRICLISTS.add("专辑信息: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
+					}else if (txt.contains("[wl:")) {// 歌词作家
+						LYRICLISTS.add("歌词作家: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
+					}else if (txt.contains("[wm:")) {// 歌曲作家
+						LYRICLISTS.add("歌曲作家: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
+					}else if (txt.contains("[al:")) {// 歌词制作
+						LYRICLISTS.add("歌词制作: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
+					}
+					Pattern pattern=Pattern.compile(reg);
+					Matcher matcher=pattern.matcher(txt);
+					while(matcher.find()){
+						LYRICLISTS.add(matcher.group(0).substring(1,6).trim()+txt.substring(txt.lastIndexOf("]")+1).trim());
 					}
 				}
+				reg="^\\d+$";
+				for(int i=0;i<LYRICLISTS.size();i++){
+					if(Pattern.matches(reg,LYRICLISTS.get(i).substring(0, 2))){
+						for(int j=0;j<LYRICLISTS.size();j++){
+							if(Pattern.matches(reg,LYRICLISTS.get(j).substring(0, 2))){
+								if(Integer.parseInt(LYRICLISTS.get(i).substring(0, 2))<Integer.parseInt(LYRICLISTS.get(j).substring(0, 2))){
+									String temp=LYRICLISTS.get(i);
+									LYRICLISTS.set(i, LYRICLISTS.get(j));
+									LYRICLISTS.set(j, temp);
+								}
+								if(Integer.parseInt(LYRICLISTS.get(i).substring(0, 2))==Integer.parseInt(LYRICLISTS.get(j).substring(0, 2)) && Double.parseDouble(LYRICLISTS.get(i).substring(3,5))<Double.parseDouble(LYRICLISTS.get(j).substring(3,5))){
+									String temp=LYRICLISTS.get(i);
+									LYRICLISTS.set(i, LYRICLISTS.get(j));
+									LYRICLISTS.set(j, temp);
+								}
+							}
+						}
+					}
+				}			
 				TableItem tableItem=null;
 				table_1.removeAll();
 				int index=1;
@@ -625,13 +681,49 @@ public class MusicPlayer {
 	 */
 	private void lyric(String play){
 		String[] text=play.split("\r\n");
+		String reg="\\[(\\d{2}:\\d{2}\\.\\d{2})\\]";
 		for(String txt:text){
-			if(txt.contains("00:")||txt.contains("01:")||txt.contains("02:")||txt.contains("03:")||txt.contains("04:")
-					||txt.contains("05:")||txt.contains("06:")||txt.contains("07:")){
-				String time=txt.substring(txt.indexOf("[")+1,txt.indexOf("[")+6);
-				String lyric=txt.substring(txt.lastIndexOf("]")+1);
-				LYRICLISTS.add(time+lyric);
+			if(txt.contains("[ti:")) {       // 歌曲信息
+				LYRICLISTS.add("歌曲信息: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
+			}else if (txt.contains("[ar:")) {// 歌手信息
+				LYRICLISTS.add("歌手信息: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
+			}else if (txt.contains("[al:")) {// 专辑信息
+				LYRICLISTS.add("专辑信息: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
+			}else if (txt.contains("[wl:")) {// 歌词作家
+				LYRICLISTS.add("歌词作家: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
+			}else if (txt.contains("[wm:")) {// 歌曲作家
+				LYRICLISTS.add("歌曲作家: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
+			}else if (txt.contains("[al:")) {// 歌词制作
+				LYRICLISTS.add("歌词制作: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
 			}
+			
+			Pattern pattern=Pattern.compile(reg);
+			Matcher matcher=pattern.matcher(txt);
+			
+			while(matcher.find()){
+				LYRICLISTS.add(matcher.group(0).substring(1,6).trim()+txt.substring(txt.lastIndexOf("]")+1).trim());
+			}
+			
+			reg="^\\d+$";
+			for(int i=0;i<LYRICLISTS.size();i++){
+				if(Pattern.matches(reg,LYRICLISTS.get(i).substring(0, 2))){
+					for(int j=0;j<LYRICLISTS.size();j++){
+						if(Pattern.matches(reg,LYRICLISTS.get(j).substring(0, 2))){
+							if(Integer.parseInt(LYRICLISTS.get(i).substring(0, 2))<Integer.parseInt(LYRICLISTS.get(j).substring(0, 2))){
+								String temp=LYRICLISTS.get(i);
+								LYRICLISTS.set(i, LYRICLISTS.get(j));
+								LYRICLISTS.set(j, temp);
+							}
+							if(Integer.parseInt(LYRICLISTS.get(i).substring(0, 2))==Integer.parseInt(LYRICLISTS.get(j).substring(0, 2)) && Double.parseDouble(LYRICLISTS.get(i).substring(3,5))<Double.parseDouble(LYRICLISTS.get(j).substring(3,5))){
+								String temp=LYRICLISTS.get(i);
+								LYRICLISTS.set(i, LYRICLISTS.get(j));
+								LYRICLISTS.set(j, temp);
+							}
+						}
+					}
+				}
+			}
+			
 		}
 		TableItem tableItem=null;
 		table_1.removeAll();
@@ -642,7 +734,8 @@ public class MusicPlayer {
 			tableItem.setText(1,lyric.substring(5));
 			index++;
 		}
-		HAVELYRIC=true;
+		//		HAVELYRIC=true;
+		lyric();
 	}
 
 	/**
@@ -790,13 +883,12 @@ public class MusicPlayer {
 		Preferences preferences=Preferences.userNodeForPackage(MusicPlayer.class);
 		if(preferences.get("MusicPlayer", null)!=null || !"".equals(preferences.get("MusicPlayer", null)) ){
 			String mu=preferences.get("MusicPlayer", null).toString();
-			System.out.println(mu);
 			start(mu);
 			text.setText(mu.substring(mu.lastIndexOf(File.separator)+1, mu.lastIndexOf(".")));
 			label_3.setImage(SWTResourceManager.getImage(Player.class, "/com/xu/musicplayer/image/start.png"));
 			click=false;
 		}
 	}
-	
+
 }
 
