@@ -437,14 +437,14 @@ public class MusicPlayer {
 				}
 			}
 		});
-		
+
 		//进度条
 		progressBar.addTouchListener(new TouchListener() {
 			public void touch(TouchEvent arg0) {
 				System.out.println(arg0.time);
 			}
 		});
-		
+
 	}
 
 	/**
@@ -481,19 +481,19 @@ public class MusicPlayer {
 			if(!HAVELYRIC){
 				sashForm_1.setWeights(new int[] {186, 521, 174});
 				String name=play.substring(play.lastIndexOf(File.separator)+1, play.lastIndexOf("."));
-//				try {
-//					netList=new Analysis().getLyricList(name);
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//				if(netList!=null){
-//					TableItem item=null;
-//					table_2.removeAll();
-//					for(int i=0;i<netList.size();i++){
-//						item=new TableItem(table_2, SWT.NONE);
-//						item.setText(new String []{(i+1)+"",netList.get(i).substring(0, netList.get(i).toString().indexOf("$"))});
-//					}
-//				}
+				try {
+					netList=new Analysis().getLyricList(name);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				if(netList!=null){
+					TableItem item=null;
+					table_2.removeAll();
+					for(int i=0;i<netList.size();i++){
+						item=new TableItem(table_2, SWT.NONE);
+						item.setText(new String []{(i+1)+"",netList.get(i).substring(0, netList.get(i).toString().indexOf("$"))});
+					}
+				}
 			}else{
 				sashForm_1.setWeights(new int[] {186, 693, 0});
 			}
@@ -572,10 +572,7 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * 获取歌曲歌词
-	 * @param play
-	 */
-	/**
+	 * 获取本地歌曲歌词
 	 * @param musicfile
 	 */
 	private void lyric(File musicfile){
@@ -599,7 +596,7 @@ public class MusicPlayer {
 				fReader = new FileReader(file);
 				bReader=new BufferedReader(fReader);
 				String txt="";
-				String reg="\\[(\\d{2}:\\d{2}\\.\\d{2})\\]";				
+				String reg="\\[(\\d{2}:\\d{2}\\.\\d{2})\\]|\\[\\d{2}:\\d{2}\\]";				
 				while((txt=bReader.readLine())!=null){
 					if(txt.contains("[ti:")) {       // 歌曲信息
 						LYRICLISTS.add("歌曲信息: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
@@ -617,38 +614,11 @@ public class MusicPlayer {
 					Pattern pattern=Pattern.compile(reg);
 					Matcher matcher=pattern.matcher(txt);
 					while(matcher.find()){
-						LYRICLISTS.add(matcher.group(0).substring(1,6).trim()+txt.substring(txt.lastIndexOf("]")+1).trim());
+						LYRICLISTS.add(matcher.group(0).substring(1,matcher.group(0).lastIndexOf("]")).trim()+txt.substring(txt.lastIndexOf("]")+1).trim());
 					}
 				}
-				reg="^\\d+$";
-				for(int i=0;i<LYRICLISTS.size();i++){
-					if(Pattern.matches(reg,LYRICLISTS.get(i).substring(0, 2))){
-						for(int j=0;j<LYRICLISTS.size();j++){
-							if(Pattern.matches(reg,LYRICLISTS.get(j).substring(0, 2))){
-								if(Integer.parseInt(LYRICLISTS.get(i).substring(0, 2))<Integer.parseInt(LYRICLISTS.get(j).substring(0, 2))){
-									String temp=LYRICLISTS.get(i);
-									LYRICLISTS.set(i, LYRICLISTS.get(j));
-									LYRICLISTS.set(j, temp);
-								}
-								if(Integer.parseInt(LYRICLISTS.get(i).substring(0, 2))==Integer.parseInt(LYRICLISTS.get(j).substring(0, 2)) && Double.parseDouble(LYRICLISTS.get(i).substring(3,5))<Double.parseDouble(LYRICLISTS.get(j).substring(3,5))){
-									String temp=LYRICLISTS.get(i);
-									LYRICLISTS.set(i, LYRICLISTS.get(j));
-									LYRICLISTS.set(j, temp);
-								}
-							}
-						}
-					}
-				}			
-				TableItem tableItem=null;
-				table_1.removeAll();
-				int index=1;
-				for(String lyric:LYRICLISTS){
-					tableItem=new TableItem(table_1, SWT.NONE);
-					tableItem.setText(0, index+"");
-					tableItem.setText(1,lyric.substring(5));
-					index++;
-				}
-
+				int num=sortLyric(LYRICLISTS);	
+				loadLyric(num,table_1,LYRICLISTS);
 			} catch (Exception e) {
 				logger.error(e.getMessage());
 				e.printStackTrace();
@@ -676,12 +646,13 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * 获取歌曲歌词
+	 * 获取网络歌曲歌词
 	 * @param play
 	 */
 	private void lyric(String play){
 		String[] text=play.split("\r\n");
 		String reg="\\[(\\d{2}:\\d{2}\\.\\d{2})\\]";
+		int num=5;
 		for(String txt:text){
 			if(txt.contains("[ti:")) {       // 歌曲信息
 				LYRICLISTS.add("歌曲信息: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
@@ -696,50 +667,92 @@ public class MusicPlayer {
 			}else if (txt.contains("[al:")) {// 歌词制作
 				LYRICLISTS.add("歌词制作: "+txt.substring(txt.lastIndexOf(":")+1,txt.length()-1));
 			}
-			
+
 			Pattern pattern=Pattern.compile(reg);
 			Matcher matcher=pattern.matcher(txt);
-			
+
 			while(matcher.find()){
 				LYRICLISTS.add(matcher.group(0).substring(1,6).trim()+txt.substring(txt.lastIndexOf("]")+1).trim());
 			}
-			
-			reg="^\\d+$";
-			for(int i=0;i<LYRICLISTS.size();i++){
-				if(Pattern.matches(reg,LYRICLISTS.get(i).substring(0, 2))){
-					for(int j=0;j<LYRICLISTS.size();j++){
-						if(Pattern.matches(reg,LYRICLISTS.get(j).substring(0, 2))){
-							if(Integer.parseInt(LYRICLISTS.get(i).substring(0, 2))<Integer.parseInt(LYRICLISTS.get(j).substring(0, 2))){
-								String temp=LYRICLISTS.get(i);
-								LYRICLISTS.set(i, LYRICLISTS.get(j));
-								LYRICLISTS.set(j, temp);
-							}
-							if(Integer.parseInt(LYRICLISTS.get(i).substring(0, 2))==Integer.parseInt(LYRICLISTS.get(j).substring(0, 2)) && Double.parseDouble(LYRICLISTS.get(i).substring(3,5))<Double.parseDouble(LYRICLISTS.get(j).substring(3,5))){
-								String temp=LYRICLISTS.get(i);
-								LYRICLISTS.set(i, LYRICLISTS.get(j));
-								LYRICLISTS.set(j, temp);
-							}
-						}
-					}
-				}
-			}
-			
+			num=sortLyric(LYRICLISTS);			
 		}
+		loadLyric(num,table_1,LYRICLISTS);
+		lyric();
+	}
+	
+	/**
+	 * load lyric to screen
+	 * @param num
+	 * @param table
+	 * @param LYRICLISTS
+	 */
+	private void loadLyric(int num ,Table table ,List<String> LYRICLISTS){
 		TableItem tableItem=null;
 		table_1.removeAll();
 		int index=1;
 		for(String lyric:LYRICLISTS){
 			tableItem=new TableItem(table_1, SWT.NONE);
 			tableItem.setText(0, index+"");
-			tableItem.setText(1,lyric.substring(5));
+			if(Pattern.matches("^\\d+$", lyric.substring(0, 2))){
+				tableItem.setText(1,lyric.substring(num));
+			}else{
+				tableItem.setText(1,lyric);
+			}
 			index++;
 		}
-		//		HAVELYRIC=true;
-		lyric();
 	}
 
 	/**
-	 * 获取歌曲的真是路径
+	 * sort for lyric
+	 * @param lyric
+	 */
+	private int sortLyric(List<String> lyric){
+		int num=5;
+		for(int i=0;i<lyric.size();i++){
+			if(Pattern.matches("^\\d+$",lyric.get(i).substring(0,2))){
+				if(Pattern.matches("^\\d{2}:\\d{2}\\.\\d{1}$",lyric.get(i).substring(0,7))){
+					num=8;
+					for(int j=0;j<lyric.size();j++){
+						if(Pattern.matches("^\\d+$",lyric.get(j).substring(0, 2))){
+							if(Double.parseDouble(lyric.get(i).substring(0, 2))<Double.parseDouble(lyric.get(j).substring(0, 2))){
+								String temp=lyric.get(i);
+								lyric.set(i, lyric.get(j));
+								lyric.set(j, temp);
+							}
+							if(Double.parseDouble(lyric.get(i).substring(0, 2))==Double.parseDouble(lyric.get(j).substring(0, 2)) && Double.parseDouble(lyric.get(i).substring(3,8))<Double.parseDouble(lyric.get(j).substring(3,8))){
+								String temp=lyric.get(i);
+								lyric.set(i, lyric.get(j));
+								lyric.set(j, temp);
+							}
+						}
+					}
+				}else if(Pattern.matches("^\\d{2}:\\d{2}$",lyric.get(i).substring(0,5))){
+					num=5;
+					for(int j=0;j<lyric.size();j++){
+						if(Pattern.matches("^\\d+$",lyric.get(j).substring(0, 2))){
+							if(Integer.parseInt(lyric.get(i).substring(0, 2))<Integer.parseInt(lyric.get(j).substring(0, 2))){
+								String temp=lyric.get(i);
+								lyric.set(i, lyric.get(j));
+								lyric.set(j, temp);
+							}
+							if(Integer.parseInt(lyric.get(i).substring(0, 2))==Integer.parseInt(lyric.get(j).substring(0, 2)) && Integer.parseInt(lyric.get(i).substring(3,5))<Double.parseDouble(lyric.get(j).substring(3,5))){
+								String temp=lyric.get(i);
+								lyric.set(i, lyric.get(j));
+								lyric.set(j, temp);
+							}
+						}
+					}
+				}else{
+					HAVELYRIC=false;
+				}
+			}
+		}
+		System.out.println(num);
+		return num;
+	}
+
+	/**
+	 * get zhe real path of music file
 	 * @param musicname
 	 * @return 
 	 */
@@ -758,12 +771,12 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * 导入本地的播放文件(本地歌曲目录不存在，需要从新导入)
+	 * get local play files from local
 	 * @author Administrator
 	 */
 	private void inputMusicPlayerFile(){
 		FileDialog fileDialog=new FileDialog(shell,SWT.OPEN|SWT.MULTI);
-		fileDialog.setFilterExtensions(new String[]{"*.mp3","*.wma","*.wav","*.wav",".lrc"});
+		fileDialog.setFilterNames(new String[]{"*.mp3","*.wma","*.wav","*.wav","*.LRC","*.lrc"});
 		fileDialog.open();
 		String[] playlist=fileDialog.getFileNames();
 		table.removeAll();
@@ -813,7 +826,7 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * 获取本地的播放文件(本地歌曲目录已存在)
+	 * get play files from music file
 	 * @author Administrator
 	 */
 	private void getMusicPlayerFile(){//获取本地的播放文件(本地歌曲目录已存在)
@@ -823,7 +836,7 @@ public class MusicPlayer {
 			File file=new File("G:\\KuGou\\test.txt");
 			if(!file.exists()){				
 				tool.beep();
-				MessageDialog.openError(shell, "错误提示", "缺失歌曲索引!");
+				//MessageDialog.openError(shell, "错误提示", "缺失歌曲索引!");
 				inputMusicPlayerFile();
 			}else{
 				FReader=new FileReader(file);

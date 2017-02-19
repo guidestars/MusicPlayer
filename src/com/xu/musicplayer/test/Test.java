@@ -1,6 +1,8 @@
 package com.xu.musicplayer.test;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -16,64 +18,35 @@ import javax.media.PrefetchCompleteEvent;
 import javax.media.RealizeCompleteEvent;
 import javax.media.StopEvent;
 
-public class Test implements ControllerListener {
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.FileDialog;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TableItem;
 
+public class Test {
 
-	private Player player;
-	private File file;
-
-	public static void main(String[] args) throws Exception{
-//		new Test().play();
-		System.out.println(File.separator);
+	public static void main(String[] args) {
+		inputMusicPlayerFile();
 	}
+	
 
-	public void play() throws NoPlayerException, MalformedURLException, IOException{
-
-		file=new File("G:\\KuGou\\刘德华 - 开心的马骝 - 2007中国巡回演唱会上海站.mp3");
-
-		if(file.exists()){ 
-
-			//			URL url=new URL("G:\\KuGou\\刘德华 - 开心的马骝 - 2007中国巡回演唱会上海站.mp3");
-			//MediaLocator locator = new MediaLocator("G:\\KuGou\\刘德华 - 开心的马骝 - 2007中国巡回演唱会上海站.mp3");
-
-			player=Manager.createPlayer(file.toURL());
-			player.addControllerListener(this);
-			player.prefetch();
-			player.start();
-		}
-	}
-
-
-	@Override
-	public void controllerUpdate(ControllerEvent event) {
-
-		if (event instanceof RealizeCompleteEvent) {//实现完成事件
-			System.out.println("RealizeCompleteEvent");
-			
-			if(player.getState()==300){//表示播放器实例已经销毁
-				try {
-					player=Manager.createPlayer(file.toURL());
-				} catch (NoPlayerException | IOException e) {
-					e.printStackTrace();
-				}
-			}else if(player.getState()==400){//表示播放器暂停
-				
-			}
-//			player.start();
-
-		} else if (event instanceof EndOfMediaEvent) {//歌曲播放结束事件
-			player.close();
-			System.out.println("EndOfMediaEvent");
-		} else if (event instanceof StopEvent) {//歌曲播放停止事件
-			System.out.println("StopEvent");
-		} else if (event instanceof PrefetchCompleteEvent) {
-			System.out.println("PrefetchCompleteEvent");//预取完成事件
-			
-			player.start();
-			
+	/**
+	 * 导入本地的播放文件(本地歌曲目录不存在，需要从新导入)
+	 * @author Administrator
+	 */
+	private static void inputMusicPlayerFile(){
+		FileDialog fileDialog=new FileDialog(new Shell(),SWT.OPEN|SWT.MULTI);
+		//fileDialog.setFilterExtensions(new String[]{"*.mp3,*.lrc","*.wma","*.wav","*.wav","*.LRC"});
+		fileDialog.setFilterNames(new String[]{"*.mp3,*.lrc","*.wma","*.wav","*.wav","*.LRC"});
+		fileDialog.open();
+		String[] playlist=fileDialog.getFileNames();
+		TableItem tableItem=null;
+		int index=1;
+		for(int i=0;i<playlist.length;i++){
+			System.out.println(playlist[i]);
 		}
 
-
-
+		
 	}
+	
 }
