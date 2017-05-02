@@ -56,6 +56,7 @@ import org.eclipse.swt.events.MouseMoveListener;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.events.MouseTrackAdapter;
 
+@SuppressWarnings(value="all")
 public class MusicPlayerTest {
 
 	protected Shell shell;
@@ -118,7 +119,7 @@ public class MusicPlayerTest {
 			if (!display.readAndDispatch()) {
 				display.sleep();
 			}
-		}
+		}		
 	}
 
 	/**
