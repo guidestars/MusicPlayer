@@ -752,7 +752,7 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * get zhe real path of music file
+	 * get the real path of music file
 	 * @param musicname
 	 * @return 
 	 */
@@ -796,7 +796,7 @@ public class MusicPlayer {
 		FileWriter FWriter=null;
 		BufferedWriter BWriter=null;
 		try {
-			File file=new File("G:\\KuGou\\test.txt");
+			File file=new File("G:\\CloudMusic\\test.txt");
 			FWriter=new FileWriter(file);
 			BWriter=new BufferedWriter(FWriter);
 			for(String plays:PLAYLISTS){
@@ -833,7 +833,7 @@ public class MusicPlayer {
 		FileReader FReader=null;
 		BufferedReader BReader=null;
 		try {
-			File file=new File("G:\\KuGou\\test.txt");
+			File file=new File("G:\\CloudMusic\\test.txt");
 			if(!file.exists()){				
 				tool.beep();
 				//MessageDialog.openError(shell, "错误提示", "缺失歌曲索引!");
@@ -846,7 +846,7 @@ public class MusicPlayer {
 				TableItem tableItem=null;
 				int index=1;
 				while((txt=BReader.readLine())!=null){
-					if(!txt.equals("") && !txt.toLowerCase().endsWith(".lrc")){
+					if(!txt.equals("") && !txt.toLowerCase().endsWith(".lrc") && txt.endsWith(".mp3")){
 						tableItem=new TableItem(table, SWT.NONE);
 						tableItem.setText(new String[]{index+"",txt.substring(txt.lastIndexOf(File.separator)+1, txt.lastIndexOf("."))});
 						index++;

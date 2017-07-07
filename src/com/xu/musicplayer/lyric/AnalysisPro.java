@@ -15,6 +15,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+@SuppressWarnings(value="all")
 public class AnalysisPro {
 
 	public static void main(String[] args) throws IOException {
@@ -31,13 +32,14 @@ public class AnalysisPro {
 		//                      /lrc-21926-234479/年轮-张碧晨.html
 		//System.out.println(analysis.getLyric("http://www.lrcgc.com/lrc-6258-235146/年轮-汪苏泷.lrc"));
 	}
+	
 	/**
 	 * 获取歌词列表
-	 * @param name
-	 * @return
-	 * @throws IOException
+	 * @param name 歌曲名
+	 * @return     List<'Map<'String, String'>'>
+	 * @throws IOException IO异常
 	 */
-	public List<Map<String, String>> getLyricList(String name) throws IOException{
+	public static List<Map<String, String>> getLyricList(String name) throws IOException{
 		List<Map<String,String>> lists=new ArrayList<Map<String,String>>();
 		Map<String,String> map;
 		Document htmldoc = Jsoup.connect("http://www.lrcgc.com/so/?q="+name+"&csrf_token="+getRandomString()).get();
@@ -73,9 +75,9 @@ public class AnalysisPro {
 
 	/**
 	 * 获取随机码
-	 * @return
+	 * @return 随机码
 	 */
-	private String getRandomString(){
+	private static String getRandomString(){
 		String list="1234567890qwertyuiopasdfghjklzxcvbnm";
 		String answer="";
 		for(int i=0;i<16;i++){
@@ -86,11 +88,11 @@ public class AnalysisPro {
 
 	/**
 	 * 获取推介的歌曲
-	 * @param html
-	 * @return
-	 * @throws IOException
+	 * @param name 歌曲名
+	 * @return     List<'Map<'String, String'>'>
+	 * @throws IOException IO异常
 	 */
-	public List<Map<String, String>> referralsMusic(String name) throws IOException{
+	public static List<Map<String, String>> getReferralsMusic(String name) throws IOException{
 		List<Map<String,String>> lists=new ArrayList<Map<String,String>>();
 		Map<String,String> map;
 		Document html = Jsoup.connect("http://www.lrcgc.com/so/?q="+name+"&csrf_token="+getRandomString()).get();
@@ -110,11 +112,11 @@ public class AnalysisPro {
 	
 	/**
 	 * 在网络上爬取歌词信息
-	 * @param lrcurl
-	 * @return
-	 * @throws IOException
+	 * @param lrcurl 歌词的URL地址
+	 * @return       String
+	 * @throws IOException IO异常
 	 */
-	public String getLyric(String lrcurl) throws IOException{
+	public static String getLyric(String lrcurl) throws IOException{
 		URL url;
 		if(lrcurl.startsWith("http:")){
 			url=new URL(lrcurl);

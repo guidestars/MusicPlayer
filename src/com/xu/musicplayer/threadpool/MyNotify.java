@@ -1,4 +1,4 @@
-package com.xu.threadpool;
+package com.xu.musicplayer.threadpool;
 
 public interface MyNotify {
 	/**

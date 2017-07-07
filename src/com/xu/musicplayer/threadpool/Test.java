@@ -1,4 +1,4 @@
-package com.xu.threadpool;
+package com.xu.musicplayer.threadpool;
 
 import java.util.ArrayList;
 import java.util.Date;

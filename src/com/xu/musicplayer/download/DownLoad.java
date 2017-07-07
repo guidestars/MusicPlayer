@@ -5,14 +5,13 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+import com.xu.musicplayer.threadpool.ThreadPoolManager;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
 import org.eclipse.swt.SWT;
-
-import com.xu.threadpool.ThreadPoolManager;
-
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Button;

@@ -6,7 +6,7 @@ import java.io.RandomAccessFile;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import com.xu.threadpool.ThreadPoolManager;
+import com.xu.musicplayer.threadpool.ThreadPoolManager;
 
 public class DownLoadManager {
 

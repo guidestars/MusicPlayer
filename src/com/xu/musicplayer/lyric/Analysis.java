@@ -24,6 +24,7 @@ public class Analysis {
 		//  http://www.lrcgc.com/lrc-21926-234479/张碧晨-年轮.lrc
 		System.out.println(analysis.getLyric("/lrc-21926-234479/张碧晨-年轮.lrc"));
 	}
+	
 	/**
 	 * 获取歌词列表
 	 * @param name
@@ -108,6 +109,7 @@ public class Analysis {
 		while((len=inputStream.read(bt, 0, bt.length))!=-1){
 			html+=new String(bt,0,len)+"\r\n";
 		}
+		System.out.println(html);
 		return html;
 	}
 

@@ -9,7 +9,7 @@ import java.net.HttpURLConnection;
 import java.net.ProtocolException;
 import java.net.URL;
 
-import com.xu.threadpool.ThreadPoolManager;
+import com.xu.musicplayer.threadpool.ThreadPoolManager;
 
 public class DownLoadTask implements Runnable{
 

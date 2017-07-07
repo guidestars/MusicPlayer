@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-import com.xu.threadpool.ThreadPoolManager;
+import com.xu.musicplayer.threadpool.ThreadPoolManager;
 
 public class Test {
 	
