@@ -19,7 +19,7 @@ public class DownLoadManager {
 	private long totalLength;//整个文件的长度
 	private int  threadSize=2;//线程的数量
 
-	private MyNotify myNotify;
+	private Notify myNotify;
 	private ThreadPoolManager tpm;
 
 	/**
@@ -45,7 +45,7 @@ public class DownLoadManager {
 	 * @param threadSize
 	 * @param myNotify
 	 */
-	public DownLoadManager(URL url,int threadSize,MyNotify myNotify){
+	public DownLoadManager(URL url,int threadSize,Notify myNotify){
 		this.url=url;
 		this.threadSize=threadSize;
 		this.myNotify=myNotify;
@@ -58,7 +58,7 @@ public class DownLoadManager {
 	 * @param tpm
 	 * @param myNotify
 	 */
-	public DownLoadManager(URL url,int threadSize,ThreadPoolManager tpm,MyNotify myNotify){
+	public DownLoadManager(URL url,int threadSize,ThreadPoolManager tpm,Notify myNotify){
 		this.url=url;
 		this.threadSize=threadSize;
 		this.myNotify=myNotify;
@@ -142,6 +142,7 @@ public class DownLoadManager {
 			abstructFileSavePath=new File(System.getProperty("user.home")+File.separator+fileName.substring(0,fileName.lastIndexOf("."))+"["+index+"]"+fileName.substring(fileName.lastIndexOf(".")));
 			index++;
 		}
+		System.out.println(abstructFileSavePath);
 		RandomAccessFile raf=new RandomAccessFile(abstructFileSavePath, "rw");
 		raf.setLength(totalLength);
 		raf.close();

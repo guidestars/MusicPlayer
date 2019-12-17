@@ -11,19 +11,20 @@ import java.net.URL;
 
 import com.xu.musicplayer.threadpool.ThreadPoolManager;
 
+@SuppressWarnings(value = "all")
 public class DownLoadTask implements Runnable{
 
-	private File abstructFileSavePath;
+	private File path;
 	
 	private URL url;
 	
-	private MyNotify myNotify;
+	private Notify notify;
 	
 	private int index;
 	
-	private  long fileSizePerThread;
-	private  long start;
-	private  long end;
+	private long size;
+	private long start;
+	private long end;
 
 	private ThreadPoolManager tpm;
 
@@ -35,12 +36,12 @@ public class DownLoadTask implements Runnable{
 	 * @param i
 	 * @param myNotify
 	 */
-	public DownLoadTask(URL url, File abstructFileSavePath, long fileSizePerThread, int i, MyNotify myNotify) {
+	public DownLoadTask(URL url, File abstructFileSavePath, long fileSizePerThread, int i, Notify myNotify) {
 		this.url=url;
-		this.abstructFileSavePath=abstructFileSavePath;
+		this.path=abstructFileSavePath;
 		this.index=i;
-		this.myNotify=myNotify;
-		this.fileSizePerThread=fileSizePerThread;
+		this.notify=myNotify;
+		this.size=fileSizePerThread;
 		
 		this.start=fileSizePerThread*index;
 		this.end=(index+1)*fileSizePerThread-1;
@@ -55,12 +56,12 @@ public class DownLoadTask implements Runnable{
 	 * @param tpm
 	 * @param myNotify
 	 */
-	public DownLoadTask(URL url, File abstructFileSavePath, long fileSizePerThread, int i,ThreadPoolManager tpm, MyNotify myNotify) {
+	public DownLoadTask(URL url, File abstructFileSavePath, long fileSizePerThread, int i,ThreadPoolManager tpm, Notify myNotify) {
 		this.url=url;
-		this.abstructFileSavePath=abstructFileSavePath;
+		this.path=abstructFileSavePath;
 		this.index=i;
-		this.myNotify=myNotify;
-		this.fileSizePerThread=fileSizePerThread;
+		this.notify=myNotify;
+		this.size=fileSizePerThread;
 		
 		this.start=index*fileSizePerThread;
 		this.end=(index+1)*fileSizePerThread-1;
@@ -76,10 +77,10 @@ public class DownLoadTask implements Runnable{
 	 * @param totalLength
 	 * @param myNotify
 	 */
-	public DownLoadTask(URL url, File abstructFileSavePath, long totalLength, MyNotify myNotify) {
+	public DownLoadTask(URL url, File abstructFileSavePath, long totalLength, Notify myNotify) {
 		this.url=url;
-		this.abstructFileSavePath=abstructFileSavePath;
-		this.myNotify=myNotify;
+		this.path=abstructFileSavePath;
+		this.notify=myNotify;
 		
 		this.start=0;
 		this.end=totalLength;
@@ -91,7 +92,7 @@ public class DownLoadTask implements Runnable{
 		RandomAccessFile accessFile=null;
 		
 		try {
-			accessFile=new RandomAccessFile(abstructFileSavePath, "rw");//随机文件流
+			accessFile=new RandomAccessFile(path, "rw");//随机文件流
 			HttpURLConnection connection=(HttpURLConnection) url.openConnection();
 			connection.setRequestMethod("GET");//设置http的获取方法
 			connection.setRequestProperty("Range", "bytes="+this.start+"-"+this.end);//设定获取文件的位置
@@ -104,9 +105,9 @@ public class DownLoadTask implements Runnable{
 			int length=0;
 			while((length=inputStream.read(bt, 0, bt.length))!=-1){
 				accessFile.write(bt, 0, length);
-				if(this.myNotify!=null){
+				if(this.notify!=null){
 					synchronized (this) {
-						this.myNotify.notifyResult(length);
+						this.notify.notifyResult(length);
 					}
 				}
 			}

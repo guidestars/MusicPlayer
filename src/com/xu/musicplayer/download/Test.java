@@ -16,7 +16,7 @@ public class Test {
 		URL url=new URL("http://down.360safe.com/yunpan/360wangpan_setup_6.6.0.1307.exe");
 		ThreadPoolManager tpm=new ThreadPoolManager(10);
 		try {
-			new DownLoadManager(url,10,tpm,new MyNotify() {
+			new DownLoadManager(url,10,tpm,new Notify() {
 				public synchronized void notifyResult(Object object) {
 					long size=Long.parseLong(object.toString());
 					length+=size;

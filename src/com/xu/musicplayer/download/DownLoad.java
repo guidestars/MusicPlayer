@@ -22,10 +22,10 @@ import org.eclipse.swt.events.SelectionEvent;
 public class DownLoad {
 
 	protected Shell shell;
-	private Text txtHttpdownsafecomyunpanwangpansetupexe;
+	private Text text;
 
 	private static long length;
-	private long totallength;
+	private long total_length;
 
 	/**
 	 * Launch the application.
@@ -68,9 +68,9 @@ public class DownLoad {
 		label.setBounds(35, 38, 46, 23);
 		label.setText("地址");
 
-		txtHttpdownsafecomyunpanwangpansetupexe = new Text(shell, SWT.BORDER);
-		txtHttpdownsafecomyunpanwangpansetupexe.setText("http://down.360safe.com/yunpan/360wangpan_setup_6.6.0.1307.exe");
-		txtHttpdownsafecomyunpanwangpansetupexe.setBounds(97, 38, 423, 23);
+		text = new Text(shell, SWT.BORDER);
+		text.setText("http://down.360safe.com/yunpan/360wangpan_setup_6.6.0.1307.exe");
+		text.setBounds(97, 38, 423, 23);
 
 		Label label_1 = new Label(shell, SWT.NONE);
 		label_1.setText("线程");
@@ -93,7 +93,7 @@ public class DownLoad {
 		btnNewButton.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				String url=txtHttpdownsafecomyunpanwangpansetupexe.getText().trim();
+				String url=text.getText().trim();
 				String threadNumber=combo.getText().trim();
 				if(threadNumber==null || "".equalsIgnoreCase(threadNumber)){
 					threadNumber="5";
@@ -101,22 +101,22 @@ public class DownLoad {
 
 				ThreadPoolManager tpm=new ThreadPoolManager(5);
 				try {
-					totallength=new DownLoadManager().getLength(new URL(url));
+					total_length=new DownLoadManager().getLength(new URL(url));
 				} catch (MalformedURLException e2) {
 					e2.printStackTrace();
 				} catch (IOException e2) {
 					e2.printStackTrace();
 				}
-				System.out.println("-----"+totallength);
+				System.out.println("-----"+total_length);
 				try {
-					new DownLoadManager(new URL(url),Integer.parseInt(threadNumber),tpm,new MyNotify() {
+					new DownLoadManager(new URL(url),Integer.parseInt(threadNumber),tpm,new Notify() {
 						public synchronized void notifyResult(Object object) {
 							long size=Long.parseLong(object.toString());
 							length+=size;
 							System.out.println("已下载:"+length);
 							Display.getDefault().asyncExec(new Runnable() {
 								public void run() {
-									progressBar.setSelection( (int)(length/(double)totallength*100) );
+									progressBar.setSelection( (int)(length/(double)total_length*100) );
 								}
 							} );
 						}
