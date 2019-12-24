@@ -24,6 +24,16 @@ public class LyricyServer implements Observed {
 	public void stop_lyric_player(Observer observer) {
 		observer.stop();
 	}
+
+	@Override
+	public void start_spectrum(Observer observer, PlayerEntity entity) {
+		observer.start(entity);
+	}
+
+	@Override
+	public void end_spectrum(Observer observer) {
+		observer.end();
+	}
 	
 }
 

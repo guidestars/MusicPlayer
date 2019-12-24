@@ -37,7 +37,6 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.ProgressBar;
-import org.eclipse.swt.widgets.Text;
 
 public class MusicPlayer {
 
@@ -50,12 +49,13 @@ public class MusicPlayer {
 	private Tray tray;//
 	private Table table;
 	private Table table_1;
-	private Text text;
-	private Text text_1;
+	private Label text;
+	private Label text_1;
 	private boolean playing = true;
 	private Label label_3 ;
 	private LyricyServer server = new LyricyServer(); // 歌词
 	private ProgressBar progressBar; // 进度条
+	private Composite composite_3;
 
 	private int length;
 
@@ -101,6 +101,7 @@ public class MusicPlayer {
 		shell.setLocation((display.getClientArea().width - shell.getSize().x)/2, 
 				(display.getClientArea().height - shell.getSize().y)/2);
 		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
+		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
 		// 托盘引入
 		tray = display.getSystemTray();
@@ -157,7 +158,7 @@ public class MusicPlayer {
 		tableColumn_3.setWidth(728);
 		tableColumn_3.setText("歌词");
 
-		Composite composite_3 = new Composite(sashForm, SWT.NONE);
+		composite_3 = new Composite(sashForm, SWT.NONE);
 
 
 		Label lblNewLabel = new Label(composite_3, SWT.NONE);
@@ -194,11 +195,13 @@ public class MusicPlayer {
 		progressBar.setSelection(0);
 		progressBar.setMinimum(0);//设置进度的条最小程度		
 
-		text = new Text(composite_3, SWT.NONE);
+		text = new Label(composite_3, SWT.NONE);
+		text.setFont(SWTResourceManager.getFont("Consolas", 9, SWT.NORMAL));
 		text.setEnabled(false);
 		text.setBounds(238, 4, 73, 20);
 
-		text_1 = new Text(composite_3, SWT.RIGHT);
+		text_1 = new Label(composite_3, SWT.RIGHT);
+		text_1.setFont(SWTResourceManager.getFont("Consolas", 9, SWT.NORMAL));
 		text_1.setEnabled(false);
 		text_1.setBounds(775, 4, 73, 20);
 
@@ -333,7 +336,7 @@ public class MusicPlayer {
 		update_list(Constant.PLAY_LIST,table);
 		get_registry();
 	}
-	
+
 	private void update_list(LinkedList<String> lists,Table table) {
 		table.removeAll();
 		TableItem item;
@@ -452,13 +455,14 @@ public class MusicPlayer {
 				PlayerEntity.setText(text_1);
 				PlayerEntity.setSong(PLAYING_SONG);
 				PlayerEntity.setTable(table_1);
+				PlayerEntity.setSpectrum(composite_3);
 				server.end_lyric_player(new LyricPlayer());
 				server.start_lyric_player(new LyricPlayer(), entity);
 			}
 		}
 		set_registry(index+"");
 	}
-	
+
 	private void set_registry(String index) {
 		Preferences preferences=Preferences.userNodeForPackage(MusicPlayer.class);
 		if(preferences.get("MusicPlayer", null) == null){
@@ -487,5 +491,5 @@ public class MusicPlayer {
 		shell.dispose();
 		System.exit(0);
 	}
-	
+
 }

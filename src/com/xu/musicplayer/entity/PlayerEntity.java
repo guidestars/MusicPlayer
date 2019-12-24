@@ -1,26 +1,35 @@
 package com.xu.musicplayer.entity;
 
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.Text;
 
 public class PlayerEntity {
 	
 	private static Table table;
-	private static Text text;
+	private static org.eclipse.swt.widgets.Label text;
 	private static ProgressBar bar;
 	private static String song;
+	private static Composite spectrum;
+
+	
+	public static Composite getSpectrum() {
+		return spectrum;
+	}
+	public static void setSpectrum(Composite spectrum) {
+		PlayerEntity.spectrum = spectrum;
+	}
 	public static Table getTable() {
 		return table;
 	}
 	public static void setTable(Table table) {
 		PlayerEntity.table = table;
 	}
-	public static Text getText() {
+	public static org.eclipse.swt.widgets.Label getText() {
 		return text;
 	}
-	public static void setText(Text text) {
-		PlayerEntity.text = text;
+	public static void setText(org.eclipse.swt.widgets.Label text_1) {
+		PlayerEntity.text = text_1;
 	}
 	public static ProgressBar getBar() {
 		return bar;

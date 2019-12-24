@@ -9,21 +9,19 @@
 
 	<dependencies>
 
-		<!-- MP3转码 -->
 		<dependency>
 			<groupId>com.googlecode.soundlibs</groupId>
 			<artifactId>mp3spi</artifactId>
 			<version>1.9.5.4</version>
 		</dependency>
 
-		<!-- 音频标签 -->
 		<dependency>
 			<groupId>org</groupId>
 			<artifactId>jaudiotagger</artifactId>
 			<version>2.0.3</version>
 		</dependency>
 
-		<!-- FLAC文件解码 -->
+		<!-- 如果需要解码播放flac文件则引入这个jar包 -->
 		<dependency>
 			<groupId>org.jflac</groupId>
 			<artifactId>jflac-codec</artifactId>

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.LinkedList;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -31,6 +32,7 @@ public class XMusic implements Player {
 
 	private static Thread thread = null;
 	private static volatile boolean playing = false;
+	public static LinkedList<Short> deque = new LinkedList<Short>();
 
 	@Override
 	public void load(URL url) {
@@ -175,12 +177,36 @@ public class XMusic implements Player {
 				@Override
 				public void run() {
 					try {
-						if (info!=null) {
+						if (info != null) {
 							data.open(format);
 							data.start();
-							byte[] bt = new byte[1024];
-							while (stream.read(bt) != -1 && playing) {
-								data.write(bt, 0, bt.length);				
+							byte[] buf = new byte[4];
+							int channels = stream.getFormat().getChannels();
+							float rate = stream.getFormat().getSampleRate();
+							while (stream.read(buf) != -1 && playing) {
+								if(channels == 2) {//立体声
+									if(rate == 16) {
+										put((short) ((buf[1] << 8) | buf[0]));//左声道
+										//waveformGraph.put((short) ((buf[3] << 8) | buf[2]));//右声道
+									} else {
+										put(buf[1]);//左声道
+										put(buf[3]);//左声道
+										//waveformGraph.put(buf[2]);//右声道
+										//waveformGraph.put(buf[4]);//右声道
+									}
+								} else {//单声道
+									if(rate == 16) {
+										put((short) ((buf[1] << 8) | buf[0]));
+										put((short) ((buf[3] << 8) | buf[2]));
+									} else {
+										put(buf[1]);
+										put(buf[2]);
+										put(buf[3]);
+										put(buf[4]);
+
+									}
+								}
+								data.write(buf, 0, 4);				
 							}
 							new LyricyServer().end_lyric_player(new LyricPlayer());
 							end();
@@ -249,6 +275,14 @@ public class XMusic implements Player {
 		XMusic.playing = playing;
 	}
 
+	public void put(short v) {
+		synchronized (deque) {
+			deque.add(v);
+			if(deque.size() > 151) {
+				deque.removeFirst();
+			}
+		}
+	}
 
 }
 

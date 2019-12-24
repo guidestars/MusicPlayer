@@ -3,7 +3,7 @@ package com.xu.musicplayer.lyric;
 import com.xu.musicplayer.player.XMusic;
 import com.xu.musicplayer.system.Constant;
 
-public class LyricyThread extends Thread{
+public class LyricyThread extends Thread {
 
 	private LyricyNotify notify;
 	private long time = 0;

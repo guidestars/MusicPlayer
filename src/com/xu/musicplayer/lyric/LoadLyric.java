@@ -2,8 +2,9 @@ package com.xu.musicplayer.lyric;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -28,10 +29,10 @@ public class LoadLyric {
 		Constant.PLAY_LYRIC.clear();
 		File file=new File(path);
 		if(file.exists()){
-			FileReader fReader=null;
+			InputStreamReader fReader=null;
 			BufferedReader bReader=null;
-			try {
-				fReader = new FileReader(file);
+			try (FileInputStream stream = new FileInputStream(file)){
+				fReader = new InputStreamReader(stream,"UTF-8");
 				bReader=new BufferedReader(fReader);
 				String txt="";
 				String reg="\\[(\\d{2}:\\d{2}\\.\\d{2})\\]|\\[\\d{2}:\\d{2}\\]";				

@@ -41,6 +41,7 @@ public class Writing {
 					content += Constant.SPLIT + get_song_name(splits[0]);
 					content += Constant.SPLIT + get_song_Length(splits[0]);
 					content += Constant.SPLIT + splits[1];
+					content += "<-->END";
 				} catch (Exception e1) {
 					e1.printStackTrace();
 				}

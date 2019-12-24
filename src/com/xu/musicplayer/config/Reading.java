@@ -2,7 +2,8 @@ package com.xu.musicplayer.config;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.HashSet;
 
 import com.xu.musicplayer.system.Constant;
@@ -14,11 +15,11 @@ public class Reading {
 		if (file.exists() && file.isFile()) {
 			HashSet<String> songs = new HashSet<String>();
 			Constant.PLAY_LIST.clear();
-			FileReader FReader = null;
+			InputStreamReader FReader = null;
 			BufferedReader BReader = null;
 			String song = "";
-			try {
-				FReader = new FileReader(file);
+			try(FileInputStream stream = new FileInputStream(file)) {
+				FReader = new InputStreamReader(stream,"UTF-8");
 				BReader = new BufferedReader(FReader);
 				while ((song = BReader.readLine()) != null) {
 					songs.add(song);
@@ -43,6 +44,14 @@ public class Reading {
 			return null;
 		}
 
+	}
+
+	public boolean empty(String k) {
+		if (k == null || k.length()<=0) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

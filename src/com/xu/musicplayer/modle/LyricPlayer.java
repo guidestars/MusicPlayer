@@ -8,6 +8,7 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.xu.musicplayer.entity.PlayerEntity;
 import com.xu.musicplayer.lyric.LyricyNotify;
 import com.xu.musicplayer.lyric.LyricyThread;
+import com.xu.musicplayer.lyric.SpectrumThread;
 import com.xu.musicplayer.main.MusicPlayer;
 import com.xu.musicplayer.system.Constant;
 
@@ -20,6 +21,7 @@ import com.xu.musicplayer.system.Constant;
 public class LyricPlayer implements Observer {
 
 	private static LyricyThread thread = null;
+	private static SpectrumThread spectrum = null;
 	private int merchant = 0;
 	private int remainder = 0;
 	private String format = "";
@@ -57,8 +59,16 @@ public class LyricPlayer implements Observer {
 			});
 			thread.setDaemon(true);
 			thread.start();
+			start_spectrum(entity);
 		}
 
+	}
+	
+	public void start_spectrum(PlayerEntity entity) {
+		if (spectrum == null) {
+			spectrum = new SpectrumThread(PlayerEntity.getSpectrum(),485,148);
+			spectrum.start();
+		}
 	}
 
 	/**
@@ -93,6 +103,11 @@ public class LyricPlayer implements Observer {
 		if (thread != null) {
 			thread.stop();
 			thread = null;
+		}
+		
+		if (spectrum != null) {
+			spectrum.stop();
+			spectrum = null;
 		}
 	}
 
