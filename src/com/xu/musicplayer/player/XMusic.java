@@ -17,8 +17,8 @@ import org.jaudiotagger.audio.AudioFileIO;
 
 import javax.sound.sampled.AudioFormat.Encoding;
 
-import com.xu.musicplayer.modle.LyricyServer;
-import com.xu.musicplayer.modle.LyricPlayer;
+import com.xu.musicplayer.modle.ControllerServer;
+import com.xu.musicplayer.modle.ControllerPlayer;
 
 import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
 
@@ -208,7 +208,7 @@ public class XMusic implements Player {
 								}
 								data.write(buf, 0, 4);				
 							}
-							new LyricyServer().end_lyric_player(new LyricPlayer());
+							new ControllerServer().end_lyric_player(new ControllerPlayer());
 							end();
 						}
 					} catch (Exception e) {

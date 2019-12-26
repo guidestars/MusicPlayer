@@ -11,10 +11,18 @@ import java.util.regex.Pattern;
 
 import com.xu.musicplayer.system.Constant;
 
-public class LoadLyric {
+/**
+ * Java MusicPlayer 加载本地歌词
+ * @Author: hyacinth
+ * @ClassName: LoadLyric   
+ * @Description: TODO    
+ * @Date: 2019年12月26日 下午8:00:46   
+ * @Copyright: hyacinth
+ */
+public class LoadLocalLyric {
 
 	public static void main(String[] args) throws IOException {
-		LoadLyric lyric =  new LoadLyric();
+		LoadLocalLyric lyric =  new LoadLocalLyric();
 		lyric.lyric("F:\\KuGou\\丸子呦 - 广寒宫.lrc");
 		for (String s:Constant.PLAY_LYRIC) {
 			System.out.println(s);

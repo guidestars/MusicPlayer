@@ -13,12 +13,14 @@ import com.xu.musicplayer.main.MusicPlayer;
 import com.xu.musicplayer.system.Constant;
 
 /**
- * 观察者
- * @author hyacinth
- * @date 2019年10月10日12:00:09
- *
+ * Java MusicPlayer 观察者
+ * @Author: hyacinth
+ * @ClassName: LyricPlayer   
+ * @Description: TODO    
+ * @Date: 2019年12月26日 下午8:04:08   
+ * @Copyright: hyacinth
  */
-public class LyricPlayer implements Observer {
+public class ControllerPlayer implements Observer {
 
 	private static LyricyThread thread = null;
 	private static SpectrumThread spectrum = null;
@@ -30,10 +32,10 @@ public class LyricPlayer implements Observer {
 	public void start(PlayerEntity entity) {
 
 		int length = Integer.parseInt(MusicPlayer.PLAYING_SONG.split(Constant.SPLIT)[3]);
-		
+
 		PlayerEntity.getBar().setMaximum(length);
 		PlayerEntity.getBar().setSelection(0);
-		
+
 		if (thread != null) {
 			//TODO:
 		} else {
@@ -63,7 +65,7 @@ public class LyricPlayer implements Observer {
 		}
 
 	}
-	
+
 	public void start_spectrum(PlayerEntity entity) {
 		if (spectrum == null) {
 			spectrum = new SpectrumThread(PlayerEntity.getSpectrum(),485,148);
@@ -104,7 +106,7 @@ public class LyricPlayer implements Observer {
 			thread.stop();
 			thread = null;
 		}
-		
+
 		if (spectrum != null) {
 			spectrum.stop();
 			spectrum = null;

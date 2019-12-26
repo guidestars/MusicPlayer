@@ -15,9 +15,9 @@ import org.eclipse.wb.swt.SWTResourceManager;
 import com.xu.musicplayer.config.Reading;
 import com.xu.musicplayer.config.SongChoiceWindow;
 import com.xu.musicplayer.entity.PlayerEntity;
-import com.xu.musicplayer.lyric.LoadLyric;
-import com.xu.musicplayer.modle.LyricyServer;
-import com.xu.musicplayer.modle.LyricPlayer;
+import com.xu.musicplayer.lyric.LoadLocalLyric;
+import com.xu.musicplayer.modle.ControllerServer;
+import com.xu.musicplayer.modle.ControllerPlayer;
 import com.xu.musicplayer.player.Player;
 import com.xu.musicplayer.player.XMusic;
 import com.xu.musicplayer.system.Constant;
@@ -53,7 +53,7 @@ public class MusicPlayer {
 	private Label text_1;
 	private boolean playing = true;
 	private Label label_3 ;
-	private LyricyServer server = new LyricyServer(); // 歌词
+	private ControllerServer server = new ControllerServer(); // 歌词
 	private ProgressBar progressBar; // 进度条
 	private Composite composite_3;
 
@@ -175,11 +175,11 @@ public class MusicPlayer {
 			public void mouseDown(MouseEvent e) {
 				playing = Constant.PLAY_STATE;
 				if (playing && !XMusic.isPlaying()) {
-					start_player();
+					//TODO:
 					label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/start.png"));
 					playing = false;
 				} else {
-					stop_player();
+					//TODO:
 					playing = true;
 					label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/stop.png"));
 				}
@@ -264,7 +264,7 @@ public class MusicPlayer {
 				label.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-1.png"));
 				//tray.dispose();
 				//distory();
-				exit();
+				exitMusicPlayer();
 			}
 		});
 		label.addMouseTrackListener(new MouseTrackAdapter() {
@@ -292,7 +292,7 @@ public class MusicPlayer {
 				if (choise) {
 					TableItem[] items=table.getSelection();
 					int index = Integer.parseInt(items[0].getText(0).trim());
-					choise_song(index);
+					changePlayingSong(index-1,1);//下一曲
 				}
 			}
 		});
@@ -305,7 +305,7 @@ public class MusicPlayer {
 			}
 			@Override
 			public void mouseUp(MouseEvent e) {
-				last_song(-1);
+				changePlayingSong(-1,0);//上一曲
 				lblNewLabel.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/lastsong-1.png"));
 			}
 		});
@@ -318,26 +318,46 @@ public class MusicPlayer {
 			}
 			@Override
 			public void mouseUp(MouseEvent e) {
-				next_song(-1);
+				changePlayingSong(-1,1);//下一曲
 				label_2.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/nextsong-1.png"));
 			}
 		});
 
-		init_music_player(shell,table);
+		initMusicPlayer(shell,table);
 	}
 
-	public void init_music_player(Shell shell,Table table) {
+	/**
+	 * Java MusicPlayer 初始化音乐播放器
+	 * @Author: hyacinth
+	 * @Title: initMusicPlayer   
+	 * @Description: TODO 
+	 * @param shell
+	 * @param table      
+	 * @return void  
+	 * @date: 2019年12月26日 下午7:20:00
+	 */
+	public void initMusicPlayer (Shell shell,Table table) {
 		SongChoiceWindow choice = new SongChoiceWindow();
 		new Reading().read();
 		if (Constant.PLAY_LIST==null || Constant.PLAY_LIST.size()<=0) {
 			Toolkit.getDefaultToolkit().beep();
 			choice.open_choise_windows(shell);
 		}
-		update_list(Constant.PLAY_LIST,table);
+		updatePlayerSongLists(Constant.PLAY_LIST,table);
 		get_registry();
 	}
 
-	private void update_list(LinkedList<String> lists,Table table) {
+	/**
+	 * Java MusicPlayer 更新播放歌曲列表
+	 * @Author: hyacinth
+	 * @Title: updatePlayerSongLists   
+	 * @Description: TODO 
+	 * @param lists
+	 * @param table      
+	 * @return void  
+	 * @date: 2019年12月26日 下午7:20:33
+	 */
+	private void updatePlayerSongLists (LinkedList<String> lists,Table table) {
 		table.removeAll();
 		TableItem item;
 		for (int i = 0; i < lists.size(); i++) {
@@ -346,46 +366,23 @@ public class MusicPlayer {
 		}			
 	}
 
-	public void start_player() {
-		PLAYING_SONG = Constant.PLAY_LIST.get(Constant.PLAY_INDEX);
-		player.load(PLAYING_SONG.split(Constant.SPLIT)[0]);
-		try {
-			player.start();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		Constant.PLAY_STATE = true;
-		label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/start.png"));
-		update_list_color(table,Constant.PLAY_INDEX);
-	}
 
-	public void stop_player() {
-		try {
-			player.end();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Constant.PLAY_STATE = false;
-		label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/stop.png"));
-		update_list_color(table,Constant.PLAY_INDEX);
-	}
-
-	public void choise_song(int index) {
-		Constant.PLAY_INDEX = index==-1?Constant.PLAY_INDEX:index-1;
-		System.out.println(Constant.PLAY_INDEX+"\t"+index+"\t"+Constant.PLAY_LIST.get(Constant.PLAY_INDEX));
-		PLAYING_SONG = Constant.PLAY_LIST.get(Constant.PLAY_INDEX);
-		player.load(PLAYING_SONG.split(Constant.SPLIT)[0]);
-		try {
-			player.start();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		Constant.PLAY_STATE = true;
-		label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/start.png"));
-		update_list_color(table,index-1);
-	}
-
-	public void last_song(int index) {
+	/**
+	 * Java MusicPlayer 改变播放歌曲
+	 * <table border="1" cellpadding="10">
+	 * <tr><td colspan="2" align="center">changePlayingSong</td></tr>
+	 * <tr><th align="center">Mode 输入参数</th><th align="center">参数解释</th></tr>
+	 * <tr><td align="left">0</td><td align="left">上一曲</td></tr>
+	 * <tr><td align="left">1</td><td align="left">下一曲</td></tr>
+	 * @Author: hyacinth
+	 * @Title: changePlayingSong   
+	 * @Description: TODO 
+	 * @param index 歌曲索引
+	 * @param mode 切歌模式(上一曲/下一曲)
+	 * @return void  
+	 * @date: 2019年12月26日 下午7:33:36
+	 */
+	public void changePlayingSong (int index,int mode) {
 		Constant.PLAY_INDEX = index==-1?Constant.PLAY_INDEX:index;
 		System.out.println(Constant.PLAY_INDEX+"\t"+Constant.PLAY_LIST.get(Constant.PLAY_INDEX));
 		PLAYING_SONG = Constant.PLAY_LIST.get(Constant.PLAY_INDEX);
@@ -396,38 +393,34 @@ public class MusicPlayer {
 			e1.printStackTrace();
 		}
 		Constant.PLAY_STATE = true;
-		label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/start.png"));
-		update_list_color(table,Constant.PLAY_INDEX);
-		if (Constant.PLAY_INDEX == 0) {
-			Constant.PLAY_INDEX = Constant.PLAY_LIST.size();
-		} else {
-			Constant.PLAY_INDEX--;
+		updatePlayerSongListsColor(table,Constant.PLAY_INDEX);
+		if (mode == 0) {//上一曲
+			if (Constant.PLAY_INDEX <= 0) {
+				Constant.PLAY_INDEX = Constant.PLAY_LIST.size();
+			} else {
+				Constant.PLAY_INDEX--;
+			}		
+		} else {//下一曲
+			if (Constant.PLAY_INDEX >= Constant.PLAY_LIST.size()) {
+				Constant.PLAY_INDEX = 0;
+			} else {
+				Constant.PLAY_INDEX++;
+			}	
 		}
 	}
 
-	public void next_song(int index) {
-		Constant.PLAY_INDEX = index==-1?Constant.PLAY_INDEX:index;
-		System.out.println(Constant.PLAY_INDEX+"\t"+Constant.PLAY_LIST.get(Constant.PLAY_INDEX));
-		PLAYING_SONG = Constant.PLAY_LIST.get(Constant.PLAY_INDEX);
-		player.load(PLAYING_SONG.split(Constant.SPLIT)[0]);
-		try {
-			player.start();
-		} catch (Exception e1) {
-			e1.printStackTrace();
-		}
-		Constant.PLAY_STATE = true;
+	/**
+	 * Java MusicPlayer 改变选中歌曲的颜色
+	 * @Author: hyacinth
+	 * @Title: updatePlayerSongListsColor   
+	 * @Description: TODO 
+	 * @param table
+	 * @param index      
+	 * @return void  
+	 * @date: 2019年12月26日 下午7:40:10
+	 */
+	private void updatePlayerSongListsColor(Table table,int index) {
 		label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/start.png"));
-		update_list_color(table,Constant.PLAY_INDEX);
-		if (Constant.PLAY_INDEX == Constant.PLAY_LIST.size()) {
-			Constant.PLAY_INDEX = 0;
-		} else {
-			Constant.PLAY_INDEX++;
-		}
-	}
-
-
-
-	private void update_list_color(Table table,int index) {
 		length = Integer.parseInt(PLAYING_SONG.split(Constant.SPLIT)[3]);
 		text.setText(((int)length/60+":"+length%60)+"");
 		TableItem[] items = table.getItems();
@@ -439,7 +432,7 @@ public class MusicPlayer {
 			}
 		}
 		if (Constant.PLAY_LIST.get(Constant.PLAY_INDEX).split(Constant.SPLIT)[4].equalsIgnoreCase("Y")) {
-			LoadLyric lyric = new LoadLyric();
+			LoadLocalLyric lyric = new LoadLocalLyric();
 			String path = Constant.PLAY_LIST.get(Constant.PLAY_INDEX).split(Constant.SPLIT)[0];
 			path = path.substring(0, path.lastIndexOf("."))+".lrc";
 			lyric.lyric(path);
@@ -456,12 +449,49 @@ public class MusicPlayer {
 				PlayerEntity.setSong(PLAYING_SONG);
 				PlayerEntity.setTable(table_1);
 				PlayerEntity.setSpectrum(composite_3);
-				server.end_lyric_player(new LyricPlayer());
-				server.start_lyric_player(new LyricPlayer(), entity);
+				server.end_lyric_player(new ControllerPlayer());
+				server.start_lyric_player(new ControllerPlayer(), entity);
 			}
 		}
 		set_registry(index+"");
 	}
+
+
+	/**
+	 * Java MusicPlayer 暂停播放(未实现)
+	 * @Author: hyacinth
+	 * @Title: stopMusicPlayer   
+	 * @Description: TODO       
+	 * @return void  
+	 * @date: 2019年12月26日 下午7:47:41
+	 */
+	public void stopMusicPlayer() {
+		try {
+			player.end();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Constant.PLAY_STATE = false;
+		label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/stop.png"));
+		updatePlayerSongListsColor(table,Constant.PLAY_INDEX);
+	}
+
+
+	/**
+	 * Java MusicPlayer 退出音乐播放器
+	 * @Author: hyacinth
+	 * @Title: exitMusicPlayer   
+	 * @Description: TODO       
+	 * @return void  
+	 * @date: 2019年12月26日 下午7:57:12
+	 */
+	private void exitMusicPlayer() {
+		player.stop();
+		tray.dispose();
+		shell.dispose();
+		System.exit(0);
+	}
+
 
 	private void set_registry(String index) {
 		Preferences preferences=Preferences.userNodeForPackage(MusicPlayer.class);
@@ -483,13 +513,6 @@ public class MusicPlayer {
 		if(index != null){
 			//next_song(Integer.parseInt(index));
 		}
-	}
-
-	private void exit() {
-		player.stop();
-		tray.dispose();
-		shell.dispose();
-		System.exit(0);
 	}
 
 }

@@ -3,6 +3,14 @@ package com.xu.musicplayer.lyric;
 import com.xu.musicplayer.player.XMusic;
 import com.xu.musicplayer.system.Constant;
 
+/**
+ * Java MusicPlayer 歌词线程
+ * @Author: hyacinth
+ * @ClassName: LyricyThread   
+ * @Description: TODO    
+ * @Date: 2019年12月26日 下午8:00:13   
+ * @Copyright: hyacinth
+ */
 public class LyricyThread extends Thread {
 
 	private LyricyNotify notify;

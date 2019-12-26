@@ -3,12 +3,14 @@ package com.xu.musicplayer.modle;
 import com.xu.musicplayer.entity.PlayerEntity;
 
 /**
- * 被观察者
- * @author hyacinth
- * @date 2019年10月10日12:00:09
- *
+ * Java MusocPlayer 被观察者
+ * @Author: hyacinth
+ * @ClassName: LyricyServer   
+ * @Description: TODO    
+ * @Date: 2019年12月26日 下午8:03:42   
+ * @Copyright: hyacinth
  */
-public class LyricyServer implements Observed {
+public class ControllerServer implements Observed {
 	
 	@Override
 	public void start_lyric_player(Observer observer,PlayerEntity entity) {

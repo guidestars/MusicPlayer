@@ -19,6 +19,14 @@ import org.eclipse.swt.widgets.Display;
 
 import com.xu.musicplayer.player.XMusic;
 
+/**
+ * Java MusicPlayer 音频线程
+ * @Author: hyacinth
+ * @ClassName: SpectrumThread   
+ * @Description: TODO    
+ * @Date: 2019年12月26日 下午7:58:50   
+ * @Copyright: hyacinth
+ */
 public class SpectrumThread extends Thread {
 
 	private Composite spectrum;
@@ -64,7 +72,6 @@ public class SpectrumThread extends Thread {
 							}
 						}							
 					}
-
 					ByteArrayOutputStream stream = new ByteArrayOutputStream();
 					try {
 						ImageIO.write(image, "png", stream);
