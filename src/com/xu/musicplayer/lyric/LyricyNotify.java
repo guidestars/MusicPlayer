@@ -1,7 +1,7 @@
 package com.xu.musicplayer.lyric;
 
 /**
- * Java MusicPlayer 线程通知
+ * Java MusicPlayer 歌词线程通知
  * @Author: hyacinth
  * @ClassName: LyricyNotify   
  * @Description: TODO    
