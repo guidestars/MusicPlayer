@@ -14,6 +14,10 @@ import java.util.Random;
 public class KuGouSearch {
 
 	private static String json = "";
+	
+	public static void main(String[] args) throws MalformedURLException, IOException {
+		new KuGouSearch().search("不醉");
+	}
 
 	public List<String> search(String name) throws MalformedURLException, IOException {
 		List<String> songs = new ArrayList<String>();

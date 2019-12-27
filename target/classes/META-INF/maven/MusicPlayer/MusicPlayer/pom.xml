@@ -9,33 +9,21 @@
 
 	<dependencies>
 
-		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
-		<dependency>
-			<groupId>com.google.code.gson</groupId>
-			<artifactId>gson</artifactId>
-			<version>2.8.6</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.10</version>
-		</dependency>
-
+		<!-- MP3文件 解码 -->
 		<dependency>
 			<groupId>com.googlecode.soundlibs</groupId>
 			<artifactId>mp3spi</artifactId>
 			<version>1.9.5.4</version>
 		</dependency>
 
+		<!-- 音频标签 -->
 		<dependency>
 			<groupId>org</groupId>
 			<artifactId>jaudiotagger</artifactId>
 			<version>2.0.3</version>
 		</dependency>
 
-		<!-- 如果需要解码播放flac文件则引入这个jar包 -->
+		<!-- flac文件 解码 -->
 		<dependency>
 			<groupId>org.jflac</groupId>
 			<artifactId>jflac-codec</artifactId>
@@ -51,7 +39,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.7.0</version>
 				<configuration>
-					<release>11</release>
+					<release>1.8</release>
 				</configuration>
 			</plugin>
 		</plugins>
