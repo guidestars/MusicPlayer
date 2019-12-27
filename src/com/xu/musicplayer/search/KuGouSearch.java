@@ -10,11 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-
 public class KuGouSearch {
 
 	private static String json = "";
@@ -37,13 +32,6 @@ public class KuGouSearch {
 		BufferedReader breader = new BufferedReader(reader);
 		json = breader.readLine();
 		System.out.println(json);
-		Gson gson = new Gson();
-		 
-		JsonObject object = JsonParser.parseString(json).getAsJsonObject();
-		
-		System.out.println(object.isJsonArray());
-		object.get("info");
-		System.out.println(object.get("info").getAsJsonArray());
 		
 		return songs;
 	}
