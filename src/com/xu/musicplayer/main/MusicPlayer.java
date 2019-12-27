@@ -1,7 +1,11 @@
 package com.xu.musicplayer.main;
 
+import java.awt.Color;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
@@ -62,7 +66,9 @@ public class MusicPlayer {
 	
 	public static boolean playing = true;// 播放按钮
 	public static String PLAYING_SONG = "";// 正在播放歌曲
-
+	
+	public static List<Color> COLORS = new ArrayList<Color>();
+	
 	/**
 	 * Launch the application.
 	 * @param args
@@ -98,7 +104,7 @@ public class MusicPlayer {
 		shell = new Shell(SWT.NONE);
 		shell.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/main.png"));
 		shell.setSize(new Point(1000, 645));
-		shell.setSize(889, 485);
+		shell.setSize(890, 486);
 		shell.setText("MusicPlayer");
 		shell.setLocation((display.getClientArea().width - shell.getSize().x)/2, 
 				(display.getClientArea().height - shell.getSize().y)/2);
@@ -159,8 +165,31 @@ public class MusicPlayer {
 		TableColumn tableColumn_3 = new TableColumn(table_1, SWT.CENTER);
 		tableColumn_3.setWidth(728);
 		tableColumn_3.setText("歌词");
-
+		
+		COLORS.add(Color.BLACK);
+		COLORS.add(Color.BLUE);
+		COLORS.add(Color.CYAN);
+		COLORS.add(Color.DARK_GRAY);
+		COLORS.add(Color.GRAY);
+		COLORS.add(Color.GREEN);
+		COLORS.add(Color.LIGHT_GRAY);
+		COLORS.add(Color.MAGENTA);
+		COLORS.add(Color.ORANGE);
+		COLORS.add(Color.PINK);
+		COLORS.add(Color.RED);
+		COLORS.add(Color.WHITE);
+		COLORS.add(Color.YELLOW);
+		
 		composite_3 = new Composite(sashForm, SWT.NONE);
+		composite_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				Color color = COLORS.get(new Random().nextInt(COLORS.size()));
+				if (color != Constant.SPECTRUM_BACKGROUND_COLOR) {
+					Constant.SPECTRUM_COLOR = color;
+				}
+			}
+		});
 
 
 		Label lblNewLabel = new Label(composite_3, SWT.NONE);

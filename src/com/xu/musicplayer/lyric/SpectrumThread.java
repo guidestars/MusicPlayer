@@ -1,9 +1,7 @@
 package com.xu.musicplayer.lyric;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -18,6 +16,7 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 
 import com.xu.musicplayer.player.XMusic;
+import com.xu.musicplayer.system.Constant;
 
 /**
  * Java MusicPlayer 音频线程
@@ -49,27 +48,25 @@ public class SpectrumThread extends Thread {
 				public void run() {
 					image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 					Graphics2D graphics = image.createGraphics();
-					image = graphics.getDeviceConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);
-					graphics.dispose();
-					graphics = image.createGraphics();
-					graphics.setColor(Color.YELLOW);
+					//image = graphics.getDeviceConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);
+					//graphics.dispose();
+					//graphics = image.createGraphics();
+					graphics.setBackground(Constant.SPECTRUM_BACKGROUND_COLOR);
+					graphics.clearRect(0, 0, width, height);
+					graphics.setColor(Constant.SPECTRUM_COLOR);
 					graphics.setStroke(new BasicStroke(1f));
-
 					if (XMusic.deque.size()>50) {
-						for (int i = 0,len = XMusic.deque.size(); i < 151; i++) {
+						for (int i = 0,len = XMusic.deque.size(); i < 178; i++) {
 							try {
 								if (i<len) {
-									spectrum_height = Integer.parseInt(XMusic.deque.get(i)+"");
+									spectrum_height = Math.abs(Integer.parseInt(XMusic.deque.get(i)+""));
+									spectrum_height = spectrum_height>81?81:spectrum_height;
 								}
-								spectrum_height = spectrum_height>100?100:spectrum_height;
 							} catch (Exception e) {
 								spectrum_height = 0;									
 							}
-							if (spectrum_height>0) {
-								graphics.fillRect(i*5, height/2-spectrum_height, 5, spectrum_height);
-							} else {
-								graphics.fillRect(i*5, height/2, 5, -spectrum_height);
-							}
+							graphics.fillRect(i*5, height-spectrum_height, 5, spectrum_height);
+							//graphics.fillRect(i*5, height/2-spectrum_height, 5, -spectrum_height);//双谱
 						}							
 					}
 					ByteArrayOutputStream stream = new ByteArrayOutputStream();

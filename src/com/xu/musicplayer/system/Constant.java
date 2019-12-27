@@ -1,5 +1,6 @@
 package com.xu.musicplayer.system;
 
+import java.awt.Color;
 import java.io.File;
 import java.util.LinkedList;
 
@@ -25,5 +26,8 @@ public class Constant {
 	
 	public static boolean PLAY_STATE = true;
 	
+	public static volatile Color SPECTRUM_BACKGROUND_COLOR = Color.WHITE;
+	
+	public static volatile Color SPECTRUM_COLOR = Color.PINK;
 	
 }

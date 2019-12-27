@@ -102,7 +102,7 @@ public class Controller implements Observer {
 
 	public void startSpectrumPlayer(PlayerEntity entity) {
 		if (spectrum == null) {
-			spectrum = new SpectrumThread(PlayerEntity.getSpectrum(),485,148);
+			spectrum = new SpectrumThread(PlayerEntity.getSpectrum(),890,81);
 			spectrum.setDaemon(true);
 			spectrum.start();
 		}

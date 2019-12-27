@@ -12,6 +12,8 @@
 package com.xu.musicplayer.test;
 
 
+import java.awt.Color;
+
 import com.xu.musicplayer.player.Player;
 import com.xu.musicplayer.player.XMusic;
 
@@ -21,8 +23,6 @@ import com.xu.musicplayer.player.XMusic;
  */
 public class Test {
 	public static void main(String[] args) throws Exception {
-		Player player = new XMusic();
-		player.load("C:\\Users\\Administrator\\Desktop\\TEST.wav");
-		player.start();
+		System.out.println(Color.BLACK.getAlpha());
 	}
 }

@@ -265,7 +265,7 @@ public class XMusic implements Player {
 	public void put(short v) {
 		synchronized (deque) {
 			deque.add(v);
-			if(deque.size() > 151) {
+			if(deque.size() > 178) {
 				deque.removeFirst();
 			}
 		}
