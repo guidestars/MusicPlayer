@@ -13,6 +13,8 @@ public class Constant {
 	public static final String MUSIC_PLAYER_SONG_LISTS_NAME = "MusicPlayer.song";
 	public static final String MUSIC_PLAYER_SONG_LISTS_PATH = SYSTEM_USER_HOME+File.separator+".MusicPlayer"+File.separator+MUSIC_PLAYER_SONG_LISTS_NAME;
 	
+	public static final String MUSIC_PLAYER_DOWNLOAD_PATH = SYSTEM_USER_HOME+File.separator+".MusicPlayer"+File.separator+"download"+File.separator;
+
 	public static final String MUSIC_PLAYER_LOG = "Log.log";
 	
 	public static final String SPLIT = "<-->";
