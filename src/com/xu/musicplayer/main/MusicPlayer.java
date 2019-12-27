@@ -17,7 +17,7 @@ import com.xu.musicplayer.config.SongChoiceWindow;
 import com.xu.musicplayer.entity.PlayerEntity;
 import com.xu.musicplayer.lyric.LoadLocalLyric;
 import com.xu.musicplayer.modle.ControllerServer;
-import com.xu.musicplayer.modle.ControllerPlayer;
+import com.xu.musicplayer.modle.Controller;
 import com.xu.musicplayer.player.Player;
 import com.xu.musicplayer.player.XMusic;
 import com.xu.musicplayer.system.Constant;
@@ -42,24 +42,26 @@ public class MusicPlayer {
 
 	protected Shell shell;
 	private Display display;
-	private boolean click = false;
-	private int clickX,clickY;
-	private boolean choise = true;
 	private static Player player = new XMusic();
-	private Tray tray;//
+	private Tray tray;// 播放器托盘
 	private Table table;
 	private Table table_1;
 	private Label text;
 	private Label text_1;
-	private boolean playing = true;
 	private Label label_3 ;
-	private ControllerServer server = new ControllerServer(); // 歌词
+	
+	private ControllerServer server = new ControllerServer(); // 歌词及频谱
+	
 	private ProgressBar progressBar; // 进度条
-	private Composite composite_3;
+	private Composite composite_3; // 频谱面板
 
-	private int length;
-
-	public static String PLAYING_SONG = ""; //正在播放歌曲
+	private boolean click = false;//界面移动
+	private int clickX,clickY;//界面移动
+	private boolean choise = true;// 双击播放
+	private int length;// 播放时长
+	
+	public static boolean playing = true;// 播放按钮
+	public static String PLAYING_SONG = "";// 正在播放歌曲
 
 	/**
 	 * Launch the application.
@@ -449,8 +451,8 @@ public class MusicPlayer {
 				PlayerEntity.setSong(PLAYING_SONG);
 				PlayerEntity.setTable(table_1);
 				PlayerEntity.setSpectrum(composite_3);
-				server.end_lyric_player(new ControllerPlayer());
-				server.start_lyric_player(new ControllerPlayer(), entity);
+				server.endLyricPlayer(new Controller());
+				server.startLyricPlayer(new Controller(), entity);
 			}
 		}
 		set_registry(index+"");

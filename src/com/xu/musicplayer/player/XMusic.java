@@ -12,13 +12,12 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 
-import org.jaudiotagger.audio.AudioFile;
-import org.jaudiotagger.audio.AudioFileIO;
-
 import javax.sound.sampled.AudioFormat.Encoding;
 
 import com.xu.musicplayer.modle.ControllerServer;
-import com.xu.musicplayer.modle.ControllerPlayer;
+import com.xu.musicplayer.system.Constant;
+import com.xu.musicplayer.main.MusicPlayer;
+import com.xu.musicplayer.modle.Controller;
 
 import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
 
@@ -28,10 +27,10 @@ public class XMusic implements Player {
 	private static AudioFormat format = null;
 	private static SourceDataLine data = null;
 	private static AudioInputStream stream = null;
-	private static double length = 0.0;
 
 	private static Thread thread = null;
 	private static volatile boolean playing = false;
+	
 	public static LinkedList<Short> deque = new LinkedList<Short>();
 
 	@Override
@@ -150,11 +149,11 @@ public class XMusic implements Player {
 
 	@Override
 	public void stop() {
-		if (data!=null && data.isOpen()) {
+		if (data != null && data.isOpen()) {
 			data.stop();
 			synchronized (thread) {
 				try {
-					thread.wait(1);
+					thread.wait(0);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				};
@@ -208,8 +207,8 @@ public class XMusic implements Player {
 								}
 								data.write(buf, 0, 4);				
 							}
-							new ControllerServer().end_lyric_player(new ControllerPlayer());
-							end();
+							new ControllerServer().endLyricPlayer(new Controller());// 结束歌词和频谱
+							end();// 结束播放流
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -255,24 +254,12 @@ public class XMusic implements Player {
 	}
 
 	@Override
-	public double length(String path) {
-		File file=new File(path);
-		AudioFile mp3 = null;
-		try {
-			mp3 = AudioFileIO.read(file);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		length = mp3.getAudioHeader().getTrackLength();
-		return length;
+	public double length() {
+		return Integer.parseInt(MusicPlayer.PLAYING_SONG.split(Constant.SPLIT)[3]);
 	}
 
 	public static boolean isPlaying() {
 		return playing;
-	}
-
-	public static void setPlaying(boolean playing) {
-		XMusic.playing = playing;
 	}
 
 	public void put(short v) {

@@ -142,6 +142,6 @@ public interface Player {
 	 * @return 音频播放时长
 	 * @date 2019年10月31日19:06:39
 	 */
-	public double length(String path);
+	public double length();
 
 }

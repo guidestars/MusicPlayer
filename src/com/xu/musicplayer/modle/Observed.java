@@ -11,15 +11,17 @@ import com.xu.musicplayer.entity.PlayerEntity;
  */
 public interface Observed {
 
-	public void start_lyric_player(Observer observer,PlayerEntity entity);
+	public void startLyricPlayer(Observer observer,PlayerEntity entity);
 
-	public void start_spectrum(Observer observer,PlayerEntity entity);
+	public void startSpectrumPlayer(Observer observer,PlayerEntity entity);
 
-	public void end_spectrum(Observer observer);
+	public void endLyricPlayer(Observer observer);
 
-	public void end_lyric_player(Observer observer);
+	public void endSpectrumPlayer(Observer observer);
 
-	public void stop_lyric_player(Observer observer);
+	public void stopLyricPlayer(Observer observer);
+	
+	public void stopSpectrumPlayer(Observer observer);
 
 }
 

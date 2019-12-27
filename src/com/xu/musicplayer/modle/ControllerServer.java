@@ -11,30 +11,35 @@ import com.xu.musicplayer.entity.PlayerEntity;
  * @Copyright: hyacinth
  */
 public class ControllerServer implements Observed {
-	
+
 	@Override
-	public void start_lyric_player(Observer observer,PlayerEntity entity) {
+	public void startLyricPlayer(Observer observer, PlayerEntity entity) {
 		observer.start(entity);
 	}
 
 	@Override
-	public void end_lyric_player(Observer observer) {
+	public void startSpectrumPlayer(Observer observer, PlayerEntity entity) {
+		observer.start(entity);
+	}
+
+	@Override
+	public void endLyricPlayer(Observer observer) {
 		observer.end();
 	}
 
 	@Override
-	public void stop_lyric_player(Observer observer) {
+	public void endSpectrumPlayer(Observer observer) {
+		observer.end();
+	}
+
+	@Override
+	public void stopLyricPlayer(Observer observer) {
 		observer.stop();
 	}
 
 	@Override
-	public void start_spectrum(Observer observer, PlayerEntity entity) {
-		observer.start(entity);
-	}
-
-	@Override
-	public void end_spectrum(Observer observer) {
-		observer.end();
+	public void stopSpectrumPlayer(Observer observer) {
+		observer.stop();
 	}
 	
 }
