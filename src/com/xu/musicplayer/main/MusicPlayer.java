@@ -24,6 +24,8 @@ import com.xu.musicplayer.modle.ControllerServer;
 import com.xu.musicplayer.modle.Controller;
 import com.xu.musicplayer.player.Player;
 import com.xu.musicplayer.player.XMusic;
+import com.xu.musicplayer.search.Search;
+import com.xu.musicplayer.search.SearchTipsEntity;
 import com.xu.musicplayer.system.Constant;
 import com.xu.musicplayer.tray.MusicPlayerTray;
 
@@ -41,6 +43,9 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.ProgressBar;
+import org.eclipse.swt.widgets.Combo;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.ModifyEvent;
 
 public class MusicPlayer {
 
@@ -53,9 +58,9 @@ public class MusicPlayer {
 	private Label text;
 	private Label text_1;
 	private Label label_3 ;
-	
+
 	private ControllerServer server = new ControllerServer(); // 歌词及频谱
-	
+
 	private ProgressBar progressBar; // 进度条
 	private Composite composite_3; // 频谱面板
 
@@ -63,12 +68,12 @@ public class MusicPlayer {
 	private int clickX,clickY;//界面移动
 	private boolean choise = true;// 双击播放
 	private int length;// 播放时长
-	
+
 	public static boolean playing = true;// 播放按钮
 	public static String PLAYING_SONG = "";// 正在播放歌曲
-	
+
 	public static List<Color> COLORS = new ArrayList<Color>();
-	
+
 	/**
 	 * Launch the application.
 	 * @param args
@@ -131,6 +136,18 @@ public class MusicPlayer {
 		label_1.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/mini-1.png"));
 		label_1.setBounds(798, 10, 32, 32);
 
+		Combo combo = new Combo(composite_1, SWT.NONE);
+		combo.addModifyListener(new ModifyListener() {
+			public void modifyText(ModifyEvent arg0) {
+				for (SearchTipsEntity songs:Search.search(combo.getText(),"API")) {
+					combo.add(songs.getFilename());
+				}
+				combo.setListVisible(true);
+			}
+		});
+		combo.setBounds(283, 21, 330, 25);
+		combo.setVisible(false);
+		
 		Composite composite_2 = new Composite(sashForm, SWT.NONE);
 		composite_2.setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -165,7 +182,7 @@ public class MusicPlayer {
 		TableColumn tableColumn_3 = new TableColumn(table_1, SWT.CENTER);
 		tableColumn_3.setWidth(728);
 		tableColumn_3.setText("歌词");
-		
+
 		COLORS.add(Color.BLACK);
 		COLORS.add(Color.BLUE);
 		COLORS.add(Color.CYAN);
@@ -179,7 +196,7 @@ public class MusicPlayer {
 		COLORS.add(Color.RED);
 		COLORS.add(Color.WHITE);
 		COLORS.add(Color.YELLOW);
-		
+
 		composite_3 = new Composite(sashForm, SWT.NONE);
 		composite_3.addMouseListener(new MouseAdapter() {
 			@Override
@@ -545,5 +562,4 @@ public class MusicPlayer {
 			//next_song(Integer.parseInt(index));
 		}
 	}
-
 }
