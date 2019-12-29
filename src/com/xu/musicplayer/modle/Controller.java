@@ -58,6 +58,7 @@ public class Controller implements Observer {
 
 	@Override
 	public void end() {
+		System.out.println("结束所有");
 		endLyricPlayer();
 		endSpectrumPlayer();
 	}

@@ -135,7 +135,7 @@ public class XMusic implements Player {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void end() throws IOException {
-		if (data!=null) {
+		if (data != null) {
 			data.stop();
 			data.drain();
 			stream.close();
@@ -143,6 +143,7 @@ public class XMusic implements Player {
 				thread.stop();
 				thread = null;
 			}
+			deque.clear();
 		}
 		playing = false;
 	}
@@ -208,14 +209,16 @@ public class XMusic implements Player {
 								data.write(buf, 0, 4);				
 							}
 							new ControllerServer().endLyricPlayer(new Controller());// 结束歌词和频谱
+							System.out.println("结束歌词和频谱");
 							end();// 结束播放流
+							System.out.println("结束播放流");
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
 				}
 			});
-			thread.setDaemon(true);			
+			thread.setDaemon(true);
 			thread.start();
 		}
 

@@ -2,6 +2,7 @@ package com.xu.musicplayer.main;
 
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -463,7 +464,7 @@ public class MusicPlayer {
 				Constant.PLAY_INDEX = Constant.PLAY_LIST.size();
 			} else {
 				Constant.PLAY_INDEX--;
-			}		
+			}
 		} else {//下一曲
 			if (Constant.PLAY_INDEX >= Constant.PLAY_LIST.size()) {
 				Constant.PLAY_INDEX = 0;
