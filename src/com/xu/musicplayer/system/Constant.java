@@ -32,4 +32,12 @@ public class Constant {
 	
 	public static volatile Color SPECTRUM_COLOR = Color.PINK;
 	
+	public static volatile int SPECTRUM_WIDTH = 0;
+	
+	public static volatile int SPECTRUM_HEIGHT = 0;
+	
+	public static volatile int SPECTRUM_NUMBER = 0;
+	
+	public static volatile int SPECTRUM_SPLIT = 5;
+	
 }

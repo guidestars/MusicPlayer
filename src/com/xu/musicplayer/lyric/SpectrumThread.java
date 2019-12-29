@@ -34,10 +34,8 @@ public class SpectrumThread extends Thread {
 	private int width;
 	private int height;
 
-	public SpectrumThread(Composite spectrum,int width,int height) {
+	public SpectrumThread(Composite spectrum) {
 		this.spectrum = spectrum;
-		this.width = width;
-		this.height = height;
 	}
 
 	@Override
@@ -46,6 +44,8 @@ public class SpectrumThread extends Thread {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
+					width = Constant.SPECTRUM_WIDTH;
+					height = Constant.SPECTRUM_HEIGHT;
 					image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 					Graphics2D graphics = image.createGraphics();
 					//image = graphics.getDeviceConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);
@@ -60,7 +60,7 @@ public class SpectrumThread extends Thread {
 							try {
 								if (i<len) {
 									spectrum_height = Math.abs(Integer.parseInt(XMusic.deque.get(i)+""));
-									spectrum_height = spectrum_height>81?81:spectrum_height;
+									spectrum_height = spectrum_height>height?height:spectrum_height;
 								}
 							} catch (Exception e) {
 								spectrum_height = 0;									

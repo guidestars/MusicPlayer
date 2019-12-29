@@ -101,8 +101,13 @@ public class Controller implements Observer {
 	}
 
 	public void startSpectrumPlayer(PlayerEntity entity) {
+		if (Constant.SPECTRUM_HEIGHT == 0) {
+			Constant.SPECTRUM_HEIGHT = PlayerEntity.getSpectrum().getClientArea().height;
+			Constant.SPECTRUM_WIDTH = PlayerEntity.getSpectrum().getClientArea().width;
+			Constant.SPECTRUM_NUMBER = PlayerEntity.getSpectrum().getClientArea().width/5;			
+		}
 		if (spectrum == null) {
-			spectrum = new SpectrumThread(PlayerEntity.getSpectrum(),890,81);
+			spectrum = new SpectrumThread(PlayerEntity.getSpectrum());
 			spectrum.setDaemon(true);
 			spectrum.start();
 		}

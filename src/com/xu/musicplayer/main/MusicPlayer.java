@@ -46,6 +46,8 @@ import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
 
 public class MusicPlayer {
 
@@ -73,6 +75,8 @@ public class MusicPlayer {
 	public static String PLAYING_SONG = "";// 正在播放歌曲
 
 	public static List<Color> COLORS = new ArrayList<Color>();
+
+	private static int resize = 0;
 
 	/**
 	 * Launch the application.
@@ -147,7 +151,7 @@ public class MusicPlayer {
 		});
 		combo.setBounds(283, 21, 330, 25);
 		combo.setVisible(false);
-		
+
 		Composite composite_2 = new Composite(sashForm, SWT.NONE);
 		composite_2.setLayout(new FillLayout(SWT.HORIZONTAL));
 
@@ -198,16 +202,6 @@ public class MusicPlayer {
 		COLORS.add(Color.YELLOW);
 
 		composite_3 = new Composite(sashForm, SWT.NONE);
-		composite_3.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				Color color = COLORS.get(new Random().nextInt(COLORS.size()));
-				if (color != Constant.SPECTRUM_BACKGROUND_COLOR) {
-					Constant.SPECTRUM_COLOR = color;
-				}
-			}
-		});
-
 
 		Label lblNewLabel = new Label(composite_3, SWT.NONE);
 		lblNewLabel.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/lastsong-1.png"));
@@ -371,6 +365,28 @@ public class MusicPlayer {
 			}
 		});
 
+		composite_3.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlResized(ControlEvent e) {
+				if (resize > 0) {
+					Constant.SPECTRUM_HEIGHT = composite_3.getClientArea().height;
+					Constant.SPECTRUM_WIDTH = composite_3.getClientArea().width;
+					Constant.SPECTRUM_NUMBER = composite_3.getClientArea().width/5;						
+				}	
+				resize++;
+			}
+		});
+
+		composite_3.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDoubleClick(MouseEvent e) {
+				Color color = COLORS.get(new Random().nextInt(COLORS.size()));
+				if (color != Constant.SPECTRUM_BACKGROUND_COLOR) {
+					Constant.SPECTRUM_COLOR = color;
+				}
+			}
+		});
+
 		initMusicPlayer(shell,table);
 	}
 
@@ -384,7 +400,7 @@ public class MusicPlayer {
 	 * @return void  
 	 * @date: 2019年12月26日 下午7:20:00
 	 */
-	public void initMusicPlayer (Shell shell,Table table) {
+	public void initMusicPlayer (Shell shell,Table table) {		
 		SongChoiceWindow choice = new SongChoiceWindow();
 		new Reading().read();
 		if (Constant.PLAY_LIST==null || Constant.PLAY_LIST.size()<=0) {
@@ -392,7 +408,7 @@ public class MusicPlayer {
 			choice.open_choise_windows(shell);
 		}
 		updatePlayerSongLists(Constant.PLAY_LIST,table);
-		get_registry();
+		readMusicPlayerPlayingSong();
 	}
 
 	/**
@@ -474,9 +490,9 @@ public class MusicPlayer {
 		TableItem[] items = table.getItems();
 		for (int i = 0; i < items.length; i++) {
 			if (index == i) {
-				items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_BLUE));//将选中的行的颜色变为蓝色
+				items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
 			} else {
-				items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));//将选中的行的颜色变为蓝色
+				items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 			}
 		}
 		if (Constant.PLAY_LIST.get(Constant.PLAY_INDEX).split(Constant.SPLIT)[4].equalsIgnoreCase("Y")) {
@@ -501,7 +517,7 @@ public class MusicPlayer {
 				server.startLyricPlayer(new Controller(), entity);
 			}
 		}
-		set_registry(index+"");
+		setMusicPlayerPlayingSong(index+"");
 	}
 
 
@@ -541,7 +557,16 @@ public class MusicPlayer {
 	}
 
 
-	private void set_registry(String index) {
+	/**
+	 * Java MusicPlayer 将正在播放的歌曲存在注册表中
+	 * @Author: hyacinth
+	 * @Title: setMusicPlayerPlayingSong   
+	 * @Description: TODO 
+	 * @param index      
+	 * @return void  
+	 * @date: 2019年12月29日 下午2:57:30
+	 */
+	private void setMusicPlayerPlayingSong(String index) {
 		Preferences preferences=Preferences.userNodeForPackage(MusicPlayer.class);
 		if(preferences.get("MusicPlayer", null) == null){
 			preferences.put("MusicPlayer", index);
@@ -555,11 +580,20 @@ public class MusicPlayer {
 		}
 	}
 
-	private void get_registry(){
+	/**
+	 * Java MusicPlayer 读取上次播放器退出前播放的歌曲
+	 * @Author: hyacinth
+	 * @Title: readMusicPlayerPlayingSong   
+	 * @Description: TODO       
+	 * @return void  
+	 * @date: 2019年12月29日 下午2:58:24
+	 */
+	private void readMusicPlayerPlayingSong(){
 		Preferences preferences=Preferences.userNodeForPackage(MusicPlayer.class);
 		String index = preferences.get("MusicPlayer", null);
 		if(index != null){
 			//next_song(Integer.parseInt(index));
 		}
 	}
+
 }
