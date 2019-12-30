@@ -157,7 +157,6 @@ public class MusicPlayer {
 		composite_2.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		SashForm sashForm_1 = new SashForm(composite_2, SWT.NONE);
-		sashForm_1.setTouchEnabled(true);
 
 		Composite composite_4 = new Composite(sashForm_1, SWT.NONE);
 		composite_4.setLayout(new FillLayout(SWT.HORIZONTAL));
@@ -385,6 +384,22 @@ public class MusicPlayer {
 				if (color != Constant.SPECTRUM_BACKGROUND_COLOR) {
 					Constant.SPECTRUM_COLOR = color;
 				}
+			}
+		});
+
+		sashForm.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlResized(ControlEvent e) {
+				sashForm.setWeights(new int[] {1, 5, 1});
+				sashForm_1.setWeights(new int[] {156, 728});
+			}
+		});
+
+		sashForm_1.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlResized(ControlEvent e) {
+				sashForm.setWeights(new int[] {1, 5, 1});
+				sashForm_1.setWeights(new int[] {156, 728});
 			}
 		});
 
