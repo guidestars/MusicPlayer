@@ -537,9 +537,11 @@ public class MusicPlayer {
 			table_1.removeAll();
 			if (Constant.PLAY_LYRIC!=null && Constant.PLAY_LYRIC.size()>0) {
 				TableItem item;
-				for (String lyri:Constant.PLAY_LYRIC) {
+				for (int i = 0,len = Constant.PLAY_LYRIC.size()+8; i < len; i++) {
 					item = new TableItem(table_1, SWT.NONE);
-					item.setText(new String[]{"",lyri.split(Constant.SPLIT)[1]});
+					if (i < len-8) {
+						item.setText(new String[]{"",Constant.PLAY_LYRIC.get(i).split(Constant.SPLIT)[1]});
+					}
 				}
 				PlayerEntity.setBar(progressBar);
 				PlayerEntity.setText(text_1);

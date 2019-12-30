@@ -86,6 +86,9 @@ public class Controller implements Observer {
 							for (int i = 0; i < items.length; i++) {
 								if (i == lrc) {
 									items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));//将选中的行的颜色变为蓝色
+									if (i>7) {
+										PlayerEntity.getTable().setTopIndex(i-7);
+									}
 								} else {
 									items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));//将选中的行的颜色变为蓝色
 								} 
