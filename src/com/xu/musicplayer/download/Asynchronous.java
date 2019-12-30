@@ -20,13 +20,13 @@ public class Asynchronous {
 		new Asynchronous().download(new DownloadNotify() {
 			@Override
 			public void result(Object object) {
-				
+
 			}
 		},"http://down.360safe.com/yunpan/360wangpan_setup_6.6.0.1307.exe", "a");
 	}
 
 	public void download(DownloadNotify notify,String url) {
-		String name =url.substring(url.lastIndexOf("/")+1, url.length());
+		String name = url.substring(url.lastIndexOf("/")+1, url.length());
 		HttpURLConnection connection = null;
 		try {
 			connection = (HttpURLConnection) new URL(url).openConnection();
@@ -34,7 +34,7 @@ public class Asynchronous {
 			connection.connect();
 			length = connection.getContentLengthLong();
 
-			RandomAccessFile raf=new RandomAccessFile(Constant.MUSIC_PLAYER_DOWNLOAD_PATH, "rw");
+			RandomAccessFile raf = new RandomAccessFile(Constant.MUSIC_PLAYER_DOWNLOAD_PATH, "rw");
 			raf.setLength(length);
 			raf.close();
 			connection.disconnect();
@@ -55,7 +55,7 @@ public class Asynchronous {
 			connection.connect();
 			length = connection.getContentLengthLong();
 
-			RandomAccessFile raf=new RandomAccessFile(Constant.MUSIC_PLAYER_DOWNLOAD_PATH, "rw");
+			RandomAccessFile raf = new RandomAccessFile(Constant.MUSIC_PLAYER_DOWNLOAD_PATH, "rw");
 			raf.setLength(length);
 			raf.close();
 			connection.disconnect();
@@ -103,19 +103,19 @@ class DownLoadTask implements Runnable {
 	}
 
 	public void run() {
-		BufferedInputStream inputStream=null;
-		RandomAccessFile access=null;
+		BufferedInputStream stream = null;
+		RandomAccessFile access = null;
 		HttpURLConnection connection = null;
 		try {
-			access=new RandomAccessFile(path, "rw");
+			access = new RandomAccessFile(path, "rw");
 			connection = (HttpURLConnection) new URL(url).openConnection();
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Range", "bytes="+this.start+"-"+this.end);
 			access.seek(this.start);
-			inputStream=new BufferedInputStream(connection.getInputStream());
-			byte[] bt=new byte[10*1024];
-			int length=0;
-			while((length=inputStream.read(bt, 0, bt.length))!=-1){
+			stream=new BufferedInputStream(connection.getInputStream());
+			byte[] bt = new byte[10*1024];
+			int length = 0;
+			while((length = stream.read(bt, 0, bt.length)) != -1){
 				access.write(bt, 0, length);
 				if (notify != null) {
 					synchronized (this) {
@@ -126,14 +126,14 @@ class DownLoadTask implements Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			if(inputStream!=null){
+			if(stream != null){
 				try {
-					inputStream.close();
+					stream.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-			if(access!=null){
+			if(access != null){
 				try {
 					access.close();
 				} catch (Exception e) {
