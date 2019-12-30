@@ -508,14 +508,13 @@ public class MusicPlayer {
 					item = new TableItem(table_1, SWT.NONE);
 					item.setText(new String[]{"",lyri.split(Constant.SPLIT)[1]});
 				}
-				PlayerEntity entity = new PlayerEntity();
 				PlayerEntity.setBar(progressBar);
 				PlayerEntity.setText(text_1);
 				PlayerEntity.setSong(PLAYING_SONG);
 				PlayerEntity.setTable(table_1);
 				PlayerEntity.setSpectrum(composite_3);
 				server.endLyricPlayer(new Controller());
-				server.startLyricPlayer(new Controller(), entity);
+				server.startLyricPlayer(new Controller(), null);
 			}
 		}
 		setMusicPlayerPlayingSong(index+"");
