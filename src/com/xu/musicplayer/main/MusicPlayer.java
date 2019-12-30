@@ -373,6 +373,8 @@ public class MusicPlayer {
 					Constant.SPECTRUM_WIDTH = composite_3.getClientArea().width;
 					Constant.SPECTRUM_NUMBER = composite_3.getClientArea().width/5;						
 				}	
+				sashForm.setWeights(new int[] {1, 5, 1});
+				sashForm_1.setWeights(new int[] {156, 728});
 				resize++;
 			}
 		});
@@ -388,6 +390,22 @@ public class MusicPlayer {
 		});
 
 		sashForm.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlResized(ControlEvent e) {
+				sashForm.setWeights(new int[] {1, 5, 1});
+				sashForm_1.setWeights(new int[] {156, 728});
+			}
+		});
+
+		composite_4.addControlListener(new ControlAdapter() {
+			@Override
+			public void controlResized(ControlEvent e) {
+				sashForm.setWeights(new int[] {1, 5, 1});
+				sashForm_1.setWeights(new int[] {156, 728});
+			}
+		});
+
+		composite_5.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
 				sashForm.setWeights(new int[] {1, 5, 1});
