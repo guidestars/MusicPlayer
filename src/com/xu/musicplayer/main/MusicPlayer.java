@@ -2,7 +2,6 @@ package com.xu.musicplayer.main;
 
 import java.awt.Color;
 import java.awt.Toolkit;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -26,7 +25,7 @@ import com.xu.musicplayer.modle.Controller;
 import com.xu.musicplayer.player.Player;
 import com.xu.musicplayer.player.XMusic;
 import com.xu.musicplayer.search.Search;
-import com.xu.musicplayer.search.SearchTipsEntity;
+import com.xu.musicplayer.search.APISearchTipsEntity;
 import com.xu.musicplayer.system.Constant;
 import com.xu.musicplayer.tray.MusicPlayerTray;
 
@@ -144,8 +143,9 @@ public class MusicPlayer {
 		Combo combo = new Combo(composite_1, SWT.NONE);
 		combo.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
-				for (SearchTipsEntity songs:Search.search(combo.getText(),"API")) {
-					combo.add(songs.getFilename());
+				List<APISearchTipsEntity> songs = Search.search(combo.getText(),"API");
+				for (APISearchTipsEntity song:songs) {
+					combo.add(song.getFilename());
 				}
 				combo.setListVisible(true);
 			}

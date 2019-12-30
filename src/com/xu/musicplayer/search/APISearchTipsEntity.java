@@ -1,6 +1,6 @@
 package com.xu.musicplayer.search;
 
-public class SearchTipsEntity {
+public class APISearchTipsEntity {
 	
 	private String srctype;
 	private String bitrate;
@@ -359,6 +359,25 @@ public class SearchTipsEntity {
 	}
 	public void setPrice_320(String price_320) {
 		this.price_320 = price_320;
+	}
+	@Override
+	public String toString() {
+		return "APISearchTipsEntity [srctype=" + srctype + ", bitrate=" + bitrate + ", source=" + source + ", rp_type="
+				+ rp_type + ", songname_original=" + songname_original + ", audio_id=" + audio_id + ", othername="
+				+ othername + ", price=" + price + ", mvhash=" + mvhash + ", feetype=" + feetype + ", extname="
+				+ extname + ", pay_type_sq=" + pay_type_sq + ", group=" + group + ", rp_publish=" + rp_publish
+				+ ", fold_type=" + fold_type + ", othername_original=" + othername_original + ", songname=" + songname
+				+ ", pkg_price_320=" + pkg_price_320 + ", sqprivilege=" + sqprivilege + ", sqfilesize=" + sqfilesize
+				+ ", filename=" + filename + ", m4afilesize=" + m4afilesize + ", topic=" + topic + ", pkg_price="
+				+ pkg_price + ", album_id=" + album_id + ", s320hash=" + s320hash + ", pkg_price_sq=" + pkg_price_sq
+				+ ", hash=" + hash + ", singername=" + singername + ", fail_process_320=" + fail_process_320
+				+ ", fail_process_sq=" + fail_process_sq + ", fail_process=" + fail_process + ", sqhash=" + sqhash
+				+ ", filesize=" + filesize + ", privilege=" + privilege + ", isnew=" + isnew + ", price_sq=" + price_sq
+				+ ", duration=" + duration + ", ownercount=" + ownercount + ", pay_type_320=" + pay_type_320
+				+ ", album_name=" + album_name + ", old_cpy=" + old_cpy + ", album_audio_id=" + album_audio_id
+				+ ", pay_type=" + pay_type + ", s320filesize=" + s320filesize + ", Accompany=" + Accompany
+				+ ", sourceid=" + sourceid + ", s320privilege=" + s320privilege + ", isoriginal=" + isoriginal
+				+ ", topic_url=" + topic_url + ", price_320=" + price_320 + "]";
 	}
 	
 }

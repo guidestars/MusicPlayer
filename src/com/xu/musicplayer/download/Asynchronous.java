@@ -11,24 +11,22 @@ import java.util.concurrent.TimeUnit;
 
 import com.xu.musicplayer.system.Constant;
 
+
 public class Asynchronous {
 
 	private long length = 0;
 
 	public static void main(String[] args) throws InterruptedException {
-		ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 10, TimeUnit.MILLISECONDS,new ArrayBlockingQueue<Runnable>(5),Executors.defaultThreadFactory(),new ThreadPoolExecutor.AbortPolicy());
-		for(int i=0;i<15;i++){
-			DownLoadTask myTask = new DownLoadTask("","",1,1);
-			executor.execute(myTask);
-		}
-		while(!executor.isTerminated()) {
-			Thread.sleep(1000);
-			System.out.println("线程池中任务数目："+executor.getPoolSize()+"，队列中等待执行的任务数目："+executor.getQueue().size()+"，已执行完成的任务数目："+executor.getCompletedTaskCount());
-		}
-		executor.shutdown();
+		new Asynchronous().download(new DownloadNotify() {
+			@Override
+			public void result(Object object) {
+				
+			}
+		},"http://down.360safe.com/yunpan/360wangpan_setup_6.6.0.1307.exe", "a");
 	}
 
-	public void download(String url,String name) {
+	public void download(DownloadNotify notify,String url) {
+		String name =url.substring(url.lastIndexOf("/")+1, url.length());
 		HttpURLConnection connection = null;
 		try {
 			connection = (HttpURLConnection) new URL(url).openConnection();
@@ -36,29 +34,49 @@ public class Asynchronous {
 			connection.connect();
 			length = connection.getContentLengthLong();
 
-			RandomAccessFile raf=new RandomAccessFile(Constant.MUSIC_PLAYER_DOWNLOAD_PATH+name, "rw");
+			RandomAccessFile raf=new RandomAccessFile(Constant.MUSIC_PLAYER_DOWNLOAD_PATH, "rw");
 			raf.setLength(length);
 			raf.close();
-			
-			task(url,Constant.MUSIC_PLAYER_DOWNLOAD_PATH+name,length);
-			
+			connection.disconnect();
+
+			task(notify,url,Constant.MUSIC_PLAYER_DOWNLOAD_PATH + name,length);
+
 		} catch (Exception e) {
 			e.printStackTrace();
-		} finally {
-			connection.disconnect();
 		}
 	}
-	
-	public void task(String url,String path,long length) {
-		ThreadPoolExecutor executor = new ThreadPoolExecutor(5, 10, 10, TimeUnit.MILLISECONDS,new ArrayBlockingQueue<Runnable>(5),Executors.defaultThreadFactory(),new ThreadPoolExecutor.AbortPolicy());
+
+	public void download(DownloadNotify notify,String url,String name) {
+		name +=url.substring(url.lastIndexOf("."), url.length());
+		HttpURLConnection connection = null;
+		try {
+			connection = (HttpURLConnection) new URL(url).openConnection();
+			connection.setRequestMethod("HEAD");
+			connection.connect();
+			length = connection.getContentLengthLong();
+
+			RandomAccessFile raf=new RandomAccessFile(Constant.MUSIC_PLAYER_DOWNLOAD_PATH, "rw");
+			raf.setLength(length);
+			raf.close();
+			connection.disconnect();
+
+			task(notify,url,Constant.MUSIC_PLAYER_DOWNLOAD_PATH + name,length);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void task(DownloadNotify notify,String url,String path,long length) {
+		ThreadPoolExecutor executor = new ThreadPoolExecutor(Constant.DOWNLOAD_CORE_POOL_SIZE, Constant.DOWNLOAD_MAX_POOL_SIZE, 10, TimeUnit.MILLISECONDS,new ArrayBlockingQueue<Runnable>(5),Executors.defaultThreadFactory(),new ThreadPoolExecutor.AbortPolicy());
 		if (length <= 10*1024*1024) {
-			executor.execute(new DownLoadTask(url, path, 0, (int)length));
+			executor.execute(new DownLoadTask(notify, url, path, 0, length));
 		} else {
-			for (int i = 0,len = (int) (length/(10*1024*1024)); i < len; i++) {
+			for (long i = 0,len = length/(10*1024*1024); i < len; i++) {
 				if (i == len-1) {
-					
+					executor.execute(new DownLoadTask(notify, url, path, i*(10*1024*1024),length-i*(10*1024*1024)));
 				} else {
-					executor.execute(new DownLoadTask(url, path, i*(10*1024*1024),(i+1)*(10*1024*1024)));
+					executor.execute(new DownLoadTask(notify, url, path, i*(10*1024*1024),(i+1)*(10*1024*1024)-1));
 				}
 			}			
 		}
@@ -70,12 +88,14 @@ public class Asynchronous {
 
 class DownLoadTask implements Runnable {
 
+	private DownloadNotify notify;
 	private String url;
 	private String path;
 	private  long start;
 	private  long end;
 
-	public DownLoadTask(String url,String path,int start,int end) {
+	public DownLoadTask(DownloadNotify notify,String url,String path,long start,long end) {
+		this.notify = notify;
 		this.url = url;
 		this.path = path;
 		this.start = start;
@@ -84,19 +104,24 @@ class DownLoadTask implements Runnable {
 
 	public void run() {
 		BufferedInputStream inputStream=null;
-		RandomAccessFile accessFile=null;
-
+		RandomAccessFile access=null;
+		HttpURLConnection connection = null;
 		try {
-			accessFile=new RandomAccessFile(path, "rw");
-			HttpURLConnection connection=(HttpURLConnection) new URL(url).openConnection();
+			access=new RandomAccessFile(path, "rw");
+			connection = (HttpURLConnection) new URL(url).openConnection();
 			connection.setRequestMethod("GET");
 			connection.setRequestProperty("Range", "bytes="+this.start+"-"+this.end);
-			accessFile.seek(this.start);
+			access.seek(this.start);
 			inputStream=new BufferedInputStream(connection.getInputStream());
 			byte[] bt=new byte[10*1024];
 			int length=0;
 			while((length=inputStream.read(bt, 0, bt.length))!=-1){
-				accessFile.write(bt, 0, length);
+				access.write(bt, 0, length);
+				if (notify != null) {
+					synchronized (this) {
+						this.notify.result(length);
+					}
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -108,12 +133,15 @@ class DownLoadTask implements Runnable {
 					e.printStackTrace();
 				}
 			}
-			if(accessFile!=null){
+			if(access!=null){
 				try {
-					accessFile.close();
+					access.close();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+			if (connection != null) {
+				connection.disconnect();				
 			}
 		}
 

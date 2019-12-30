@@ -40,4 +40,8 @@ public class Constant {
 	
 	public static volatile int SPECTRUM_SPLIT = 5;
 	
+	public static volatile int DOWNLOAD_CORE_POOL_SIZE = 10;
+	
+	public static volatile int DOWNLOAD_MAX_POOL_SIZE = 15;
+	
 }
