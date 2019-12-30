@@ -44,4 +44,6 @@ public class Constant {
 	
 	public static volatile int DOWNLOAD_MAX_POOL_SIZE = 15;
 	
+	public static volatile long DOWNLOAD_FILE_SIZE_PER_THREAD = 10*1024*1024;//每个线程下载10M
+	
 }
