@@ -58,7 +58,7 @@ public class Controller implements Observer {
 
 	@Override
 	public void end() {
-		System.out.println("结束所有");
+		System.out.println("观察者 结束所有 歌词和频谱线程");
 		endLyricPlayer();
 		endSpectrumPlayer();
 	}

@@ -209,9 +209,9 @@ public class XMusic implements Player {
 								data.write(buf, 0, 4);				
 							}
 							new ControllerServer().endLyricPlayer(new Controller());// 结束歌词和频谱
-							System.out.println("结束歌词和频谱");
+							System.out.println("解码器 结束歌词和频谱");
 							end();// 结束播放流
-							System.out.println("结束播放流");
+							System.out.println("解码器 结束播放流");
 						}
 					} catch (Exception e) {
 						e.printStackTrace();
