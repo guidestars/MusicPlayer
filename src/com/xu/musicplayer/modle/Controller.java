@@ -31,7 +31,9 @@ public class Controller implements Observer {
 
 	@Override
 	public void start(PlayerEntity entity) {
-		startLyricPlayer(entity);
+		if (Constant.HAVE_LYRIC) {
+			startLyricPlayer(entity);			
+		}
 		startSpectrumPlayer(entity);
 	}
 
@@ -83,7 +85,7 @@ public class Controller implements Observer {
 						@Override
 						public void run() {
 							TableItem[] items = PlayerEntity.getTable().getItems();
-							for (int i = 0; i < items.length; i++) {
+							for (int i = 0, len = items.length; i < len; i++) {
 								if (i == lrc) {
 									items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));//将选中的行的颜色变为蓝色
 									if (i>7) {

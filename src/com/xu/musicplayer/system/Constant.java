@@ -24,6 +24,8 @@ public class Constant {
 	
 	public static LinkedList<String> PLAY_LYRIC = new LinkedList<String>();
 	
+	public static volatile boolean HAVE_LYRIC = false;
+	
 	public static int PLAY_INDEX = 0;
 	
 	public static boolean PLAY_STATE = true;

@@ -24,8 +24,6 @@ import com.xu.musicplayer.modle.ControllerServer;
 import com.xu.musicplayer.modle.Controller;
 import com.xu.musicplayer.player.Player;
 import com.xu.musicplayer.player.XMusic;
-import com.xu.musicplayer.search.Search;
-import com.xu.musicplayer.search.APISearchTipsEntity;
 import com.xu.musicplayer.system.Constant;
 import com.xu.musicplayer.tray.MusicPlayerTray;
 
@@ -141,11 +139,24 @@ public class MusicPlayer {
 		label_1.setBounds(798, 10, 32, 32);
 
 		Combo combo = new Combo(composite_1, SWT.NONE);
+		combo.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				combo.clearSelection();
+			}
+		});
 		combo.addModifyListener(new ModifyListener() {
 			public void modifyText(ModifyEvent arg0) {
-				List<APISearchTipsEntity> songs = Search.search(combo.getText(),"API");
-				for (APISearchTipsEntity song:songs) {
-					combo.add(song.getFilename());
+				//List<APISearchTipsEntity> songs = Search.search(combo.getText(),"API");
+				//for (APISearchTipsEntity song:songs) {
+				//	combo.add(song.getFilename());
+				//}
+				//combo.setListVisible(true);
+				combo.clearSelection();
+				for (int i = 0; i < Constant.PLAY_LIST.size(); i++) {
+					if (Constant.PLAY_LIST.get(i).contains(combo.getText())) {
+						combo.add(Constant.PLAY_LIST.get(i).split(Constant.SPLIT)[1]);
+					}
 				}
 				combo.setListVisible(true);
 			}
@@ -177,8 +188,6 @@ public class MusicPlayer {
 		composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		table_1 = new Table(composite_5, SWT.FULL_SELECTION);
-		table_1.setHeaderVisible(true);
-		table_1.setLinesVisible(true);
 
 		TableColumn tableColumn_2 = new TableColumn(table_1, SWT.CENTER);
 		tableColumn_2.setText("歌词");
@@ -464,6 +473,27 @@ public class MusicPlayer {
 		}			
 	}
 
+	/**
+	 * Java MusicPlayer 更新播放歌曲列表
+	 * @Author: hyacinth
+	 * @Title: markSongsLists   
+	 * @Description: TODO 
+	 * @param lists
+	 * @param table      
+	 * @return void  
+	 * @date: 2019年12月31日 下午8:20:33
+	 */
+	public void markSongsLists(Table table,int index) {
+		TableItem[] items = table.getItems();
+		for (int i = 0, len = items.length; i < len; i++) {
+			if (index == i) {
+				items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_GRAY));
+			} else {
+				items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
+			}
+		}
+		table.setTopIndex(index);		
+	}
 
 	/**
 	 * Java MusicPlayer 改变播放歌曲
@@ -518,6 +548,7 @@ public class MusicPlayer {
 	 * @date: 2019年12月26日 下午7:40:10
 	 */
 	private void updatePlayerSongListsColor(Table table,int index) {
+		Constant.HAVE_LYRIC = false;
 		label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/start.png"));
 		length = Integer.parseInt(PLAYING_SONG.split(Constant.SPLIT)[3]);
 		text.setText(((int)length/60+":"+length%60)+"");
@@ -530,6 +561,7 @@ public class MusicPlayer {
 			}
 		}
 		if (Constant.PLAY_LIST.get(Constant.PLAY_INDEX).split(Constant.SPLIT)[4].equalsIgnoreCase("Y")) {
+			Constant.HAVE_LYRIC = true;
 			LoadLocalLyric lyric = new LoadLocalLyric();
 			String path = Constant.PLAY_LIST.get(Constant.PLAY_INDEX).split(Constant.SPLIT)[0];
 			path = path.substring(0, path.lastIndexOf("."))+".lrc";
@@ -547,10 +579,10 @@ public class MusicPlayer {
 				PlayerEntity.setText(text_1);
 				PlayerEntity.setSong(PLAYING_SONG);
 				PlayerEntity.setTable(table_1);
-				PlayerEntity.setSpectrum(composite_3);
-				server.endLyricPlayer(new Controller());
-				server.startLyricPlayer(new Controller(), null);
 			}
+			PlayerEntity.setSpectrum(composite_3);
+			server.endLyricPlayer(new Controller());
+			server.startLyricPlayer(new Controller(), null);
 		}
 		setMusicPlayerPlayingSong(index+"");
 	}
@@ -585,10 +617,10 @@ public class MusicPlayer {
 	 * @date: 2019年12月26日 下午7:57:12
 	 */
 	private void exitMusicPlayer() {
-		player.stop();
 		tray.dispose();
-		shell.dispose();
 		System.exit(0);
+		player.stop();
+		shell.dispose();
 	}
 
 
