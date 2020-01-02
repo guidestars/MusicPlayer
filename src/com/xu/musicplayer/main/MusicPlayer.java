@@ -124,11 +124,13 @@ public class MusicPlayer {
 		trayutil.tray();
 
 		Composite composite = new Composite(shell, SWT.NONE);
+		composite.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		SashForm sashForm = new SashForm(composite, SWT.VERTICAL);
 
 		Composite composite_1 = new Composite(sashForm, SWT.NONE);
+		composite_1.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
 		Label label = new Label(composite_1, SWT.NONE);
 		label.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-1.png"));
@@ -165,11 +167,13 @@ public class MusicPlayer {
 		combo.setVisible(false);
 
 		Composite composite_2 = new Composite(sashForm, SWT.NONE);
+		composite_2.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		composite_2.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		SashForm sashForm_1 = new SashForm(composite_2, SWT.NONE);
 
 		Composite composite_4 = new Composite(sashForm_1, SWT.NONE);
+		composite_4.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		composite_4.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		table = new Table(composite_4, SWT.FULL_SELECTION);
@@ -185,6 +189,7 @@ public class MusicPlayer {
 		tableColumn_1.setText("歌曲");
 
 		Composite composite_5 = new Composite(sashForm_1, SWT.NONE);
+		composite_5.setBackgroundMode(SWT.INHERIT_DEFAULT);
 		composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
 
 		table_1 = new Table(composite_5, SWT.FULL_SELECTION);
