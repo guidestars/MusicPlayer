@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="3e661583-a1eb-4e77-b438-6c2ff7636bc8" name="默认更改列表" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_fastjson_1_2_62.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_soundlibs_jlayer_1_0_1_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_soundlibs_mp3spi_1_9_5_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_soundlibs_tritonus_share_0_3_7_4.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_3_8_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jaudiotagger_2_0_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jflac_jflac_codec_1_5_2.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/com_ibm_icu_64_2_0_v20190507_1337.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/MusicPlayer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.settings/org.eclipse.wst.common.project.facet.core.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.settings/org.eclipse.wst.common.project.facet.core.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.sts4-cache/classpath-data.json" beforeDir="false" afterPath="$PROJECT_DIR$/.sts4-cache/classpath-data.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/config/Reading.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/config/Reading.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/config/SongChoiceWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/config/SongChoiceWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/config/Writing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/config/Writing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/download/Asynchronous.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/download/Asynchronous.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/download/DownloadNotify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/download/DownloadNotify.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/entity/PlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/entity/PlayerEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/fft/Complex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/fft/Complex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/fft/FFT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/fft/FFT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LoadLocalLyric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LoadLocalLyric.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyNotify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyNotify.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/SpectrumThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/SpectrumThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/main/MusicPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/main/MusicPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/ControllerServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/ControllerServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Observed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Observed.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Observer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Observer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/player/Player.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/player/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/player/Test.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/player/XMusic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/player/XMusic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/search/APISearchTipsEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/search/APISearchTipsEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/search/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/search/Search.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/search/WEBSearchTipsEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/search/WEBSearchTipsEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/system/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/system/Constant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/test/MusicPlayerDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/test/MusicPlayerDemo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/test/MusicPlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/test/MusicPlayerTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/tray/MusicPlayerTray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/tray/MusicPlayerTray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/org/eclipse/wb/swt/SWTResourceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/eclipse/wb/swt/SWTResourceManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/MANIFEST.MF" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/maven/MusicPlayer/MusicPlayer/pom.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/maven/MusicPlayer/MusicPlayer/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/config/Reading.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/config/Reading.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/config/SongChoiceWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/config/SongChoiceWindow.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/config/Writing.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/config/Writing.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/download/Asynchronous$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/download/Asynchronous$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/download/Asynchronous.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/download/Asynchronous.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/download/DownLoadTask.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/download/DownLoadTask.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/download/DownloadNotify.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/download/DownloadNotify.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/entity/PlayerEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/entity/PlayerEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/fft/Complex.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/fft/Complex.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/fft/FFT.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/fft/FFT.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/addMusic.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/delete_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/delete_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/end.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/exit-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/exit-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/find.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/hand.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/lastsong-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/lastsong-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/main.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/mini-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/mini-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/minus_1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/minus_2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/music.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/next.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/nextsong-1.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/nextsong-2.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/prev.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/search.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/start.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/image/stop.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/lyric/LoadLocalLyric.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/lyric/LoadLocalLyric.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/lyric/LyricyNotify.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/lyric/LyricyNotify.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/lyric/LyricyThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/lyric/LyricyThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/lyric/SpectrumThread$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/lyric/SpectrumThread$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/lyric/SpectrumThread.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/lyric/SpectrumThread.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$15.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$16.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$17.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$17.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$18.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$18.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$19.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$19.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/modle/Controller$1$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/modle/Controller$1$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/modle/Controller$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/modle/Controller$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/modle/Controller.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/modle/Controller.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/modle/ControllerServer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/modle/ControllerServer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/modle/Observed.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/modle/Observed.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/modle/Observer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/modle/Observer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/player/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/player/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/player/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/player/Test.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/player/XMusic$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/player/XMusic$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/player/XMusic.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/player/XMusic.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/search/APISearchTipsEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/search/APISearchTipsEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/search/Search.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/search/Search.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/search/WEBSearchTipsEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/search/WEBSearchTipsEntity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/system/Constant.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/system/Constant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$PlayProgress$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$PlayProgress$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$PlayProgress.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$PlayProgress.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$Time.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$Time.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$TimerTaskPlayProgress$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$TimerTaskPlayProgress$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$TimerTaskPlayProgress.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo$TimerTaskPlayProgress.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerDemo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$PlayProgress$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$PlayProgress$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$PlayProgress.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$PlayProgress.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$Time.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$Time.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$TimerTaskPlayProgress$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$TimerTaskPlayProgress$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$TimerTaskPlayProgress.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest$TimerTaskPlayProgress.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/test/MusicPlayerTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/tray/MusicPlayerTray$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/tray/MusicPlayerTray$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/tray/MusicPlayerTray$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/tray/MusicPlayerTray$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/tray/MusicPlayerTray$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/tray/MusicPlayerTray$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/tray/MusicPlayerTray$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/tray/MusicPlayerTray$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/tray/MusicPlayerTray.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/tray/MusicPlayerTray.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/org/eclipse/wb/swt/SWTResourceManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/org/eclipse/wb/swt/SWTResourceManager.class" afterDir="false" />
+    </list>
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/MusicPlayer$_MusicPlayer__2_.ic" NAME="所有在 MusicPlayer (2) Coverage Results" MODIFIED="1577935457655" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/com/xu/musicplayer/main/MusicPlayer.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="283">
+              <caret line="169" column="19" selection-start-line="169" selection-start-column="8" selection-end-line="169" selection-end-column="19" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/com/xu/musicplayer/search/Search.java" />
+        <option value="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Controller.java" />
+        <option value="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyThread.java" />
+        <option value="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/SpectrumThread.java" />
+        <option value="$PROJECT_DIR$/src/com/xu/musicplayer/main/MusicPlayer.java" />
+        <option value="$PROJECT_DIR$/src/com/xu/musicplayer/player/Player.java" />
+        <option value="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LoadLocalLyric.java" />
+      </list>
+    </option>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="importingSettings">
+      <MavenImportingSettings>
+        <option name="importAutomatically" value="true" />
+      </MavenImportingSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1386" />
+    <option name="height" value="788" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="MusicPlayer" type="58d84e3e:PackageViewProjectNode" />
+              <item name="MusicPlayer" type="616d4139:PackageViewModuleNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="MusicPlayer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MusicPlayer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MusicPlayer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MusicPlayer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MusicPlayer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MusicPlayer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="musicplayer" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="MusicPlayer" type="b2602c69:ProjectViewProjectNode" />
+              <item name="MusicPlayer" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="musicplayer" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1577937175622" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/org.eclipse.ui.workbench_3.115.0.v20190521-1602.jar!/" />
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="nodejs_npm_path_reset_for_default_project" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="JUnit.所有在 MusicPlayer (2)">
+    <configuration name="MusicPlayer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.xu.musicplayer.main.MusicPlayer" />
+      <module name="MusicPlayer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.xu.musicplayer.main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="所有在 MusicPlayer (1)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MusicPlayer" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="所有在 MusicPlayer (2)" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MusicPlayer" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="所有在 MusicPlayer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="MusicPlayer" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JUnit.所有在 MusicPlayer (2)" />
+        <item itemvalue="JUnit.所有在 MusicPlayer (1)" />
+        <item itemvalue="JUnit.所有在 MusicPlayer" />
+        <item itemvalue="Application.MusicPlayer" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="3e661583-a1eb-4e77-b438-6c2ff7636bc8" name="默认更改列表" comment="" />
+      <created>1577784976581</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1577784976581</updated>
+      <workItem from="1577784987751" duration="634000" />
+      <workItem from="1577786082185" duration="3513000" />
+      <workItem from="1577935839167" duration="1475000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="所有在_MusicPlayer - 2020.01.02 at 11h 11m 40s.xml">
+      <configuration name="所有在 MusicPlayer" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="所有在_MusicPlayer_(1) - 2020.01.02 at 11h 12m 40s.xml">
+      <configuration name="所有在 MusicPlayer (1)" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="所有在_MusicPlayer_(2) - 2020.01.02 at 11h 24m 29s.xml">
+      <configuration name="所有在 MusicPlayer (2)" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="5622000" />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.3169839" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Image Layers" order="2" />
+      <window_info id="Capture Tool" order="3" />
+      <window_info id="UI Designer" order="4" />
+      <window_info id="Favorites" order="5" side_tool="true" />
+      <window_info id="设计器" order="6" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32899022" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.31811023" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="7" weight="0.32755905" />
+      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50073206" side_tool="true" visible="true" weight="0.32913387" />
+      <window_info anchor="bottom" id="Database Changes" order="11" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="12" sideWeight="0.49926794" visible="true" weight="0.32913387" />
+      <window_info anchor="bottom" id="调试" order="13" weight="0.32913387" />
+      <window_info anchor="bottom" id="缩略图" order="14" weight="0.32913387" />
+      <window_info anchor="bottom" id="Inspection Results" order="15" sideWeight="0.49926794" weight="0.47086614" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Maven" order="3" weight="0.32930514" />
+      <window_info anchor="right" id="Capture Analysis" order="4" />
+      <window_info anchor="right" id="调色板" order="5" />
+      <window_info anchor="right" id="Database" order="6" />
+      <window_info anchor="right" id="Palette&#9;" order="7" />
+      <window_info anchor="right" id="Theme Preview" order="8" />
+      <window_info anchor="right" id="Coverage" order="9" side_tool="true" weight="0.329429" />
+    </layout>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ORDER">
+      <list>
+        <option value="0" />
+        <option value="2" />
+        <option value="3" />
+        <option value="1" />
+      </list>
+    </option>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="16" selection-start-line="6" selection-start-column="16" selection-end-line="6" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/encodings.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/lang/Thread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1319">
+          <caret line="835" column="7" selection-start-line="770" selection-start-column="2" selection-end-line="835" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/xu/musicplayer/image/addMusic.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/xu/musicplayer/search/Search.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1692">
+          <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/eclipse/wb/swt/SWTResourceManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="262" column="23" selection-start-line="262" selection-start-column="23" selection-end-line="262" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/xu/musicplayer/config/Writing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="111" column="19" selection-start-line="111" selection-start-column="19" selection-end-line="111" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/xu/musicplayer/player/XMusic.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="200" column="24" lean-forward="true" selection-start-line="200" selection-start-column="24" selection-end-line="200" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="75" column="52" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/xu/musicplayer/lyric/SpectrumThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="79" column="24" selection-start-line="79" selection-start-column="24" selection-end-line="79" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/xu/musicplayer/modle/Controller.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="168">
+          <caret line="126" column="9" lean-forward="true" selection-start-line="126" selection-start-column="9" selection-end-line="126" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/xu/musicplayer/player/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="103">
+          <caret line="38" column="7" selection-start-line="38" selection-start-column="7" selection-end-line="38" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LoadLocalLyric.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/xu/musicplayer/main/MusicPlayer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="169" column="19" selection-start-line="169" selection-start-column="8" selection-end-line="169" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>No facets are configured</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>MusicPlayer</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>com.ibm.icu_64.2.0.v20190507-1337</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>
