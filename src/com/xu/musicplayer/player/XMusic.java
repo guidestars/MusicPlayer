@@ -199,10 +199,10 @@ public class XMusic implements Player {
 										put((short) ((buf[1] << 8) | buf[0]));
 										put((short) ((buf[3] << 8) | buf[2]));
 									} else {
+										put(buf[0]);
 										put(buf[1]);
 										put(buf[2]);
 										put(buf[3]);
-										put(buf[4]);
 
 									}
 								}
