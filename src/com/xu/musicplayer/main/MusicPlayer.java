@@ -1,7 +1,26 @@
 package com.xu.musicplayer.main;
 
-import java.awt.Color;
-import java.awt.Toolkit;
+import com.xu.musicplayer.config.Reading;
+import com.xu.musicplayer.config.SongChoiceWindow;
+import com.xu.musicplayer.entity.PlayerEntity;
+import com.xu.musicplayer.lyric.LoadLocalLyric;
+import com.xu.musicplayer.modle.Controller;
+import com.xu.musicplayer.modle.ControllerServer;
+import com.xu.musicplayer.player.Player;
+import com.xu.musicplayer.player.XMusic;
+import com.xu.musicplayer.system.Constant;
+import com.xu.musicplayer.tray.MusicPlayerTray;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.events.*;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.*;
+import org.eclipse.wb.swt.SWTResourceManager;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -9,72 +28,29 @@ import java.util.Random;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Point;
-import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.wb.swt.SWTResourceManager;
-
-import com.xu.musicplayer.config.Reading;
-import com.xu.musicplayer.config.SongChoiceWindow;
-import com.xu.musicplayer.entity.PlayerEntity;
-import com.xu.musicplayer.lyric.LoadLocalLyric;
-import com.xu.musicplayer.modle.ControllerServer;
-import com.xu.musicplayer.modle.Controller;
-import com.xu.musicplayer.player.Player;
-import com.xu.musicplayer.player.XMusic;
-import com.xu.musicplayer.system.Constant;
-import com.xu.musicplayer.tray.MusicPlayerTray;
-
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseMoveListener;
-import org.eclipse.swt.events.MouseTrackAdapter;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
-import org.eclipse.swt.widgets.Tray;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.ProgressBar;
-import org.eclipse.swt.widgets.Combo;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.ControlAdapter;
-import org.eclipse.swt.events.ControlEvent;
-
+@SuppressWarnings(value = "all")
 public class MusicPlayer {
 
+    public static boolean playing = true;// 播放按钮
+    public static String PLAYING_SONG = "";// 正在播放歌曲
+    public static List<Color> COLORS = new ArrayList<Color>();
+    private static Player player = new XMusic();
+    private static int resize = 0;
     protected Shell shell;
     private Display display;
-    private static Player player = new XMusic();
     private Tray tray;// 播放器托盘
     private Table table;
     private Table table_1;
     private Label text;
     private Label text_1;
     private Label label_3;
-
     private ControllerServer server = new ControllerServer(); // 歌词及频谱
-
     private ProgressBar progressBar; // 进度条
     private Composite composite_3; // 频谱面板
-
     private boolean click = false;//界面移动
     private int clickX, clickY;//界面移动
     private boolean choise = true;// 双击播放
     private int length;// 播放时长
-
-    public static boolean playing = true;// 播放按钮
-    public static String PLAYING_SONG = "";// 正在播放歌曲
-
-    public static List<Color> COLORS = new ArrayList<Color>();
-
-    private static int resize = 0;
 
     /**
      * Launch the application.
