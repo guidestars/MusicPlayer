@@ -86,7 +86,7 @@ public class MusicPlayer {
      */
     protected void createContents() {
         shell = new Shell(SWT.NONE);
-        shell.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/main.png"));
+        shell.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/main.png"));
         shell.setSize(new Point(1000, 645));
         shell.setSize(890, 486);
         shell.setText("MusicPlayer");
@@ -108,11 +108,11 @@ public class MusicPlayer {
         Composite composite_1 = new Composite(sashForm, SWT.NONE);
 
         Label label = new Label(composite_1, SWT.NONE);
-        label.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-1.png"));
+        label.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/exit-1.png"));
         label.setBounds(845, 10, 32, 32);
 
         Label label_1 = new Label(composite_1, SWT.NONE);
-        label_1.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/mini-1.png"));
+        label_1.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/mini-1.png"));
         label_1.setBounds(798, 10, 32, 32);
 
         Combo combo = new Combo(composite_1, SWT.NONE);
@@ -190,11 +190,11 @@ public class MusicPlayer {
         composite_3 = new Composite(sashForm, SWT.NONE);
 
         Label lblNewLabel = new Label(composite_3, SWT.NONE);
-        lblNewLabel.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/lastsong-1.png"));
+        lblNewLabel.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/lastsong-1.png"));
         lblNewLabel.setBounds(33, 18, 32, 32);
 
         Label label_2 = new Label(composite_3, SWT.NONE);
-        label_2.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/nextsong-1.png"));
+        label_2.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/nextsong-1.png"));
         label_2.setBounds(165, 18, 32, 32);
 
         label_3 = new Label(composite_3, SWT.NONE);
@@ -204,16 +204,16 @@ public class MusicPlayer {
                 playing = Constant.PLAY_STATE;
                 if (playing && !XMusic.isPlaying()) {
                     //TODO:
-                    label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/start.png"));
+                    label_3.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/start.png"));
                     playing = false;
                 } else {
                     //TODO:
                     playing = true;
-                    label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/stop.png"));
+                    label_3.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/stop.png"));
                 }
             }
         });
-        label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/stop.png"));
+        label_3.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/stop.png"));
         label_3.setBounds(98, 18, 32, 32);
 
         progressBar = new ProgressBar(composite_3, SWT.NONE);
@@ -262,24 +262,24 @@ public class MusicPlayer {
         label_1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDown(MouseEvent e) {
-                label_1.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/mini-2.png"));
+                label_1.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/mini-2.png"));
             }
 
             @Override
             public void mouseUp(MouseEvent e) {
-                label_1.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/mini-1.png"));
+                label_1.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/mini-1.png"));
                 shell.setMinimized(true);
             }
         });
         label_1.addMouseTrackListener(new MouseTrackAdapter() {
             @Override
             public void mouseExit(MouseEvent e) {
-                label_1.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/mini-1.png"));
+                label_1.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/mini-1.png"));
             }
 
             @Override
             public void mouseHover(MouseEvent e) {
-                label_1.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/mini-2.png"));
+                label_1.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/mini-2.png"));
                 label_1.setToolTipText("最小化");
             }
         });
@@ -288,12 +288,12 @@ public class MusicPlayer {
         label.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDown(MouseEvent e) {
-                label.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-2.png"));
+                label.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/exit-2.png"));
             }
 
             @Override
             public void mouseUp(MouseEvent e) {
-                label.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-1.png"));
+                label.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/exit-1.png"));
                 //tray.dispose();
                 //distory();
                 exitMusicPlayer();
@@ -302,12 +302,12 @@ public class MusicPlayer {
         label.addMouseTrackListener(new MouseTrackAdapter() {
             @Override
             public void mouseExit(MouseEvent e) {
-                label.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-1.png"));
+                label.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/exit-1.png"));
             }
 
             @Override
             public void mouseHover(MouseEvent e) {
-                label.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-2.png"));
+                label.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/exit-2.png"));
                 label.setToolTipText("退出");
             }
         });
@@ -334,13 +334,13 @@ public class MusicPlayer {
         lblNewLabel.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDown(MouseEvent e) {
-                lblNewLabel.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/lastsong-2.png"));
+                lblNewLabel.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/lastsong-2.png"));
             }
 
             @Override
             public void mouseUp(MouseEvent e) {
                 changePlayingSong(-1, 0);//上一曲
-                lblNewLabel.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/lastsong-1.png"));
+                lblNewLabel.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/lastsong-1.png"));
             }
         });
 
@@ -348,13 +348,13 @@ public class MusicPlayer {
         label_2.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseDown(MouseEvent e) {
-                label_2.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/nextsong-2.png"));
+                label_2.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/nextsong-2.png"));
             }
 
             @Override
             public void mouseUp(MouseEvent e) {
                 changePlayingSong(-1, 1);//下一曲
-                label_2.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/nextsong-1.png"));
+                label_2.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/nextsong-1.png"));
             }
         });
 
@@ -538,7 +538,7 @@ public class MusicPlayer {
      */
     private void updatePlayerSongListsColor(Table table, int index) {
         Constant.HAVE_LYRIC = false;
-        label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/start.png"));
+        label_3.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/start.png"));
         length = Integer.parseInt(PLAYING_SONG.split(Constant.SPLIT)[3]);
         text.setText(((int) length / 60 + ":" + length % 60) + "");
         TableItem[] items = table.getItems();
@@ -574,6 +574,7 @@ public class MusicPlayer {
             server.startLyricPlayer(new Controller(), null);
         }
         setMusicPlayerPlayingSong(index + "");
+        JVMinfo();
     }
 
 
@@ -593,7 +594,7 @@ public class MusicPlayer {
             e.printStackTrace();
         }
         Constant.PLAY_STATE = false;
-        label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/stop.png"));
+        label_3.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/stop.png"));
         updatePlayerSongListsColor(table, Constant.PLAY_INDEX);
     }
 
@@ -654,6 +655,23 @@ public class MusicPlayer {
         if (index != null) {
             //next_song(Integer.parseInt(index));
         }
+    }
+
+    public void JVMinfo() {
+        long vmFree = 0;
+        long vmUse = 0;
+        long vmTotal = 0;
+        long vmMax = 0;
+        int byteToMb = 1024;
+        Runtime rt = Runtime.getRuntime();
+        vmTotal = rt.totalMemory() / byteToMb;
+        vmFree = rt.freeMemory() / byteToMb;
+        vmMax = rt.maxMemory() / byteToMb;
+        vmUse = vmTotal - vmFree;
+        System.out.println("JVM 已用内存为：" + vmUse + "\tKB");
+        System.out.println("JVM 空闲内存为：" + vmFree + "\tKB");
+        System.out.println("JVM 可用内存为：" + vmTotal + "\tKB");
+        System.out.println("JVM 最大内存为：" + vmMax + "\tKB");
     }
 
 }
