@@ -578,6 +578,7 @@ public class MusicPlayer {
             server.startLyricPlayer(new Controller(), null);
         }
         setMusicPlayerPlayingSong(index + "");
+        JVMinfo();
     }
 
 
@@ -659,5 +660,22 @@ public class MusicPlayer {
             //next_song(Integer.parseInt(index));
         }
     }
-
+    
+    public void JVMinfo() {
+		long vmFree = 0;
+		long vmUse = 0;
+		long vmTotal = 0;
+		long vmMax = 0;
+		int byteToMb = 1024;
+		Runtime rt = Runtime.getRuntime();
+		vmTotal = rt.totalMemory() / byteToMb;
+		vmFree = rt.freeMemory() / byteToMb;
+		vmMax = rt.maxMemory() / byteToMb;
+		vmUse = vmTotal - vmFree;
+		System.out.println("JVM 已用内存为：" + vmUse + "\tKB");
+		System.out.println("JVM 空闲内存为：" + vmFree + "\tKB");
+		System.out.println("JVM 可用内存为：" + vmTotal + "\tKB");
+		System.out.println("JVM 最大内存为：" + vmMax + "\tKB");
+	}
+    
 }
