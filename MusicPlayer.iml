@@ -135,5 +135,6 @@
     <orderEntry type="library" name="Maven: org:jaudiotagger:2.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.jflac:jflac-codec:1.5.2" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.62" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:13.0" level="project" />
   </component>
 </module>
