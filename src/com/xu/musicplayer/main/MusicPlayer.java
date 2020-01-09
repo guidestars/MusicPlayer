@@ -450,26 +450,14 @@ public class MusicPlayer {
 	 * @date: 2019年12月26日 下午7:20:00
 	 */
 	public void initMusicPlayer(Shell shell, Table table) {
-		Toolkit.getDefaultToolkit().beep();
-		MessageBox message = new MessageBox(shell,SWT.YES|SWT.ICON_WARNING|SWT.NO);
-		message.setText("提示");
-		message.setMessage("未发现歌曲，现在添加歌曲？");
-		if(message.open() == SWT.YES){
-			SongChoiceWindow choice = new SongChoiceWindow();
-			new Reading().read();
-			if (Constant.PLAY_LIST == null || Constant.PLAY_LIST.size() <= 0) {
-				Toolkit.getDefaultToolkit().beep();
-				choice.open_choise_windows(shell);
-			}
-			updatePlayerSongLists(Constant.PLAY_LIST, table);
-			readMusicPlayerPlayingSong();
-		} else {
+		SongChoiceWindow choice = new SongChoiceWindow();
+		new Reading().read();
+		if (Constant.PLAY_LIST == null || Constant.PLAY_LIST.size() <= 0) {
 			Toolkit.getDefaultToolkit().beep();
-			message = new MessageBox(shell,SWT.OK|SWT.ICON_ERROR);
-			message.setText("提示");
-			message.setMessage("你将不能播放歌曲。");
-			message.open();
+			choice.open_choise_windows(shell);
 		}
+		updatePlayerSongLists(Constant.PLAY_LIST, table);
+		readMusicPlayerPlayingSong();
 	}
 
 	/**
