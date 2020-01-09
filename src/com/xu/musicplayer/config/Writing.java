@@ -26,7 +26,7 @@ public class Writing {
 
 
     public boolean write(List<String> lists) {
-        File file = new File(Constant.MUSIC_PLAYER_SONG_LISTS_PATH);
+        File file = new File(Constant.MUSIC_PLAYER_SONG_LISTS_FULL_PATH);
         HashSet<String> songs = new HashSet<String>();
         if (file.exists()) {
             songs = new Reading().read();
@@ -47,6 +47,7 @@ public class Writing {
             }
         } else {
             try {
+            	new File(Constant.MUSIC_PLAYER_SONG_LISTS_PATH).mkdirs();
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -70,7 +71,7 @@ public class Writing {
         FileWriter FWriter = null;
         BufferedWriter BWriter = null;
         try {
-            FWriter = new FileWriter(Constant.MUSIC_PLAYER_SONG_LISTS_PATH);
+            FWriter = new FileWriter(new File(Constant.MUSIC_PLAYER_SONG_LISTS_FULL_PATH));
             BWriter = new BufferedWriter(FWriter);
             Constant.PLAY_LIST.clear();
             for (String song : songs) {

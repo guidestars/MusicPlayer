@@ -12,7 +12,7 @@ import java.util.HashSet;
 public class Reading {
 
     public HashSet<String> read() {
-        File file = new File(Constant.MUSIC_PLAYER_SONG_LISTS_PATH);
+        File file = new File(Constant.MUSIC_PLAYER_SONG_LISTS_FULL_PATH);
         if (file.exists() && file.isFile()) {
             HashSet<String> songs = new HashSet<String>();
             Constant.PLAY_LIST.clear();
