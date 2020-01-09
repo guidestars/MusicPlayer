@@ -2,13 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e661583-a1eb-4e77-b438-6c2ff7636bc8" name="默认更改列表" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/utils/Utils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/xu/musicplayer/main/MusicPlayer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/main/MusicPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/main/MusicPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Controller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/player/XMusic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/player/XMusic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/system/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/system/Constant.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/MusicPlayer$_MusicPlayer__2_.ic" NAME="所有在 MusicPlayer (2) Coverage Results" MODIFIED="1577935457655" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
@@ -26,7 +35,13 @@
       </MavenImportingSettings>
     </option>
   </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="1" />
+  </component>
   <component name="ProjectId" id="1VriSz5MgnMxERnAwkWjOFV8vHE" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="添加" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
@@ -34,7 +49,9 @@
     <option name="showMembers" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1578016995891" />
@@ -132,6 +149,7 @@
       <workItem from="1578018702318" duration="38000" />
       <workItem from="1578018791386" duration="2772000" />
       <workItem from="1578022475861" duration="390000" />
+      <workItem from="1578554461801" duration="670000" />
     </task>
     <servers />
   </component>
@@ -159,31 +177,34 @@
       </list>
     </option>
   </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
   <component name="WindowStateProjectService">
     <state x="275" y="23" key="#Inspections" timestamp="1578018972976">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="23" key="#Inspections/0.0.1366.728@0.0.1366.728" timestamp="1578018972976" />
-    <state x="432" y="222" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1578019232717">
+    <state x="432" y="222" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1578554972164">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="432" y="222" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1578019232717" />
-    <state width="662" height="171" key="GridCell.Tab.0.bottom" timestamp="1578022877902">
+    <state x="432" y="222" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1578554972164" />
+    <state width="1325" height="171" key="GridCell.Tab.0.bottom" timestamp="1578554991489">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="662" height="171" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1578022877902" />
-    <state width="662" height="171" key="GridCell.Tab.0.center" timestamp="1578022877902">
+    <state width="1325" height="171" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1578554991489" />
+    <state width="1325" height="171" key="GridCell.Tab.0.center" timestamp="1578554991489">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="662" height="171" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1578022877902" />
-    <state width="662" height="171" key="GridCell.Tab.0.left" timestamp="1578022877902">
+    <state width="1325" height="171" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1578554991489" />
+    <state width="1325" height="171" key="GridCell.Tab.0.left" timestamp="1578554991488">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="662" height="171" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1578022877902" />
-    <state width="662" height="171" key="GridCell.Tab.0.right" timestamp="1578022877902">
+    <state width="1325" height="171" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1578554991488" />
+    <state width="1325" height="171" key="GridCell.Tab.0.right" timestamp="1578554991489">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="662" height="171" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1578022877902" />
+    <state width="1325" height="171" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1578554991489" />
     <state x="214" y="8" key="SettingsEditor" timestamp="1578022777732">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

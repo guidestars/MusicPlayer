@@ -60,8 +60,8 @@ public class LyricyThread extends Thread {
     /**
      * 时间转换
      *
-     * @param time 时间
-     * @return 格式化时间
+     * @param time
+     * @return
      */
     private String format_time(long time) {
         merchant = time / 60;

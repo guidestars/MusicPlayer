@@ -1,6 +1,5 @@
 package com.xu.musicplayer.player;
 
-import com.xu.musicplayer.main.MusicPlayer;
 import com.xu.musicplayer.modle.Controller;
 import com.xu.musicplayer.modle.ControllerServer;
 import com.xu.musicplayer.system.Constant;
@@ -253,7 +252,7 @@ public class XMusic implements Player {
 
     @Override
     public double length() {
-        return Integer.parseInt(MusicPlayer.PLAYING_SONG.split(Constant.SPLIT)[3]);
+        return Integer.parseInt(Constant.PLAYING_SONG.split(Constant.SPLIT)[3]);
     }
 
     public void put(short v) {

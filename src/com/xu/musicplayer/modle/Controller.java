@@ -4,7 +4,6 @@ import com.xu.musicplayer.entity.PlayerEntity;
 import com.xu.musicplayer.lyric.LyricyNotify;
 import com.xu.musicplayer.lyric.LyricyThread;
 import com.xu.musicplayer.lyric.SpectrumThread;
-import com.xu.musicplayer.main.MusicPlayer;
 import com.xu.musicplayer.system.Constant;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
@@ -31,10 +30,12 @@ public class Controller implements Observer {
 
     @Override
     public void start(PlayerEntity entity) {
-        if (Constant.HAVE_LYRIC) {
+        if (Constant.HAVE_LYRIC && Constant.START_LYRIC) {
             startLyricPlayer(entity);
         }
-        startSpectrumPlayer(entity);
+        if (Constant.START_SPECTRUM) {
+            startSpectrumPlayer(entity);
+        }
     }
 
     private String format(int time) {
@@ -60,9 +61,14 @@ public class Controller implements Observer {
 
     @Override
     public void end() {
-        System.out.println("观察者 结束所有 歌词和频谱线程");
-        endLyricPlayer();
-        endSpectrumPlayer();
+        if (Constant.HAVE_LYRIC && Constant.START_LYRIC) {
+            System.out.println("观察者 结束所有 歌词线程");
+            endLyricPlayer();
+        }
+        if (Constant.START_SPECTRUM) {
+            System.out.println("观察者 结束所有 频谱线程");
+            endSpectrumPlayer();
+        }
     }
 
     @Override
@@ -72,7 +78,7 @@ public class Controller implements Observer {
     }
 
     public void startLyricPlayer(PlayerEntity entity) {
-        int length = Integer.parseInt(MusicPlayer.PLAYING_SONG.split(Constant.SPLIT)[3]);
+        int length = Integer.parseInt(Constant.PLAYING_SONG.split(Constant.SPLIT)[3]);
         PlayerEntity.getBar().setMaximum(length);
         PlayerEntity.getBar().setSelection(0);
         if (lyricy != null) {
