@@ -47,11 +47,11 @@ public class MusicPlayer {
 	protected Shell shell;
 	private Display display;
 	private Tray tray;// 播放器托盘
-	
+
 	Composite top;
 	private Table lists;
 	private Table lyrics;
-	
+
 	private Label text;
 	private Label text_1;
 	private Label label_3;
@@ -450,14 +450,26 @@ public class MusicPlayer {
 	 * @date: 2019年12月26日 下午7:20:00
 	 */
 	public void initMusicPlayer(Shell shell, Table table) {
-		SongChoiceWindow choice = new SongChoiceWindow();
-		new Reading().read();
-		if (Constant.PLAY_LIST == null || Constant.PLAY_LIST.size() <= 0) {
+		Toolkit.getDefaultToolkit().beep();
+		MessageBox message = new MessageBox(shell,SWT.YES|SWT.ICON_WARNING|SWT.NO);
+		message.setText("提示");
+		message.setMessage("未发现歌曲，现在添加歌曲？");
+		if(message.open() == SWT.YES){
+			SongChoiceWindow choice = new SongChoiceWindow();
+			new Reading().read();
+			if (Constant.PLAY_LIST == null || Constant.PLAY_LIST.size() <= 0) {
+				Toolkit.getDefaultToolkit().beep();
+				choice.open_choise_windows(shell);
+			}
+			updatePlayerSongLists(Constant.PLAY_LIST, table);
+			readMusicPlayerPlayingSong();
+		} else {
 			Toolkit.getDefaultToolkit().beep();
-			choice.open_choise_windows(shell);
+			message = new MessageBox(shell,SWT.OK|SWT.ICON_ERROR);
+			message.setText("提示");
+			message.setMessage("你将不能播放歌曲。");
+			message.open();
 		}
-		updatePlayerSongLists(Constant.PLAY_LIST, table);
-		readMusicPlayerPlayingSong();
 	}
 
 	/**
@@ -525,7 +537,24 @@ public class MusicPlayer {
 		Constant.PLAY_INDEX = index == -1 ? Constant.PLAY_INDEX : index;
 		Constant.PLAYING_SONG = Constant.PLAY_LIST.get(Constant.PLAY_INDEX);
 
+		if (Constant.PLAY_LIST.size() <= 0) {
+			Toolkit.getDefaultToolkit().beep();
+			MessageBox message = new MessageBox(shell,SWT.YES|SWT.ICON_WARNING|SWT.NO);
+			message.setText("提示");
+			message.setMessage("未发现歌曲，现在添加歌曲？");
+			if (message.open() == SWT.YES) {
+				initMusicPlayer(shell,lists);
+			} else {
+				Toolkit.getDefaultToolkit().beep();
+				message = new MessageBox(shell,SWT.OK|SWT.ICON_ERROR);
+				message.setText("提示");
+				message.setMessage("你将不能播放歌曲。");
+				message.open();
+			}
+		}
+
 		player.load(Constant.PLAYING_SONG.split(Constant.SPLIT)[0]);
+
 		try {
 			player.start();
 		} catch (Exception e1) {
@@ -731,20 +760,20 @@ public class MusicPlayer {
 		//graphics.setColor(Color.PINK);
 		//graphics.setStroke(new BasicStroke(1f));
 
-		 ByteArrayOutputStream stream = new ByteArrayOutputStream();
-         try {
-             ImageIO.write(image, "png", stream);
-         } catch (IOException e) {
-             e.printStackTrace();
-         }
-         InputStream inputStream = new ByteArrayInputStream(stream.toByteArray());
-         if (inputStream != null) {
-        	 top.setBackgroundImage(new Image(null, new ImageData(inputStream)));
-        	 foot.setBackgroundImage(top.getBackgroundImage());
-             //lists.setBackgroundImage(top.getBackgroundImage());
-             //lyrics.setBackgroundImage(top.getBackgroundImage());
-         }
-         graphics.dispose();
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		try {
+			ImageIO.write(image, "png", stream);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		InputStream inputStream = new ByteArrayInputStream(stream.toByteArray());
+		if (inputStream != null) {
+			top.setBackgroundImage(new Image(null, new ImageData(inputStream)));
+			foot.setBackgroundImage(top.getBackgroundImage());
+			//lists.setBackgroundImage(top.getBackgroundImage());
+			//lyrics.setBackgroundImage(top.getBackgroundImage());
+		}
+		graphics.dispose();
 	}
 
 }
