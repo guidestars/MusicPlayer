@@ -1,6 +1,5 @@
 package com.xu.musicplayer.player;
 
-import com.xu.musicplayer.main.MusicPlayer;
 import com.xu.musicplayer.modle.Controller;
 import com.xu.musicplayer.modle.ControllerServer;
 import com.xu.musicplayer.system.Constant;

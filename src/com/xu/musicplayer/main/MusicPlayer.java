@@ -322,8 +322,6 @@ public class MusicPlayer {
 			@Override
 			public void mouseUp(MouseEvent e) {
 				label.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-1.png"));
-				//tray.dispose();
-				//distory();
 				exitMusicPlayer();
 			}
 		});
