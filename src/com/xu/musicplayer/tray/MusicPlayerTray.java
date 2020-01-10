@@ -33,14 +33,14 @@ public class MusicPlayerTray {
                 }
             });
             // 放大
-            MenuItem max = new MenuItem(menu, SWT.PUSH);
-            max.setText("放大");
-            max.addSelectionListener(new SelectionAdapter() {
-                public void widgetSelected(SelectionEvent arg0) {
-                    shell.setVisible(true);
-                    shell.setMaximized(true);
-                }
-            });
+//            MenuItem max = new MenuItem(menu, SWT.PUSH);
+//            max.setText("放大");
+//            max.addSelectionListener(new SelectionAdapter() {
+//                public void widgetSelected(SelectionEvent arg0) {
+//                    shell.setVisible(true);
+//                    shell.setMaximized(true);
+//                }
+//            });
             // 缩小
             MenuItem mini = new MenuItem(menu, SWT.PUSH);
             mini.setText("缩小");
