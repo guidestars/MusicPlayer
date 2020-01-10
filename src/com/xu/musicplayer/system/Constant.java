@@ -2,7 +2,9 @@ package com.xu.musicplayer.system;
 
 import java.awt.*;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Constant {
 
@@ -35,6 +37,11 @@ public class Constant {
 	 * 播放器日志
 	 */
 	public static final String MUSIC_PLAYER_LOG = "Log.log";// 播放器日志
+
+	/**
+	 * 播放器颜色
+	 */
+	public static List<Color> MUSIC_PLAYER_COLORS = new ArrayList<Color>();//播放器颜色
 
 	/**
 	 * 分割符

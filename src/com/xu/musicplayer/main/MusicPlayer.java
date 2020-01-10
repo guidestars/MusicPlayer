@@ -41,8 +41,6 @@ import javax.imageio.ImageIO;
 public class MusicPlayer {
 
 	public static boolean playing = true;// 播放按钮
-	public static List<Color> COLORS = new ArrayList<Color>();
-	private static Player player = new XMusic();
 
 	protected Shell shell;
 	private Display display;
@@ -50,18 +48,22 @@ public class MusicPlayer {
 
 	private Table lists;
 	private Table lyrics;
-	
+
 	private Composite top;
-	private Composite foot; // 频谱面板
+	private Composite foot; // 频谱面板	
+	private ProgressBar progress; // 进度条
+
 
 	private Label ttime;
 	private Label rtime;
 	private Label start;
-	private ControllerServer server = new ControllerServer(); // 歌词及频谱
-	private ProgressBar progress; // 进度条
 
-	private boolean click = false;//界面移动
+	private static Player player =null;//播放器
+	private ControllerServer server = new ControllerServer(); // 歌词及频谱
+
 	private int clickX, clickY;//界面移动
+	private boolean click = false;//界面移动
+
 	private boolean choise = true;// 双击播放
 
 	private static int merchant = 0;
@@ -110,6 +112,8 @@ public class MusicPlayer {
 				(display.getClientArea().height - shell.getSize().y) / 2);
 		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
+
+		player = XMusic.player();
 
 		// 托盘引入
 		tray = display.getSystemTray();
@@ -192,20 +196,6 @@ public class MusicPlayer {
 		TableColumn tableColumn_3 = new TableColumn(lyrics, SWT.CENTER);
 		tableColumn_3.setWidth(738);
 		tableColumn_3.setText("歌词");
-
-		COLORS.add(Color.BLACK);
-		COLORS.add(Color.BLUE);
-		COLORS.add(Color.CYAN);
-		COLORS.add(Color.DARK_GRAY);
-		COLORS.add(Color.GRAY);
-		COLORS.add(Color.GREEN);
-		COLORS.add(Color.LIGHT_GRAY);
-		COLORS.add(Color.MAGENTA);
-		COLORS.add(Color.ORANGE);
-		COLORS.add(Color.PINK);
-		COLORS.add(Color.RED);
-		COLORS.add(Color.WHITE);
-		COLORS.add(Color.YELLOW);
 
 		foot = new Composite(mform, SWT.NONE);
 		foot.setBackgroundMode(SWT.INHERIT_FORCE);
@@ -388,7 +378,7 @@ public class MusicPlayer {
 		foot.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				Color color = COLORS.get(new Random().nextInt(COLORS.size()));
+				Color color = Constant.MUSIC_PLAYER_COLORS.get(new Random().nextInt(Constant.MUSIC_PLAYER_COLORS.size()));
 				if (color != Constant.SPECTRUM_BACKGROUND_COLOR) {
 					Constant.SPECTRUM_FOREGROUND_COLOR = color;
 				}
@@ -451,6 +441,21 @@ public class MusicPlayer {
 		}
 		updatePlayerSongLists(Constant.MUSIC_PLAYER_SONGS_LIST, table);
 		readMusicPlayerPlayingSong();
+
+		Constant.MUSIC_PLAYER_COLORS.add(Color.BLACK);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.BLUE);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.CYAN);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.DARK_GRAY);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.GRAY);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.GREEN);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.LIGHT_GRAY);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.MAGENTA);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.ORANGE);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.PINK);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.RED);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.WHITE);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.YELLOW);
+
 	}
 
 	/**
@@ -728,34 +733,6 @@ public class MusicPlayer {
 			}
 		}
 		return format;
-	}
-
-	@SuppressWarnings("unused")
-	private void changePanelImage(Color color) {
-		BufferedImage image = new BufferedImage(5, 5, BufferedImage.TYPE_INT_RGB);
-		Graphics2D graphics = image.createGraphics();
-		//image = graphics.getDeviceConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);
-		//graphics.dispose();
-		//graphics = image.createGraphics();
-		graphics.setBackground(color);
-		graphics.clearRect(0, 0, 5, 5);
-		//graphics.setColor(Color.PINK);
-		//graphics.setStroke(new BasicStroke(1f));
-
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		try {
-			ImageIO.write(image, "png", stream);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		InputStream inputStream = new ByteArrayInputStream(stream.toByteArray());
-		if (inputStream != null) {
-			top.setBackgroundImage(new Image(null, new ImageData(inputStream)));
-			foot.setBackgroundImage(top.getBackgroundImage());
-			//lists.setBackgroundImage(top.getBackgroundImage());
-			//lyrics.setBackgroundImage(top.getBackgroundImage());
-		}
-		graphics.dispose();
 	}
 
 }

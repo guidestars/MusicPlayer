@@ -23,6 +23,18 @@ public class XMusic implements Player {
 	private static Thread thread = null;
 	private static volatile boolean playing = false;
 
+	private static class Music{
+		private static XMusic modle = new XMusic();
+	}
+
+	public static XMusic player() {
+		return Music.modle;
+	}
+
+	private XMusic() {
+
+	}
+
 	public static boolean isPlaying() {
 		return playing;
 	}

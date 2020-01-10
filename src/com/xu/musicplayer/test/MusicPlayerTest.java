@@ -33,7 +33,7 @@ public class MusicPlayerTest {
     private static int totalPlayTime;
     protected Shell shell;
     private Display display;
-    private Player player = new XMusic();
+    private Player player = XMusic.player();
     private Button button;
     private Table table;
     private Tray tray;
