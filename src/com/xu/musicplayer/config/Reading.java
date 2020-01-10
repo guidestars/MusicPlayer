@@ -18,7 +18,7 @@ public class Reading {
             Constant.MUSIC_PLAYER_SONGS_LIST.clear();
             InputStreamReader FReader = null;
             BufferedReader BReader = null;
-            String song = "";
+            String song;
             try (FileInputStream stream = new FileInputStream(file)) {
                 FReader = new InputStreamReader(stream, StandardCharsets.UTF_8);
                 BReader = new BufferedReader(FReader);

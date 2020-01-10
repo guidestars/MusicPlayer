@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 
 public class Writing {
 
@@ -30,8 +31,8 @@ public class Writing {
         HashSet<String> songs = new HashSet<String>();
         if (file.exists()) {
             songs = new Reading().read();
-            String content = "";
-            String[] splits = null;
+            String content;
+            String[] splits;
             for (String list : lists) {
                 splits = list.split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT);
                 content = splits[0];
@@ -47,13 +48,13 @@ public class Writing {
             }
         } else {
             try {
-            	new File(Constant.MUSIC_PLAYER_SONG_LISTS_PATH).mkdirs();
+                new File(Constant.MUSIC_PLAYER_SONG_LISTS_PATH).mkdirs();
                 file.createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String content = "";
-            String[] splits = null;
+            String content;
+            String[] splits;
             for (String list : lists) {
                 splits = list.split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT);
                 content = splits[0];
@@ -69,7 +70,7 @@ public class Writing {
             }
         }
         FileWriter FWriter = null;
-        BufferedWriter BWriter = null;
+        BufferedWriter BWriter;
         try {
             FWriter = new FileWriter(new File(Constant.MUSIC_PLAYER_SONG_LISTS_FULL_PATH));
             BWriter = new BufferedWriter(FWriter);
@@ -109,7 +110,7 @@ public class Writing {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return mp3.getAudioHeader().getTrackLength();
+        return Objects.requireNonNull(mp3).getAudioHeader().getTrackLength();
     }
 
 }

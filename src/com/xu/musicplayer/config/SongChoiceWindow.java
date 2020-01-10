@@ -14,7 +14,7 @@ public class SongChoiceWindow {
 
     public static void update_show_list(Table table, LinkedList<String> lists) {
         table.removeAll();
-        TableItem tableItem = null;
+        TableItem tableItem;
         for (int i = 0, len = lists.size(); i < len; i++) {
             tableItem = new TableItem(table, SWT.NONE);
             tableItem.setText(new String[]{(i + 1) + "", lists.get(i).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[1]});
@@ -26,7 +26,7 @@ public class SongChoiceWindow {
         dialog.setFilterNames(new String[]{"*.mp3", "*.MP3", "*.wav", "*.WAV", "*.flac", "*.FLAC", "*.pcm", "*.PCM"});
         dialog.open();
         String[] lists = dialog.getFileNames();
-        String paths = "";
+        String paths;
         Constant.MUSIC_PLAYER_SONGS_TEMP_LIST.clear();
         for (int i = 0, len = lists.length; i < len; i++) {
             paths = lists[i];

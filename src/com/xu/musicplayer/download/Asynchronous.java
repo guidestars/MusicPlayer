@@ -19,17 +19,14 @@ public class Asynchronous {
     private int index = 1;
 
     public static void main(String[] args) throws InterruptedException {
-        new Asynchronous().download(new DownloadNotify() {
-            @Override
-            public void result(Object object) {
-            }
+        new Asynchronous().download(object -> {
         }, "http://localhost:8080/WEB/a/a.pdf", "kk");
     }
 
     public void download(DownloadNotify notify, String url) {
         String name = url.substring(url.lastIndexOf("/") + 1);
-        HttpURLConnection connection = null;
-        String newname = "";
+        HttpURLConnection connection;
+        String newname;
         try {
             connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("HEAD");
@@ -58,8 +55,8 @@ public class Asynchronous {
 
     public void download(DownloadNotify notify, String url, String name) {
         name += url.substring(url.lastIndexOf("."));
-        String newname = "";
-        HttpURLConnection connection = null;
+        String newname;
+        HttpURLConnection connection;
         try {
             connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("HEAD");
@@ -135,7 +132,7 @@ class DownLoadTask implements Runnable {
             access.seek(this.start);
             stream = new BufferedInputStream(connection.getInputStream());
             byte[] bt = new byte[10 * 1024];
-            int length = 0;
+            int length;
             while ((length = stream.read(bt, 0, bt.length)) != -1) {
                 access.write(bt, 0, length);
                 if (notify != null) {

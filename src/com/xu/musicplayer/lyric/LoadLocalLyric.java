@@ -39,7 +39,7 @@ public class LoadLocalLyric {
             try (FileInputStream stream = new FileInputStream(file)) {
                 fReader = new InputStreamReader(stream, StandardCharsets.UTF_8);
                 bReader = new BufferedReader(fReader);
-                String txt = "";
+                String txt;
                 String reg = "\\[(\\d{2}:\\d{2}\\.\\d{2})\\]|\\[\\d{2}:\\d{2}\\]";
                 while ((txt = bReader.readLine()) != null) {
                     if (txt.contains("[ti:")) {       // 歌曲信息
@@ -80,8 +80,6 @@ public class LoadLocalLyric {
                     }
                 }
             }
-        } else {
-
         }
         return Constant.PLAYING_SONG_LYRIC;
     }
@@ -120,8 +118,6 @@ public class LoadLocalLyric {
                             }
                         }
                     }
-                } else {
-
                 }
             }
         }
