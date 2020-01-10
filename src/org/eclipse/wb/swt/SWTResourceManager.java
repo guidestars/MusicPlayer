@@ -195,7 +195,7 @@ public class SWTResourceManager {
 //                m_imageMap.put(key, image);
 //            }
 //        }
-        return getImage(path);
+        return getImage("src" + path);
     }
 
     /**
