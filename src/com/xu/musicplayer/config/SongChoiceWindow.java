@@ -14,10 +14,10 @@ public class SongChoiceWindow {
 
     public static void update_show_list(Table table, LinkedList<String> lists) {
         table.removeAll();
-        TableItem tableItem = null;
+        TableItem tableItem;
         for (int i = 0, len = lists.size(); i < len; i++) {
             tableItem = new TableItem(table, SWT.NONE);
-            tableItem.setText(new String[]{(i + 1) + "", lists.get(i).split(Constant.SPLIT)[1]});
+            tableItem.setText(new String[]{(i + 1) + "", lists.get(i).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[1]});
         }
     }
 
@@ -26,18 +26,18 @@ public class SongChoiceWindow {
         dialog.setFilterNames(new String[]{"*.mp3", "*.MP3", "*.wav", "*.WAV", "*.flac", "*.FLAC", "*.pcm", "*.PCM"});
         dialog.open();
         String[] lists = dialog.getFileNames();
-        String paths = "";
-        Constant.PLAY_TEMP_LIST.clear();
+        String paths;
+        Constant.MUSIC_PLAYER_SONGS_TEMP_LIST.clear();
         for (int i = 0, len = lists.length; i < len; i++) {
             paths = lists[i];
             if (paths.toLowerCase().endsWith(".mp3") || paths.toLowerCase().endsWith(".flac") || paths.toLowerCase().endsWith(".wav") || paths.toLowerCase().endsWith(".pcm")) {
                 paths = dialog.getFilterPath() + File.separator + lists[i];
-                paths = paths + Constant.SPLIT + have_lyric(paths);
-                Constant.PLAY_TEMP_LIST.add(paths);
+                paths = paths + Constant.MUSIC_PLAYER_SYSTEM_SPLIT + have_lyric(paths);
+                Constant.MUSIC_PLAYER_SONGS_TEMP_LIST.add(paths);
             }
         }
-        new Writing().write(Constant.PLAY_TEMP_LIST);
-        return Constant.PLAY_TEMP_LIST;
+        new Writing().write(Constant.MUSIC_PLAYER_SONGS_TEMP_LIST);
+        return Constant.MUSIC_PLAYER_SONGS_TEMP_LIST;
     }
 
     private String have_lyric(String path) {

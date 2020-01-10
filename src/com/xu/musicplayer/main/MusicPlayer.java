@@ -13,8 +13,6 @@ import com.xu.musicplayer.tray.MusicPlayerTray;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.events.*;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.ImageData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Composite;
@@ -22,16 +20,8 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
@@ -39,26 +29,30 @@ import java.util.prefs.Preferences;
 public class MusicPlayer {
 
 	public static boolean playing = true;// 播放按钮
-	public static List<Color> COLORS = new ArrayList<Color>();
-	private static Player player = new XMusic();
+
+	protected Shell shell;
+	private Display display;
+	private Tray tray;// 播放器托盘
+
+	private Table lists;
+	private Table lyrics;
+
+	private static Player player = null;//播放器
 	private static int merchant = 0;
 	private static int remainder = 0;
 	private static String format = "";
-	protected Shell shell;
-	Composite top;
-	private Display display;
-	private Tray tray;// 播放器托盘
-	private Table lists;
-	private Table lyrics;
-	private Label text;
-	private Label text_1;
-	private Label label_3;
-	private ControllerServer server = new ControllerServer(); // 歌词及频谱
-	private ProgressBar progressBar; // 进度条
+	private Composite top;
 	private Composite foot; // 频谱面板
-	private boolean click = false;//界面移动
+	private ProgressBar progress; // 进度条
+	private Label ttime;
+
 	private int clickX, clickY;//界面移动
+	private Label rtime;
+
 	private boolean choise = true;// 双击播放
+	private Label start;
+	private ControllerServer server = new ControllerServer(); // 歌词及频谱
+	private boolean click = false;//界面移动
 
 	/**
 	 * Launch the application.
@@ -71,6 +65,21 @@ public class MusicPlayer {
 			window.open();
 		} catch (Exception e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * Open the window.
+	 */
+	public void open() {
+		display = Display.getDefault();
+		createContents();
+		shell.open();
+		shell.layout();
+		while (!shell.isDisposed()) {
+			if (!display.readAndDispatch()) {
+				display.sleep();
+			}
 		}
 	}
 
@@ -96,55 +105,42 @@ public class MusicPlayer {
 	}
 
 	/**
-	 * Open the window.
-	 */
-	public void open() {
-		display = Display.getDefault();
-		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}
-	}
-
-	/**
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
 		shell = new Shell(SWT.NONE);
-		shell.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/main.png"));
+		shell.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/main.png"));
 		shell.setSize(new Point(1000, 645));
-		shell.setSize(890, 486);
+		shell.setSize(900, 486);
 		shell.setText("MusicPlayer");
 		shell.setLocation((display.getClientArea().width - shell.getSize().x) / 2,
 				(display.getClientArea().height - shell.getSize().y) / 2);
 		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
 		shell.setBackgroundMode(SWT.INHERIT_DEFAULT);
 
+		player = XMusic.player();
+
 		// 托盘引入
 		tray = display.getSystemTray();
 		MusicPlayerTray trayutil = new MusicPlayerTray(shell, tray);
 		trayutil.tray();
 
-		Composite composite = new Composite(shell, SWT.NONE);
-		composite.setBackgroundMode(SWT.INHERIT_FORCE);
-		composite.setLayout(new FillLayout(SWT.HORIZONTAL));
+		Composite mpanel = new Composite(shell, SWT.NONE);
+		mpanel.setBackgroundMode(SWT.INHERIT_FORCE);
+		mpanel.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		SashForm sashForm = new SashForm(composite, SWT.VERTICAL);
+		SashForm mform = new SashForm(mpanel, SWT.VERTICAL);
 
-		top = new Composite(sashForm, SWT.NONE);
+		top = new Composite(mform, SWT.NONE);
 		top.setBackgroundMode(SWT.INHERIT_FORCE);
 
-		Label label = new Label(top, SWT.NONE);
-		label.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/exit-1.png"));
-		label.setBounds(845, 10, 32, 32);
+		Label exit = new Label(top, SWT.NONE);
+		exit.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-1.png"));
+		exit.setBounds(845, 10, 32, 32);
 
-		Label label_1 = new Label(top, SWT.NONE);
-		label_1.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/mini-1.png"));
-		label_1.setBounds(798, 10, 32, 32);
+		Label mini = new Label(top, SWT.NONE);
+		mini.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/mini-1.png"));
+		mini.setBounds(798, 10, 32, 32);
 
 		Combo combo = new Combo(top, SWT.NONE);
 		combo.addSelectionListener(new SelectionAdapter() {
@@ -153,36 +149,34 @@ public class MusicPlayer {
 				combo.clearSelection();
 			}
 		});
-		combo.addModifyListener(new ModifyListener() {
-			public void modifyText(ModifyEvent arg0) {
-				//List<APISearchTipsEntity> songs = Search.search(combo.getText(),"API");
-				//for (APISearchTipsEntity song:songs) {
-				//	combo.add(song.getFilename());
-				//}
-				//combo.setListVisible(true);
-				combo.clearSelection();
-				for (int i = 0; i < Constant.PLAY_LIST.size(); i++) {
-					if (Constant.PLAY_LIST.get(i).contains(combo.getText())) {
-						combo.add(Constant.PLAY_LIST.get(i).split(Constant.SPLIT)[1]);
-					}
+		combo.addModifyListener(arg0 -> {
+			//List<APISearchTipsEntity> songs = Search.search(combo.getText(),"API");
+			//for (APISearchTipsEntity song:songs) {
+			//	combo.add(song.getFilename());
+			//}
+			//combo.setListVisible(true);
+			combo.clearSelection();
+			for (int i = 0; i < Constant.MUSIC_PLAYER_SONGS_LIST.size(); i++) {
+				if (Constant.MUSIC_PLAYER_SONGS_LIST.get(i).contains(combo.getText())) {
+					combo.add(Constant.MUSIC_PLAYER_SONGS_LIST.get(i).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[1]);
 				}
-				combo.setListVisible(true);
 			}
+			combo.setListVisible(true);
 		});
 		combo.setBounds(283, 21, 330, 25);
 		combo.setVisible(false);
 
-		Composite center = new Composite(sashForm, SWT.NONE);
+		Composite center = new Composite(mform, SWT.NONE);
 		center.setBackgroundMode(SWT.INHERIT_FORCE);
 		center.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		SashForm sashForm_1 = new SashForm(center, SWT.NONE);
+		SashForm cform = new SashForm(center, SWT.NONE);
 
-		Composite composite_4 = new Composite(sashForm_1, SWT.NONE);
-		composite_4.setBackgroundMode(SWT.INHERIT_FORCE);
-		composite_4.setLayout(new FillLayout(SWT.HORIZONTAL));
+		Composite lpanel = new Composite(cform, SWT.NONE);
+		lpanel.setBackgroundMode(SWT.INHERIT_FORCE);
+		lpanel.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		lists = new Table(composite_4, SWT.FULL_SELECTION);
+		lists = new Table(lpanel, SWT.FULL_SELECTION);
 		lists.setHeaderVisible(true);
 
 		TableColumn tableColumn = new TableColumn(lists, SWT.NONE);
@@ -193,82 +187,68 @@ public class MusicPlayer {
 		tableColumn_1.setWidth(117);
 		tableColumn_1.setText("歌曲");
 
-		Composite composite_5 = new Composite(sashForm_1, SWT.NONE);
-		composite_5.setBackgroundMode(SWT.INHERIT_FORCE);
-		composite_5.setLayout(new FillLayout(SWT.HORIZONTAL));
+		Composite rpanel = new Composite(cform, SWT.NONE);
+		rpanel.setBackgroundMode(SWT.INHERIT_FORCE);
+		rpanel.setLayout(new FillLayout(SWT.HORIZONTAL));
 
-		lyrics = new Table(composite_5, SWT.NONE);
+		lyrics = new Table(rpanel, SWT.NONE);
 
 		TableColumn tableColumn_2 = new TableColumn(lyrics, SWT.CENTER);
 		tableColumn_2.setText("歌词");
 
 		TableColumn tableColumn_3 = new TableColumn(lyrics, SWT.CENTER);
-		tableColumn_3.setWidth(728);
+		tableColumn_3.setWidth(738);
 		tableColumn_3.setText("歌词");
 
-		COLORS.add(Color.BLACK);
-		COLORS.add(Color.BLUE);
-		COLORS.add(Color.CYAN);
-		COLORS.add(Color.DARK_GRAY);
-		COLORS.add(Color.GRAY);
-		COLORS.add(Color.GREEN);
-		COLORS.add(Color.LIGHT_GRAY);
-		COLORS.add(Color.MAGENTA);
-		COLORS.add(Color.ORANGE);
-		COLORS.add(Color.PINK);
-		COLORS.add(Color.RED);
-		COLORS.add(Color.WHITE);
-		COLORS.add(Color.YELLOW);
-
-		foot = new Composite(sashForm, SWT.NONE);
+		foot = new Composite(mform, SWT.NONE);
 		foot.setBackgroundMode(SWT.INHERIT_FORCE);
 
-		Label lblNewLabel = new Label(foot, SWT.NONE);
-		lblNewLabel.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/lastsong-1.png"));
-		lblNewLabel.setBounds(33, 18, 32, 32);
+		Label prev = new Label(foot, SWT.NONE);
+		prev.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/lastsong-1.png"));
+		prev.setBounds(33, 18, 32, 32);
 
-		Label label_2 = new Label(foot, SWT.NONE);
-		label_2.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/nextsong-1.png"));
-		label_2.setBounds(165, 18, 32, 32);
+		Label next = new Label(foot, SWT.NONE);
+		next.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/nextsong-1.png"));
+		next.setBounds(165, 18, 32, 32);
 
-		label_3 = new Label(foot, SWT.NONE);
-		label_3.addMouseListener(new MouseAdapter() {
+		start = new Label(foot, SWT.NONE);
+		start.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				playing = Constant.PLAY_STATE;
+				playing = Constant.MUSIC_PLAYER_PLAYING_STATE;
 				if (playing && !XMusic.isPlaying()) {
 					//TODO:
-					label_3.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/start.png"));
+					start.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/start.png"));
 					playing = false;
 				} else {
 					//TODO:
 					playing = true;
-					label_3.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/stop.png"));
+					start.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/stop.png"));
 				}
 			}
 		});
-		label_3.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/stop.png"));
-		label_3.setBounds(98, 18, 32, 32);
+		start.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/stop.png"));
+		start.setBounds(98, 18, 32, 32);
 
-		progressBar = new ProgressBar(foot, SWT.NONE);
-		progressBar.setEnabled(false);
-		progressBar.setBounds(238, 25, 610, 17);
-		progressBar.setMaximum(100);//设置进度条的最大长度
-		progressBar.setSelection(0);
-		progressBar.setMinimum(0);//设置进度的条最小程度
+		progress = new ProgressBar(foot, SWT.NONE);
+		progress.setEnabled(false);
+		progress.setBounds(238, 25, 610, 17);
+		progress.setMaximum(100);//设置进度条的最大长度
+		progress.setSelection(0);
+		progress.setMinimum(0);//设置进度的条最小程度
 
-		text = new Label(foot, SWT.NONE);
-		text.setFont(SWTResourceManager.getFont("Consolas", 9, SWT.NORMAL));
-		text.setEnabled(false);
-		text.setBounds(238, 4, 73, 20);
+		ttime = new Label(foot, SWT.NONE);
+		ttime.setFont(SWTResourceManager.getFont("Consolas", 9, SWT.NORMAL));
+		ttime.setEnabled(false);
+		ttime.setBounds(238, 4, 73, 20);
 
-		text_1 = new Label(foot, SWT.RIGHT);
-		text_1.setFont(SWTResourceManager.getFont("Consolas", 9, SWT.NORMAL));
-		text_1.setEnabled(false);
-		text_1.setBounds(775, 4, 73, 20);
+		rtime = new Label(foot, SWT.RIGHT);
+		rtime.setFont(SWTResourceManager.getFont("Consolas", 9, SWT.NORMAL));
+		rtime.setEnabled(false);
+		rtime.setBounds(775, 4, 73, 20);
 
-		sashForm.setWeights(new int[]{1, 5, 1});
-		sashForm_1.setWeights(new int[]{156, 728});
+		mform.setWeights(new int[]{1, 5, 1});
+		cform.setWeights(new int[]{156, 728});
 
 		//界面移动
 		top.addMouseListener(new MouseAdapter() {
@@ -283,73 +263,62 @@ public class MusicPlayer {
 			public void mouseUp(MouseEvent e) {
 				click = false;
 			}
-
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				Color color = COLORS.get(new Random().nextInt(COLORS.size()));
-				if (color != Constant.SPECTRUM_BACKGROUND_COLOR && color != Color.BLACK) {
-					Constant.SPECTRUM_BACKGROUND_COLOR = color;
-					changePanelImage(color);
-				}
-			}
 		});
-		top.addMouseMoveListener(new MouseMoveListener() {
-			public void mouseMove(MouseEvent arg0) {//当鼠标按下的时候执行这条语句
-				if (click) {
-					shell.setLocation(shell.getLocation().x - clickX + arg0.x, shell.getLocation().y - clickY + arg0.y);
-				}
+		top.addMouseMoveListener(arg0 -> {//当鼠标按下的时候执行这条语句
+			if (click) {
+				shell.setLocation(shell.getLocation().x - clickX + arg0.x, shell.getLocation().y - clickY + arg0.y);
 			}
 		});
 
 		// 缩小
-		label_1.addMouseListener(new MouseAdapter() {
+		mini.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				label_1.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/mini-2.png"));
+				mini.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/mini-2.png"));
 			}
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				label_1.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/mini-1.png"));
+				mini.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/mini-1.png"));
 				shell.setMinimized(true);
 			}
 		});
-		label_1.addMouseTrackListener(new MouseTrackAdapter() {
+		mini.addMouseTrackListener(new MouseTrackAdapter() {
 			@Override
 			public void mouseExit(MouseEvent e) {
-				label_1.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/mini-1.png"));
+				mini.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/mini-1.png"));
 			}
 
 			@Override
 			public void mouseHover(MouseEvent e) {
-				label_1.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/mini-2.png"));
-				label_1.setToolTipText("最小化");
+				mini.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/mini-2.png"));
+				mini.setToolTipText("最小化");
 			}
 		});
 
 		//退出
-		label.addMouseListener(new MouseAdapter() {
+		exit.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				label.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/exit-2.png"));
+				exit.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-2.png"));
 			}
 
 			@Override
 			public void mouseUp(MouseEvent e) {
-				label.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/exit-1.png"));
+				exit.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-1.png"));
 				exitMusicPlayer();
 			}
 		});
-		label.addMouseTrackListener(new MouseTrackAdapter() {
+		exit.addMouseTrackListener(new MouseTrackAdapter() {
 			@Override
 			public void mouseExit(MouseEvent e) {
-				label.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/exit-1.png"));
+				exit.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-1.png"));
 			}
 
 			@Override
 			public void mouseHover(MouseEvent e) {
-				label.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/exit-2.png"));
-				label.setToolTipText("退出");
+				exit.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/exit-2.png"));
+				exit.setToolTipText("退出");
 			}
 		});
 
@@ -372,80 +341,80 @@ public class MusicPlayer {
 		});
 
 		//上一曲
-		lblNewLabel.addMouseListener(new MouseAdapter() {
+		prev.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				lblNewLabel.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/lastsong-2.png"));
+				prev.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/lastsong-2.png"));
 			}
 
 			@Override
 			public void mouseUp(MouseEvent e) {
 				changePlayingSong(-1, 0);//上一曲
-				lblNewLabel.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/lastsong-1.png"));
+				prev.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/lastsong-1.png"));
 			}
 		});
 
 		//下一曲
-		label_2.addMouseListener(new MouseAdapter() {
+		next.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				label_2.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/nextsong-2.png"));
+				next.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/nextsong-2.png"));
 			}
 
 			@Override
 			public void mouseUp(MouseEvent e) {
 				changePlayingSong(-1, 1);//下一曲
-				label_2.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/nextsong-1.png"));
+				next.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/nextsong-1.png"));
 			}
 		});
 
 		foot.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
-				sashForm.setWeights(new int[]{1, 5, 1});
-				sashForm_1.setWeights(new int[]{156, 728});
+				mform.setWeights(new int[]{1, 5, 1});
+				cform.setWeights(new int[]{156, 728});
 			}
 		});
 
 		foot.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDoubleClick(MouseEvent e) {
-				Color color = COLORS.get(new Random().nextInt(COLORS.size()));
+				Color color = Constant.MUSIC_PLAYER_COLORS.get(new Random().nextInt(Constant.MUSIC_PLAYER_COLORS.size()));
 				if (color != Constant.SPECTRUM_BACKGROUND_COLOR) {
-					Constant.SPECTRUM_COLOR = color;
+					Constant.SPECTRUM_FOREGROUND_COLOR = color;
 				}
 			}
 		});
 
-		sashForm.addControlListener(new ControlAdapter() {
+		mform.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
-				sashForm.setWeights(new int[]{1, 5, 1});
-				sashForm_1.setWeights(new int[]{156, 728});
+				mform.setWeights(new int[]{1, 5, 1});
+				cform.setWeights(new int[]{156, 728});
 			}
 		});
 
-		composite_4.addControlListener(new ControlAdapter() {
+		lpanel.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
-				sashForm.setWeights(new int[]{1, 5, 1});
-				sashForm_1.setWeights(new int[]{156, 728});
+				mform.setWeights(new int[]{1, 5, 1});
+				cform.setWeights(new int[]{156, 728});
 			}
 		});
 
-		composite_5.addControlListener(new ControlAdapter() {
+		rpanel.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
-				sashForm.setWeights(new int[]{1, 5, 1});
-				sashForm_1.setWeights(new int[]{156, 728});
+				mform.setWeights(new int[]{1, 5, 1});
+				cform.setWeights(new int[]{156, 728});
 			}
 		});
 
-		sashForm_1.addControlListener(new ControlAdapter() {
+		cform.addControlListener(new ControlAdapter() {
 			@Override
 			public void controlResized(ControlEvent e) {
-				sashForm.setWeights(new int[]{1, 5, 1});
-				sashForm_1.setWeights(new int[]{156, 728});
+				mform.setWeights(new int[]{1, 5, 1});
+				cform.setWeights(new int[]{156, 728});
 			}
 		});
 
@@ -467,12 +436,27 @@ public class MusicPlayer {
 	public void initMusicPlayer(Shell shell, Table table) {
 		SongChoiceWindow choice = new SongChoiceWindow();
 		new Reading().read();
-		if (Constant.PLAY_LIST == null || Constant.PLAY_LIST.size() <= 0) {
+		if (Constant.MUSIC_PLAYER_SONGS_LIST == null || Constant.MUSIC_PLAYER_SONGS_LIST.size() <= 0) {
 			Toolkit.getDefaultToolkit().beep();
 			choice.open_choise_windows(shell);
 		}
-		updatePlayerSongLists(Constant.PLAY_LIST, table);
+		updatePlayerSongLists(Constant.MUSIC_PLAYER_SONGS_LIST, table);
 		readMusicPlayerPlayingSong();
+
+		Constant.MUSIC_PLAYER_COLORS.add(Color.BLACK);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.BLUE);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.CYAN);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.DARK_GRAY);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.GRAY);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.GREEN);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.LIGHT_GRAY);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.MAGENTA);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.ORANGE);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.PINK);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.RED);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.WHITE);
+		Constant.MUSIC_PLAYER_COLORS.add(Color.YELLOW);
+
 	}
 
 	/**
@@ -491,7 +475,7 @@ public class MusicPlayer {
 		TableItem item;
 		for (int i = 0; i < lists.size(); i++) {
 			item = new TableItem(table, SWT.NONE);
-			item.setText(new String[]{"" + (i + 1), lists.get(i).split(Constant.SPLIT)[1]});
+			item.setText(new String[]{"" + (i + 1), lists.get(i).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[1]});
 		}
 	}
 
@@ -534,30 +518,47 @@ public class MusicPlayer {
 	 * @date: 2019年12月26日 下午7:33:36
 	 */
 	public void changePlayingSong(int index, int mode) {
-		System.out.println(Constant.PLAY_INDEX + "\t" + Constant.PLAY_LIST.get(Constant.PLAY_INDEX));
+		System.out.println(Constant.PLAYING_SONG_INDEX + "\t" + Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX));
 
-		Constant.PLAY_INDEX = index == -1 ? Constant.PLAY_INDEX : index;
-		Constant.PLAYING_SONG = Constant.PLAY_LIST.get(Constant.PLAY_INDEX);
+		Constant.PLAYING_SONG_INDEX = index == -1 ? Constant.PLAYING_SONG_INDEX : index;
+		Constant.PLAYING_SONG_NAME = Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX);
 
-		player.load(Constant.PLAYING_SONG.split(Constant.SPLIT)[0]);
+		if (Constant.MUSIC_PLAYER_SONGS_LIST.size() <= 0) {
+			Toolkit.getDefaultToolkit().beep();
+			MessageBox message = new MessageBox(shell, SWT.YES | SWT.ICON_WARNING | SWT.NO);
+			message.setText("提示");
+			message.setMessage("未发现歌曲，现在添加歌曲？");
+			if (message.open() == SWT.YES) {
+				initMusicPlayer(shell, lists);
+			} else {
+				Toolkit.getDefaultToolkit().beep();
+				message = new MessageBox(shell, SWT.OK | SWT.ICON_ERROR);
+				message.setText("提示");
+				message.setMessage("你将不能播放歌曲。");
+				message.open();
+			}
+		}
+
+		player.load(Constant.PLAYING_SONG_NAME.split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[0]);
+
 		try {
 			player.start();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		Constant.PLAY_STATE = true;
-		updatePlayerSongListsColor(lists, Constant.PLAY_INDEX);
+		Constant.MUSIC_PLAYER_PLAYING_STATE = true;
+		updatePlayerSongListsColor(lists, Constant.PLAYING_SONG_INDEX);
 		if (mode == 0) {//上一曲
-			if (Constant.PLAY_INDEX <= 0) {
-				Constant.PLAY_INDEX = Constant.PLAY_LIST.size();
+			if (Constant.PLAYING_SONG_INDEX <= 0) {
+				Constant.PLAYING_SONG_INDEX = Constant.MUSIC_PLAYER_SONGS_LIST.size();
 			} else {
-				Constant.PLAY_INDEX--;
+				Constant.PLAYING_SONG_INDEX--;
 			}
 		} else {//下一曲
-			if (Constant.PLAY_INDEX >= Constant.PLAY_LIST.size()) {
-				Constant.PLAY_INDEX = 0;
+			if (Constant.PLAYING_SONG_INDEX >= Constant.MUSIC_PLAYER_SONGS_LIST.size()) {
+				Constant.PLAYING_SONG_INDEX = 0;
 			} else {
-				Constant.PLAY_INDEX++;
+				Constant.PLAYING_SONG_INDEX++;
 			}
 		}
 	}
@@ -574,11 +575,11 @@ public class MusicPlayer {
 	 * @date: 2019年12月26日 下午7:40:10
 	 */
 	private void updatePlayerSongListsColor(Table table, int index) {
-		label_3.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/start.png"));
+		start.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/start.png"));
 
-		Constant.HAVE_LYRIC = false;
-		Constant.SONG_LENGTH = Integer.parseInt(Constant.PLAYING_SONG.split(Constant.SPLIT)[3]);
-		text.setText(format(Constant.SONG_LENGTH));
+		Constant.PLAYING_SONG_HAVE_LYRIC = false;
+		Constant.PLAYING_SONG_LENGTH = Integer.parseInt(Constant.PLAYING_SONG_NAME.split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[3]);
+		ttime.setText(format(Constant.PLAYING_SONG_LENGTH));
 
 		TableItem[] items = table.getItems();
 		for (int i = 0; i < items.length; i++) {
@@ -588,24 +589,29 @@ public class MusicPlayer {
 				items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 			}
 		}
-		if (Constant.PLAY_LIST.get(Constant.PLAY_INDEX).split(Constant.SPLIT)[4].equalsIgnoreCase("Y")) {
-			Constant.HAVE_LYRIC = true;
+		if (index <= 7) {
+			table.setTopIndex(index);
+		} else {
+			table.setTopIndex(index - 7);
+		}
+		if (Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[4].equalsIgnoreCase("Y")) {
+			Constant.PLAYING_SONG_HAVE_LYRIC = true;
 			LoadLocalLyric lyric = new LoadLocalLyric();
-			String path = Constant.PLAY_LIST.get(Constant.PLAY_INDEX).split(Constant.SPLIT)[0];
+			String path = Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[0];
 			path = path.substring(0, path.lastIndexOf(".")) + ".lrc";
 			lyric.lyric(path);
 			lyrics.removeAll();
-			if (Constant.PLAY_LYRIC != null && Constant.PLAY_LYRIC.size() > 0) {
+			if (Constant.PLAYING_SONG_LYRIC != null && Constant.PLAYING_SONG_LYRIC.size() > 0) {
 				TableItem item;
-				for (int i = 0, len = Constant.PLAY_LYRIC.size() + 8; i < len; i++) {
+				for (int i = 0, len = Constant.PLAYING_SONG_LYRIC.size() + 8; i < len; i++) {
 					item = new TableItem(lyrics, SWT.NONE);
 					if (i < len - 8) {
-						item.setText(new String[]{"", Constant.PLAY_LYRIC.get(i).split(Constant.SPLIT)[1]});
+						item.setText(new String[]{"", Constant.PLAYING_SONG_LYRIC.get(i).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[1]});
 					}
 				}
-				PlayerEntity.setBar(progressBar);
-				PlayerEntity.setText(text_1);
-				PlayerEntity.setSong(Constant.PLAYING_SONG);
+				PlayerEntity.setBar(progress);
+				PlayerEntity.setText(rtime);
+				PlayerEntity.setSong(Constant.PLAYING_SONG_NAME);
 				PlayerEntity.setTable(lyrics);
 			}
 			PlayerEntity.setSpectrum(foot);
@@ -616,25 +622,6 @@ public class MusicPlayer {
 		JVMinfo();
 	}
 
-	/**
-	 * Java MusicPlayer 暂停播放(未实现)
-	 *
-	 * @return void
-	 * @Author: hyacinth
-	 * @Title: stopMusicPlayer
-	 * @Description: TODO
-	 * @date: 2019年12月26日 下午7:47:41
-	 */
-	public void stopMusicPlayer() {
-		try {
-			player.end();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		Constant.PLAY_STATE = false;
-		label_3.setImage(SWTResourceManager.getImage("src/com/xu/musicplayer/image/stop.png"));
-		updatePlayerSongListsColor(lists, Constant.PLAY_INDEX);
-	}
 
 	/**
 	 * Java MusicPlayer 退出音乐播放器
@@ -651,6 +638,7 @@ public class MusicPlayer {
 		player.stop();
 		shell.dispose();
 	}
+
 
 	/**
 	 * Java MusicPlayer 将正在播放的歌曲存在注册表中
@@ -688,17 +676,34 @@ public class MusicPlayer {
 	private void readMusicPlayerPlayingSong() {
 		Preferences preferences = Preferences.userNodeForPackage(MusicPlayer.class);
 		String index = preferences.get("MusicPlayer", null);
-		if (index != null) {
-			//next_song(Integer.parseInt(index));
-		}
+		//next_song(Integer.parseInt(index));
 	}
 
+	/**
+	 * Java MusicPlayer 暂停播放(未实现)
+	 *
+	 * @return void
+	 * @Author: hyacinth
+	 * @Title: stopMusicPlayer
+	 * @Description: TODO
+	 * @date: 2019年12月26日 下午7:47:41
+	 */
+	public void stopMusicPlayer() {
+		try {
+			player.end();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Constant.MUSIC_PLAYER_PLAYING_STATE = false;
+		start.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/stop.png"));
+		updatePlayerSongListsColor(lists, Constant.PLAYING_SONG_INDEX);
+	}
 
 	public void JVMinfo() {
-		long vmFree = 0;
-		long vmUse = 0;
-		long vmTotal = 0;
-		long vmMax = 0;
+		long vmFree;
+		long vmUse;
+		long vmTotal;
+		long vmMax;
 		int byteToMb = 1024;
 		Runtime rt = Runtime.getRuntime();
 		vmTotal = rt.totalMemory() / byteToMb;
@@ -709,33 +714,7 @@ public class MusicPlayer {
 		System.out.println("JVM 空闲内存为：" + vmFree + "\tKB");
 		System.out.println("JVM 可用内存为：" + vmTotal + "\tKB");
 		System.out.println("JVM 最大内存为：" + vmMax + "\tKB");
-	}
-
-	private void changePanelImage(Color color) {
-		BufferedImage image = new BufferedImage(5, 5, BufferedImage.TYPE_INT_RGB);
-		Graphics2D graphics = image.createGraphics();
-		//image = graphics.getDeviceConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);
-		//graphics.dispose();
-		//graphics = image.createGraphics();
-		graphics.setBackground(color);
-		graphics.clearRect(0, 0, 5, 5);
-		//graphics.setColor(Color.PINK);
-		//graphics.setStroke(new BasicStroke(1f));
-
-		ByteArrayOutputStream stream = new ByteArrayOutputStream();
-		try {
-			ImageIO.write(image, "png", stream);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		InputStream inputStream = new ByteArrayInputStream(stream.toByteArray());
-		if (inputStream != null) {
-			top.setBackgroundImage(new Image(null, new ImageData(inputStream)));
-			foot.setBackgroundImage(top.getBackgroundImage());
-			//lists.setBackgroundImage(top.getBackgroundImage());
-			//lyrics.setBackgroundImage(top.getBackgroundImage());
-		}
-		graphics.dispose();
+		System.gc();
 	}
 
 }

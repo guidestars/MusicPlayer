@@ -19,17 +19,14 @@ public class Asynchronous {
     private int index = 1;
 
     public static void main(String[] args) throws InterruptedException {
-        new Asynchronous().download(new DownloadNotify() {
-            @Override
-            public void result(Object object) {
-            }
+        new Asynchronous().download(object -> {
         }, "http://localhost:8080/WEB/a/a.pdf", "kk");
     }
 
     public void download(DownloadNotify notify, String url) {
         String name = url.substring(url.lastIndexOf("/") + 1);
-        HttpURLConnection connection = null;
-        String newname = "";
+        HttpURLConnection connection;
+        String newname;
         try {
             connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("HEAD");
@@ -58,8 +55,8 @@ public class Asynchronous {
 
     public void download(DownloadNotify notify, String url, String name) {
         name += url.substring(url.lastIndexOf("."));
-        String newname = "";
-        HttpURLConnection connection = null;
+        String newname;
+        HttpURLConnection connection;
         try {
             connection = (HttpURLConnection) new URL(url).openConnection();
             connection.setRequestMethod("HEAD");
@@ -87,17 +84,17 @@ public class Asynchronous {
     }
 
     public void task(DownloadNotify notify, String url, String path, long length) {
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(Constant.DOWNLOAD_CORE_POOL_SIZE, Constant.DOWNLOAD_MAX_POOL_SIZE, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(Constant.MUSIC_PLAYER_DOWNLOAD_CORE_POOL_SIZE, Constant.MUSIC_PLAYER_DOWNLOAD_MAX_POOL_SIZE, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
         if (length <= 10 * 1024 * 1024) {
             executor.execute(new DownLoadTask(notify, url, path, 0, length));
         } else {
-            for (long i = 0, len = length / Constant.DOWNLOAD_FILE_SIZE_PER_THREAD; i <= len; i++) {
+            for (long i = 0, len = length / Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD; i <= len; i++) {
                 if (i == len && i > 0) {
-                    System.out.println("A-->" + length + "\t" + i * Constant.DOWNLOAD_FILE_SIZE_PER_THREAD + "--" + i + "--" + length);
-                    executor.execute(new DownLoadTask(notify, url, path, i * Constant.DOWNLOAD_FILE_SIZE_PER_THREAD, length));
+                    System.out.println("A-->" + length + "\t" + i * Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD + "--" + i + "--" + length);
+                    executor.execute(new DownLoadTask(notify, url, path, i * Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD, length));
                 } else {
-                    System.out.println("B-->" + length + "\t" + i * Constant.DOWNLOAD_FILE_SIZE_PER_THREAD + "--" + i + "--" + ((i + 1) * Constant.DOWNLOAD_FILE_SIZE_PER_THREAD - 1));
-                    executor.execute(new DownLoadTask(notify, url, path, i * Constant.DOWNLOAD_FILE_SIZE_PER_THREAD, (i + 1) * Constant.DOWNLOAD_FILE_SIZE_PER_THREAD - 1));
+                    System.out.println("B-->" + length + "\t" + i * Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD + "--" + i + "--" + ((i + 1) * Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD - 1));
+                    executor.execute(new DownLoadTask(notify, url, path, i * Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD, (i + 1) * Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD - 1));
                 }
             }
         }
@@ -135,7 +132,7 @@ class DownLoadTask implements Runnable {
             access.seek(this.start);
             stream = new BufferedInputStream(connection.getInputStream());
             byte[] bt = new byte[10 * 1024];
-            int length = 0;
+            int length;
             while ((length = stream.read(bt, 0, bt.length)) != -1) {
                 access.write(bt, 0, length);
                 if (notify != null) {

@@ -27,20 +27,16 @@ public class MusicPlayerTray {
             item.setToolTipText("登录");
             item.setImage(SWTResourceManager.getImage(MusicPlayerTray.class, "/com/xu/musicplayer/image/main.png"));
             menu = new Menu(shell, SWT.POP_UP);
-            item.addListener(SWT.MenuDetect, new Listener() {
-                public void handleEvent(Event arg0) {
-                    menu.setVisible(true);
-                }
-            });
+            item.addListener(SWT.MenuDetect, arg0 -> menu.setVisible(true));
             // 放大
-            MenuItem max = new MenuItem(menu, SWT.PUSH);
-            max.setText("放大");
-            max.addSelectionListener(new SelectionAdapter() {
-                public void widgetSelected(SelectionEvent arg0) {
-                    shell.setVisible(true);
-                    shell.setMaximized(true);
-                }
-            });
+//            MenuItem max = new MenuItem(menu, SWT.PUSH);
+//            max.setText("放大");
+//            max.addSelectionListener(new SelectionAdapter() {
+//                public void widgetSelected(SelectionEvent arg0) {
+//                    shell.setVisible(true);
+//                    shell.setMaximized(true);
+//                }
+//            });
             // 缩小
             MenuItem mini = new MenuItem(menu, SWT.PUSH);
             mini.setText("缩小");

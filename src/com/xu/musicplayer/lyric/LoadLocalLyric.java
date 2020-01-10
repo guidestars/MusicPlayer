@@ -22,7 +22,7 @@ public class LoadLocalLyric {
     public static void main(String[] args) throws IOException {
         LoadLocalLyric lyric = new LoadLocalLyric();
         lyric.lyric("F:\\KuGou\\丸子呦 - 广寒宫.lrc");
-        for (String s : Constant.PLAY_LYRIC) {
+        for (String s : Constant.PLAYING_SONG_LYRIC) {
             System.out.println(s);
         }
     }
@@ -31,7 +31,7 @@ public class LoadLocalLyric {
      * 获取本地歌曲歌词
      */
     public List<String> lyric(String path) {
-        Constant.PLAY_LYRIC.clear();
+        Constant.PLAYING_SONG_LYRIC.clear();
         File file = new File(path);
         if (file.exists()) {
             InputStreamReader fReader = null;
@@ -39,26 +39,26 @@ public class LoadLocalLyric {
             try (FileInputStream stream = new FileInputStream(file)) {
                 fReader = new InputStreamReader(stream, StandardCharsets.UTF_8);
                 bReader = new BufferedReader(fReader);
-                String txt = "";
+                String txt;
                 String reg = "\\[(\\d{2}:\\d{2}\\.\\d{2})\\]|\\[\\d{2}:\\d{2}\\]";
                 while ((txt = bReader.readLine()) != null) {
                     if (txt.contains("[ti:")) {       // 歌曲信息
-                        Constant.PLAY_LYRIC.add("歌曲信息: " + Constant.SPLIT + txt.substring(txt.lastIndexOf(":") + 1, txt.length() - 1) + "");
+                        Constant.PLAYING_SONG_LYRIC.add("歌曲信息: " + Constant.MUSIC_PLAYER_SYSTEM_SPLIT + txt.substring(txt.lastIndexOf(":") + 1, txt.length() - 1) + "");
                     } else if (txt.contains("[ar:")) {// 歌手信息
-                        Constant.PLAY_LYRIC.add("歌手信息: " + Constant.SPLIT + txt.substring(txt.lastIndexOf(":") + 1, txt.length() - 1) + " ");
+                        Constant.PLAYING_SONG_LYRIC.add("歌手信息: " + Constant.MUSIC_PLAYER_SYSTEM_SPLIT + txt.substring(txt.lastIndexOf(":") + 1, txt.length() - 1) + " ");
                     } else if (txt.contains("[al:")) {// 专辑信息
-                        Constant.PLAY_LYRIC.add("专辑信息: " + Constant.SPLIT + txt.substring(txt.lastIndexOf(":") + 1, txt.length() - 1) + " ");
+                        Constant.PLAYING_SONG_LYRIC.add("专辑信息: " + Constant.MUSIC_PLAYER_SYSTEM_SPLIT + txt.substring(txt.lastIndexOf(":") + 1, txt.length() - 1) + " ");
                     } else if (txt.contains("[wl:")) {// 歌词作家
-                        Constant.PLAY_LYRIC.add("歌词作家: " + Constant.SPLIT + txt.substring(txt.lastIndexOf(":") + 1, txt.length() - 1) + " ");
+                        Constant.PLAYING_SONG_LYRIC.add("歌词作家: " + Constant.MUSIC_PLAYER_SYSTEM_SPLIT + txt.substring(txt.lastIndexOf(":") + 1, txt.length() - 1) + " ");
                     } else if (txt.contains("[wm:")) {// 歌曲作家
-                        Constant.PLAY_LYRIC.add("歌曲作家: " + Constant.SPLIT + txt.substring(txt.lastIndexOf(":") + 1, txt.length() - 1) + " ");
+                        Constant.PLAYING_SONG_LYRIC.add("歌曲作家: " + Constant.MUSIC_PLAYER_SYSTEM_SPLIT + txt.substring(txt.lastIndexOf(":") + 1, txt.length() - 1) + " ");
                     } else if (txt.contains("[al:")) {// 歌词制作
-                        Constant.PLAY_LYRIC.add("歌词制作: " + Constant.SPLIT + txt.substring(txt.lastIndexOf(":") + 1, txt.length() - 1) + " ");
+                        Constant.PLAYING_SONG_LYRIC.add("歌词制作: " + Constant.MUSIC_PLAYER_SYSTEM_SPLIT + txt.substring(txt.lastIndexOf(":") + 1, txt.length() - 1) + " ");
                     } else {
                         Pattern pattern = Pattern.compile(reg);
                         Matcher matcher = pattern.matcher(txt);
                         while (matcher.find()) {
-                            Constant.PLAY_LYRIC.add(matcher.group(0).substring(1, matcher.group(0).lastIndexOf("]")).trim() + Constant.SPLIT + txt.substring(txt.lastIndexOf("]") + 1).trim() + " ");
+                            Constant.PLAYING_SONG_LYRIC.add(matcher.group(0).substring(1, matcher.group(0).lastIndexOf("]")).trim() + Constant.MUSIC_PLAYER_SYSTEM_SPLIT + txt.substring(txt.lastIndexOf("]") + 1).trim() + " ");
                         }
                     }
                 }
@@ -80,10 +80,8 @@ public class LoadLocalLyric {
                     }
                 }
             }
-        } else {
-
         }
-        return Constant.PLAY_LYRIC;
+        return Constant.PLAYING_SONG_LYRIC;
     }
 
     @SuppressWarnings("unused")
@@ -120,8 +118,6 @@ public class LoadLocalLyric {
                             }
                         }
                     }
-                } else {
-
                 }
             }
         }

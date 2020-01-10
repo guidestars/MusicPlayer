@@ -30,10 +30,10 @@ public class Controller implements Observer {
 
     @Override
     public void start(PlayerEntity entity) {
-        if (Constant.HAVE_LYRIC && Constant.START_LYRIC) {
+        if (Constant.PLAYING_SONG_HAVE_LYRIC && Constant.MUSIC_PLAYER_SYSTEM_START_LYRIC) {
             startLyricPlayer(entity);
         }
-        if (Constant.START_SPECTRUM) {
+        if (Constant.MUSIC_PLAYER_SYSTEM_START_SPECTRUM) {
             startSpectrumPlayer(entity);
         }
     }
@@ -61,11 +61,11 @@ public class Controller implements Observer {
 
     @Override
     public void end() {
-        if (Constant.HAVE_LYRIC && Constant.START_LYRIC) {
+        if (Constant.PLAYING_SONG_HAVE_LYRIC && Constant.MUSIC_PLAYER_SYSTEM_START_LYRIC) {
             System.out.println("观察者 结束所有 歌词线程");
             endLyricPlayer();
         }
-        if (Constant.START_SPECTRUM) {
+        if (Constant.MUSIC_PLAYER_SYSTEM_START_SPECTRUM) {
             System.out.println("观察者 结束所有 频谱线程");
             endSpectrumPlayer();
         }
@@ -78,7 +78,7 @@ public class Controller implements Observer {
     }
 
     public void startLyricPlayer(PlayerEntity entity) {
-        int length = Integer.parseInt(Constant.PLAYING_SONG.split(Constant.SPLIT)[3]);
+        int length = Integer.parseInt(Constant.PLAYING_SONG_NAME.split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[3]);
         PlayerEntity.getBar().setMaximum(length);
         PlayerEntity.getBar().setSelection(0);
         if (lyricy != null) {
@@ -113,10 +113,17 @@ public class Controller implements Observer {
     }
 
     public void startSpectrumPlayer(PlayerEntity entity) {
-        if (Constant.SPECTRUM_HEIGHT == 0) {
-            Constant.SPECTRUM_HEIGHT = PlayerEntity.getSpectrum().getClientArea().height;
-            Constant.SPECTRUM_WIDTH = PlayerEntity.getSpectrum().getClientArea().width;
-            Constant.SPECTRUM_NUMBER = PlayerEntity.getSpectrum().getClientArea().width / 5;
+        if (Constant.SPECTRUM_TOTAL_HEIGHT == 0) {
+            Constant.SPECTRUM_TOTAL_HEIGHT = PlayerEntity.getSpectrum().getClientArea().height;
+            Constant.SPECTRUM_TOTAL_WIDTH = PlayerEntity.getSpectrum().getClientArea().width;
+            if (Constant.SPECTRUM_STYLE == 0) {
+                Constant.SPECTRUM_TOTAL_NUMBER = PlayerEntity.getSpectrum().getClientArea().width / 5;
+                Constant.SPECTRUM_SPLIT_WIDTH = 5;
+            } else if (Constant.SPECTRUM_STYLE == 1) {
+                Constant.SPECTRUM_TOTAL_NUMBER = PlayerEntity.getSpectrum().getClientArea().width / 20;
+                Constant.SPECTRUM_SPLIT_WIDTH = 20;
+            }
+            Constant.SPECTRUM_SAVE_INIT_SIZE = Constant.SPECTRUM_TOTAL_NUMBER;
         }
         if (spectrum == null) {
             spectrum = new SpectrumThread(PlayerEntity.getSpectrum());

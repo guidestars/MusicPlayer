@@ -184,18 +184,18 @@ public class SWTResourceManager {
      * @return the {@link Image} stored in the file at the specified path
      */
     public static Image getImage(Class<?> clazz, String path) {
-        String key = clazz.getName() + '|' + path;
-        Image image = m_imageMap.get(key);
-        if (image == null) {
-            try {
-                image = getImage(clazz.getResourceAsStream(path));
-                m_imageMap.put(key, image);
-            } catch (Exception e) {
-                image = getMissingImage();
-                m_imageMap.put(key, image);
-            }
-        }
-        return image;
+//        String key = clazz.getName() + '|' + path;
+//        Image image = m_imageMap.get(key);
+//        if (image == null) {
+//            try {
+//                image = getImage(clazz.getResourceAsStream(path));
+//                m_imageMap.put(key, image);
+//            } catch (Exception e) {
+//                image = getMissingImage();
+//                m_imageMap.put(key, image);
+//            }
+//        }
+        return getImage(path);
     }
 
     /**
@@ -245,11 +245,7 @@ public class SWTResourceManager {
             cornerDecoratedImageMap = new HashMap<Image, Map<Image, Image>>();
             m_decoratedImageMap[corner] = cornerDecoratedImageMap;
         }
-        Map<Image, Image> decoratedMap = cornerDecoratedImageMap.get(baseImage);
-        if (decoratedMap == null) {
-            decoratedMap = new HashMap<Image, Image>();
-            cornerDecoratedImageMap.put(baseImage, decoratedMap);
-        }
+        Map<Image, Image> decoratedMap = cornerDecoratedImageMap.computeIfAbsent(baseImage, k -> new HashMap<Image, Image>());
         //
         Image result = decoratedMap.get(decorator);
         if (result == null) {
