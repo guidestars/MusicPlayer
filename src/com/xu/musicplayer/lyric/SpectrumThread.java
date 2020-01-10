@@ -26,14 +26,16 @@ import java.io.InputStream;
  */
 public class SpectrumThread extends Thread {
 
-	private Composite spectrum;
-	private BufferedImage image;
-	private int spectrum_height;
-	private int width;
-	private int height;
+	private Composite spectrum;//频谱面板
+
+	private int twidth;// 频谱总高读
+	private int theight;// 频谱总宽度
+	private int sheight;// 频谱高度
 
 	public SpectrumThread(Composite spectrum) {
 		this.spectrum = spectrum;
+		twidth = Constant.SPECTRUM_TOTAL_WIDTH;
+		theight = Constant.SPECTRUM_TOTAL_HEIGHT;
 	}
 
 	@Override
@@ -42,9 +44,9 @@ public class SpectrumThread extends Thread {
 			Display.getDefault().asyncExec(new Runnable() {
 				@Override
 				public void run() {
-					width = Constant.SPECTRUM_TOTAL_WIDTH;
-					height = Constant.SPECTRUM_TOTAL_HEIGHT;
-					draw(1,width,height);
+					twidth = Constant.SPECTRUM_TOTAL_WIDTH;
+					theight = Constant.SPECTRUM_TOTAL_HEIGHT;
+					draw(1,twidth,theight);
 				}
 			});
 			try {
@@ -56,8 +58,13 @@ public class SpectrumThread extends Thread {
 	}
 
 	public void draw(int style,int width,int height) {
-		image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		
+		InputStream inputStream = null;
+		ByteArrayOutputStream stream = null;		
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+		
 		Graphics2D graphics = image.createGraphics();
+		
 		//image = graphics.getDeviceConfiguration().createCompatibleImage(width, height, Transparency.TRANSLUCENT);
 		//graphics.dispose();
 		//graphics = image.createGraphics();
@@ -65,58 +72,75 @@ public class SpectrumThread extends Thread {
 		graphics.clearRect(0, 0, width, height);
 		graphics.setColor(Constant.SPECTRUM_FOREGROUND_COLOR);
 		graphics.setStroke(new BasicStroke(1f));
+		
 		if (Constant.SPECTRUM_STYLE == 0) {
 			if (XMusic.deque.size() >= Constant.SPECTRUM_SAVE_INIT_SIZE) {
 				for (int i = 0, len = XMusic.deque.size(); i < Constant.SPECTRUM_TOTAL_NUMBER; i++) {
 					try {
 						if (i < len) {
-							spectrum_height = Math.abs(Integer.parseInt(XMusic.deque.get(i) + ""));
-							spectrum_height = spectrum_height > height ? height : spectrum_height;
+							sheight = Math.abs(Integer.parseInt(XMusic.deque.get(i) + ""));
+							sheight = sheight > height ? height : sheight;
 						}
 					} catch (Exception e) {
-						spectrum_height = 0;
+						sheight = 0;
 					}
-					graphics.fillRect(i * Constant.SPECTRUM_SPLIT_WIDTH, height - spectrum_height, Constant.SPECTRUM_SPLIT_WIDTH, spectrum_height);
+					graphics.fillRect(i * Constant.SPECTRUM_SPLIT_WIDTH, height - sheight, Constant.SPECTRUM_SPLIT_WIDTH, sheight);
 					//graphics.fillRect(i*5, height/2-spectrum_height, 5, -spectrum_height);//双谱
 				}
 			}
-			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			stream = new ByteArrayOutputStream();
 			try {
 				ImageIO.write(image, "png", stream);
 			} catch (IOException e) {
-				e.printStackTrace();
+				throw new RuntimeException(e.getMessage());
 			}
-			InputStream inputStream = new ByteArrayInputStream(stream.toByteArray());
+			inputStream = new ByteArrayInputStream(stream.toByteArray());
 			spectrum.setBackgroundImage(new Image(null, new ImageData(inputStream).scaledTo(width, height)));
+			try {
+				inputStream.close();
+			} catch (IOException e) {
+				throw new RuntimeException(e.getMessage());
+			}
 		} else if (Constant.SPECTRUM_STYLE == 1){
 			int indexs = 0;
 			if (XMusic.deque.size() >= Constant.SPECTRUM_SAVE_INIT_SIZE) {
 				for (int i = 0, len = XMusic.deque.size(); i < Constant.SPECTRUM_TOTAL_NUMBER; i++) {
 					try {
 						if (i < len) {
-							spectrum_height = Math.abs(Integer.parseInt(XMusic.deque.get(i) + ""));
-							spectrum_height = spectrum_height > height ? height : spectrum_height;
+							sheight = Math.abs(Integer.parseInt(XMusic.deque.get(i) + ""));
+							sheight = sheight > height ? height : sheight;
 						}
 					} catch (Exception e) {
-						spectrum_height = 0;
+						sheight = 0;
 					}
 					int indexc = 10;
-					for (int j = 0; j < spectrum_height; j = indexc) {
+					for (int j = 0; j < sheight; j = indexc) {
 						graphics.fillRect(indexs, height-indexc, Constant.SPECTRUM_SPLIT_WIDTH, 5);
 						indexc += 7;
 					}
 					indexs += 22;
 				}
 			}
-			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			stream = new ByteArrayOutputStream();
 			try {
 				ImageIO.write(image, "png", stream);
 			} catch (IOException e) {
-				e.printStackTrace();
+				throw new RuntimeException(e.getMessage());
 			}
-			InputStream inputStream = new ByteArrayInputStream(stream.toByteArray());
+			inputStream = new ByteArrayInputStream(stream.toByteArray());
 			spectrum.setBackgroundImage(new Image(null, new ImageData(inputStream).scaledTo(width, height)));
 		}
+		try {
+			stream.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+		try {
+			inputStream.close();
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage());
+		}
+		image = null;
 		graphics.dispose();
 	}
 

@@ -578,6 +578,11 @@ public class MusicPlayer {
 				items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 			}
 		}
+		if (index <= 7) {
+			table.setTopIndex(index);
+		} else {
+			table.setTopIndex(index-7);
+		}
 		if (Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[4].equalsIgnoreCase("Y")) {
 			Constant.PLAYING_SONG_HAVE_LYRIC = true;
 			LoadLocalLyric lyric = new LoadLocalLyric();
@@ -701,6 +706,7 @@ public class MusicPlayer {
 		System.out.println("JVM 空闲内存为：" + vmFree + "\tKB");
 		System.out.println("JVM 可用内存为：" + vmTotal + "\tKB");
 		System.out.println("JVM 最大内存为：" + vmMax + "\tKB");
+		System.gc();
 	}
 
 	private static String format(int time) {
