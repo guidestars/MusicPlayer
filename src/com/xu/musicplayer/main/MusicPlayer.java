@@ -693,6 +693,7 @@ public class MusicPlayer {
 		}
 	}
 
+
 	public void JVMinfo() {
 		long vmFree = 0;
 		long vmUse = 0;
