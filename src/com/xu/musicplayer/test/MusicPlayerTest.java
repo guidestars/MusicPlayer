@@ -843,6 +843,25 @@ public class MusicPlayerTest {
     }
 
     /**
+     * 系统退出延时器
+     *
+     * @author Administrator
+     */
+    static class Time extends TimerTask {//系统退出延时器
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        int time = 1;
+
+        public void run() {
+            if (time > 0) {
+                //toolkit.beep();
+                time--;
+            } else {
+                System.exit(0);
+            }
+        }
+    }
+
+    /**
      * 音乐时间、进度条 线程
      *
      * @author Administrator
@@ -956,25 +975,6 @@ public class MusicPlayerTest {
                     }
 
                 });
-            }
-        }
-    }
-
-    /**
-     * 系统退出延时器
-     *
-     * @author Administrator
-     */
-    static class Time extends TimerTask {//系统退出延时器
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        int time = 1;
-
-        public void run() {
-            if (time > 0) {
-                //toolkit.beep();
-                time--;
-            } else {
-                System.exit(0);
             }
         }
     }

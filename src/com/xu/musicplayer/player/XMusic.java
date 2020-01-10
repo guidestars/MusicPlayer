@@ -36,6 +36,10 @@ public class XMusic implements Player {
         return Music.modle;
     }
 
+    public static boolean isPlaying() {
+        return playing;
+    }
+
     @Override
     public void load(URL url) {
         try {
@@ -60,10 +64,6 @@ public class XMusic implements Player {
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
-    }
-
-    public static boolean isPlaying() {
-        return playing;
     }
 
     @Override
