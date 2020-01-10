@@ -12,19 +12,19 @@ import java.util.HashSet;
 public class Reading {
 
     public HashSet<String> read() {
-        File file = new File(Constant.MUSIC_PLAYER_SONG_LISTS_PATH);
+        File file = new File(Constant.MUSIC_PLAYER_SONG_LISTS_FULL_PATH);
         if (file.exists() && file.isFile()) {
             HashSet<String> songs = new HashSet<String>();
-            Constant.PLAY_LIST.clear();
+            Constant.MUSIC_PLAYER_SONGS_LIST.clear();
             InputStreamReader FReader = null;
             BufferedReader BReader = null;
-            String song = "";
+            String song;
             try (FileInputStream stream = new FileInputStream(file)) {
                 FReader = new InputStreamReader(stream, StandardCharsets.UTF_8);
                 BReader = new BufferedReader(FReader);
                 while ((song = BReader.readLine()) != null) {
                     songs.add(song);
-                    Constant.PLAY_LIST.add(song);
+                    Constant.MUSIC_PLAYER_SONGS_LIST.add(song);
                 }
             } catch (Exception e) {
                 e.printStackTrace();

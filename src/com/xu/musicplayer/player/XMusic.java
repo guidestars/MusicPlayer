@@ -1,6 +1,5 @@
 package com.xu.musicplayer.player;
 
-import com.xu.musicplayer.main.MusicPlayer;
 import com.xu.musicplayer.modle.Controller;
 import com.xu.musicplayer.modle.ControllerServer;
 import com.xu.musicplayer.system.Constant;
@@ -21,8 +20,21 @@ public class XMusic implements Player {
     private static AudioFormat format = null;
     private static SourceDataLine data = null;
     private static AudioInputStream stream = null;
-    private static Thread thread = null;
     private static volatile boolean playing = false;
+    private static Thread thread = null;
+
+    private XMusic() {
+
+    }
+
+    /**
+     * 静态内部内模式 创建播放器实例
+     *
+     * @return 播放器实例
+     */
+    public static XMusic player() {
+        return Music.modle;
+    }
 
     public static boolean isPlaying() {
         return playing;
@@ -33,7 +45,7 @@ public class XMusic implements Player {
         try {
             end();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         try {
             stream = AudioSystem.getAudioInputStream(url);
@@ -50,7 +62,7 @@ public class XMusic implements Player {
             info = new DataLine.Info(SourceDataLine.class, format, AudioSystem.NOT_SPECIFIED);
             data = (SourceDataLine) AudioSystem.getLine(info);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -76,19 +88,8 @@ public class XMusic implements Player {
             info = new DataLine.Info(SourceDataLine.class, format, AudioSystem.NOT_SPECIFIED);
             data = (SourceDataLine) AudioSystem.getLine(info);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
-    }
-
-    @Override
-    public void load(String path) {
-        try {
-            end();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        File file = new File(path);
-        load(file);
     }
 
     @Override
@@ -96,7 +97,7 @@ public class XMusic implements Player {
         try {
             end();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         try {
             stream = AudioSystem.getAudioInputStream(streams);
@@ -113,7 +114,33 @@ public class XMusic implements Player {
             info = new DataLine.Info(SourceDataLine.class, format, AudioSystem.NOT_SPECIFIED);
             data = (SourceDataLine) AudioSystem.getLine(info);
         } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    public void load(String path) {
+        try {
+            end();
+        } catch (IOException e) {
             e.printStackTrace();
+        }
+        File file = new File(path);
+        load(file);
+    }
+
+    @Override
+    public void stop() {
+        if (data != null && data.isOpen()) {
+            data.stop();
+            synchronized (thread) {
+                try {
+                    thread.wait(0);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e.getMessage());
+                }
+            }
+            playing = false;
         }
     }
 
@@ -141,21 +168,6 @@ public class XMusic implements Player {
             deque.clear();
         }
         playing = false;
-    }
-
-    @Override
-    public void stop() {
-        if (data != null && data.isOpen()) {
-            data.stop();
-            synchronized (thread) {
-                try {
-                    thread.wait(0);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-            playing = false;
-        }
     }
 
     @Override
@@ -192,11 +204,18 @@ public class XMusic implements Player {
                                     put((short) ((buf[1] << 8) | buf[0]));
                                     put((short) ((buf[3] << 8) | buf[2]));
                                 } else {
+<<<<<<< HEAD
                                     put(buf[1]);
                                     put(buf[2]);
                                     put(buf[3]);
                                     put(buf[4]);
 
+=======
+                                    put(buf[0]);
+                                    put(buf[1]);
+                                    put(buf[2]);
+                                    put(buf[3]);
+>>>>>>> 7ee467d9b5de721a70581111b6a9c65b36eec4c3
                                 }
                             }
                             data.write(buf, 0, 4);
@@ -207,13 +226,22 @@ public class XMusic implements Player {
                         System.out.println("解码器 结束播放流");
                     }
                 } catch (Exception e) {
+<<<<<<< HEAD
                     e.printStackTrace();
+=======
+                    throw new RuntimeException(e.getMessage());
+>>>>>>> 7ee467d9b5de721a70581111b6a9c65b36eec4c3
                 }
             });
             thread.setDaemon(true);
             thread.start();
         }
 
+    }
+
+    @Override
+    public double length() {
+        return Integer.parseInt(Constant.PLAYING_SONG_NAME.split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[3]);
     }
 
     @Override
@@ -248,18 +276,17 @@ public class XMusic implements Player {
         }
     }
 
-    @Override
-    public double length() {
-        return Integer.parseInt(MusicPlayer.PLAYING_SONG.split(Constant.SPLIT)[3]);
-    }
-
     public void put(short v) {
         synchronized (deque) {
             deque.add(v);
-            if (deque.size() > Constant.SPECTRUM_NUMBER) {
+            if (deque.size() > Constant.SPECTRUM_TOTAL_NUMBER) {
                 deque.removeFirst();
             }
         }
+    }
+
+    private static class Music {
+        private static XMusic modle = new XMusic();
     }
 
 }

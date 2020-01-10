@@ -33,7 +33,7 @@ public class MusicPlayerDemo {
     private static int totalPlayTime;
     protected Shell shell;
     private Display display;
-    private Player player = new XMusic();
+    private Player player = XMusic.player();
     private Button button;
     private Table table;
     private Tray tray;
@@ -747,7 +747,7 @@ public class MusicPlayerDemo {
                         item.setText(new String[]{"" + index, f.toString().substring(f.toString().lastIndexOf("\\") + 1, f.toString().lastIndexOf("."))});
                         index++;
                     }
-                    BufferPlayList.append(f.toString() + "<-->");
+                    BufferPlayList.append(f.toString()).append("<-->");
                     playlist = new String[BufferPlayList.length()];
                     playlist = BufferPlayList.toString().split("<-->");
                 }
@@ -788,14 +788,12 @@ public class MusicPlayerDemo {
                             item.setText(new String[]{"" + index, txt.substring(txt.lastIndexOf("\\") + 1, txt.lastIndexOf("."))});
                             index++;
                         }
-                        BufferPlayList.append(txt + "<-->");
+                        BufferPlayList.append(txt).append("<-->");
                         playlist = new String[BufferPlayList.length()];
                         playlist = BufferPlayList.toString().split("<-->");
                     }
                     bufferedReader.close();
                     reader.close();
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -840,6 +838,25 @@ public class MusicPlayerDemo {
     public void distory() {//销毁会进程
         Timer timer = new Timer();
         timer.schedule(new Time(), 0, 1 * 1000);
+    }
+
+    /**
+     * 系统退出延时器
+     *
+     * @author Administrator
+     */
+    static class Time extends TimerTask {//系统退出延时器
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        int time = 1;
+
+        public void run() {
+            if (time > 0) {
+                //toolkit.beep();
+                time--;
+            } else {
+                System.exit(0);
+            }
+        }
     }
 
     /**
@@ -945,6 +962,7 @@ public class MusicPlayerDemo {
                                 }
                             }
                         }
+<<<<<<< HEAD
                     }
 
                     text.setText((autoAddShowTime) / 60 + " : " + (autoAddShowTime) % 60 + "/" + (totalPlayTime) / 60 + " : " + (totalPlayTime) % 60);//在文本框中显示剩余时间
@@ -959,22 +977,19 @@ public class MusicPlayerDemo {
             }
         }
     }
+=======
+                    }
+>>>>>>> 7ee467d9b5de721a70581111b6a9c65b36eec4c3
 
-    /**
-     * 系统退出延时器
-     *
-     * @author Administrator
-     */
-    class Time extends TimerTask {//系统退出延时器
-        Toolkit toolkit = Toolkit.getDefaultToolkit();
-        int time = 1;
+                    text.setText((autoAddShowTime) / 60 + " : " + (autoAddShowTime) % 60 + "/" + (totalPlayTime) / 60 + " : " + (totalPlayTime) % 60);//在文本框中显示剩余时间
+                    progressBar.setSelection(autoAddprogressBarTime * 100 / totalPlayTime);//进度条递增
+                    if (autoAddShowTime == 0) {//如果歌曲播放时间为0时
+                        progressBar.setSelection(0);
+                        text.setText("00:00/00:00");
+                        player.stop();
+                    }
 
-        public void run() {
-            if (time > 0) {
-                //toolkit.beep();
-                time--;
-            } else {
-                System.exit(0);
+                });
             }
         }
     }
