@@ -245,11 +245,7 @@ public class SWTResourceManager {
             cornerDecoratedImageMap = new HashMap<Image, Map<Image, Image>>();
             m_decoratedImageMap[corner] = cornerDecoratedImageMap;
         }
-        Map<Image, Image> decoratedMap = cornerDecoratedImageMap.get(baseImage);
-        if (decoratedMap == null) {
-            decoratedMap = new HashMap<Image, Image>();
-            cornerDecoratedImageMap.put(baseImage, decoratedMap);
-        }
+        Map<Image, Image> decoratedMap = cornerDecoratedImageMap.computeIfAbsent(baseImage, k -> new HashMap<Image, Image>());
         //
         Image result = decoratedMap.get(decorator);
         if (result == null) {

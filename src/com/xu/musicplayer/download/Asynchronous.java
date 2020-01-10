@@ -19,10 +19,7 @@ public class Asynchronous {
     private int index = 1;
 
     public static void main(String[] args) throws InterruptedException {
-        new Asynchronous().download(new DownloadNotify() {
-            @Override
-            public void result(Object object) {
-            }
+        new Asynchronous().download(object -> {
         }, "http://localhost:8080/WEB/a/a.pdf", "kk");
     }
 

@@ -378,11 +378,9 @@ public class MusicPlayerDemo {
                 click = false;
             }
         });
-        composite_1.addMouseMoveListener(new MouseMoveListener() {
-            public void mouseMove(MouseEvent arg0) {//当鼠标按下的时候执行这条语句
-                if (click) {
-                    shell.setLocation(shell.getLocation().x - clickX + arg0.x, shell.getLocation().y - clickY + arg0.y);
-                }
+        composite_1.addMouseMoveListener(arg0 -> {//当鼠标按下的时候执行这条语句
+            if (click) {
+                shell.setLocation(shell.getLocation().x - clickX + arg0.x, shell.getLocation().y - clickY + arg0.y);
             }
         });
 
@@ -871,34 +869,33 @@ public class MusicPlayerDemo {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                display.getDefault().asyncExec(new Runnable() {//这个是同步主线程的资源而不发生异常
-                    public void run() {
-                        autoAddprogressBarTime++;//进度条的时间
-                        autoAddLyricTime++;      //歌词的时间
-                        autoAddShowTime--;       //文本框显示的歌曲播放的时间
+                //这个是同步主线程的资源而不发生异常
+                display.getDefault().asyncExec(() -> {
+                    autoAddprogressBarTime++;//进度条的时间
+                    autoAddLyricTime++;      //歌词的时间
+                    autoAddShowTime--;       //文本框显示的歌曲播放的时间
 
-                        System.out.println(autoAddLyricTime);
+                    System.out.println(autoAddLyricTime);
 
-                        if (haslyric) {//如果这首歌曲拥有歌词
-                            tempLyric = getTime(lyricTimes);
-                            for (String lyric : lyrics) {
-                                if (lyric != null && lyric.length() > 0) {
-                                    if (tempLyric.trim().equals(lyric.substring(0, 4))) {
-                                        text_3.setText(lyric.substring(6));
-                                    }
+                    if (haslyric) {//如果这首歌曲拥有歌词
+                        tempLyric = getTime(lyricTimes);
+                        for (String lyric : lyrics) {
+                            if (lyric != null && lyric.length() > 0) {
+                                if (tempLyric.trim().equals(lyric.substring(0, 4))) {
+                                    text_3.setText(lyric.substring(6));
                                 }
                             }
                         }
-
-                        text.setText((autoAddShowTime) / 60 + " : " + (autoAddShowTime) % 60 + "/" + (totalPlayTime) / 60 + " : " + (totalPlayTime) % 60);//在文本框中显示剩余时间
-                        progressBar.setSelection(autoAddprogressBarTime * 100 / totalPlayTime);//进度条递增
-                        if (autoAddShowTime == 0) {//如果歌曲播放时间为0时
-                            progressBar.setSelection(0);
-                            text.setText("00:00/00:00");
-                            player.stop();
-                        }
-
                     }
+
+                    text.setText((autoAddShowTime) / 60 + " : " + (autoAddShowTime) % 60 + "/" + (totalPlayTime) / 60 + " : " + (totalPlayTime) % 60);//在文本框中显示剩余时间
+                    progressBar.setSelection(autoAddprogressBarTime * 100 / totalPlayTime);//进度条递增
+                    if (autoAddShowTime == 0) {//如果歌曲播放时间为0时
+                        progressBar.setSelection(0);
+                        text.setText("00:00/00:00");
+                        player.stop();
+                    }
+
                 });
             }
         }
@@ -931,34 +928,33 @@ public class MusicPlayerDemo {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                display.getDefault().asyncExec(new Runnable() {//这个是同步主线程的资源而不发生异常
-                    public void run() {
-                        autoAddprogressBarTime++;//进度条的时间
-                        autoAddLyricTime++;      //歌词的时间
-                        autoAddShowTime--;       //文本框显示的歌曲播放的时间
+                //这个是同步主线程的资源而不发生异常
+                display.getDefault().asyncExec(() -> {
+                    autoAddprogressBarTime++;//进度条的时间
+                    autoAddLyricTime++;      //歌词的时间
+                    autoAddShowTime--;       //文本框显示的歌曲播放的时间
 
-                        System.out.println(autoAddLyricTime);
+                    System.out.println(autoAddLyricTime);
 
-                        if (haslyric) {//如果这首歌曲拥有歌词
-                            tempLyric = getTime(lyricTimes);
-                            for (String lyric : lyrics) {
-                                if (lyric != null && lyric.length() > 0) {
-                                    if (tempLyric.trim().equals(lyric.substring(0, 4))) {
-                                        text_3.setText(lyric.substring(6));
-                                    }
+                    if (haslyric) {//如果这首歌曲拥有歌词
+                        tempLyric = getTime(lyricTimes);
+                        for (String lyric : lyrics) {
+                            if (lyric != null && lyric.length() > 0) {
+                                if (tempLyric.trim().equals(lyric.substring(0, 4))) {
+                                    text_3.setText(lyric.substring(6));
                                 }
                             }
                         }
-
-                        text.setText((autoAddShowTime) / 60 + " : " + (autoAddShowTime) % 60 + "/" + (totalPlayTime) / 60 + " : " + (totalPlayTime) % 60);//在文本框中显示剩余时间
-                        progressBar.setSelection(autoAddprogressBarTime * 100 / totalPlayTime);//进度条递增
-                        if (autoAddShowTime == 0) {//如果歌曲播放时间为0时
-                            progressBar.setSelection(0);
-                            text.setText("00:00/00:00");
-                            player.stop();
-                        }
-
                     }
+
+                    text.setText((autoAddShowTime) / 60 + " : " + (autoAddShowTime) % 60 + "/" + (totalPlayTime) / 60 + " : " + (totalPlayTime) % 60);//在文本框中显示剩余时间
+                    progressBar.setSelection(autoAddprogressBarTime * 100 / totalPlayTime);//进度条递增
+                    if (autoAddShowTime == 0) {//如果歌曲播放时间为0时
+                        progressBar.setSelection(0);
+                        text.setText("00:00/00:00");
+                        player.stop();
+                    }
+
                 });
             }
         }

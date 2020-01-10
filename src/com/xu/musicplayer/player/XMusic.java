@@ -168,49 +168,46 @@ public class XMusic implements Player {
             }
         } else {
             playing = true;
-            thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        if (info != null) {
-                            data.open(format);
-                            data.start();
-                            byte[] buf = new byte[4];
-                            int channels = stream.getFormat().getChannels();
-                            float rate = stream.getFormat().getSampleRate();
-                            while (stream.read(buf) != -1 && playing) {
-                                if (channels == 2) {//立体声
-                                    if (rate == 16) {
-                                        put((short) ((buf[1] << 8) | buf[0]));//左声道
-                                        //waveformGraph.put((short) ((buf[3] << 8) | buf[2]));//右声道
-                                    } else {
-                                        put(buf[1]);//左声道
-                                        put(buf[3]);//左声道
-                                        //waveformGraph.put(buf[2]);//右声道
-                                        //waveformGraph.put(buf[4]);//右声道
-                                    }
-                                } else {//单声道
-                                    if (rate == 16) {
-                                        put((short) ((buf[1] << 8) | buf[0]));
-                                        put((short) ((buf[3] << 8) | buf[2]));
-                                    } else {
-                                        put(buf[1]);
-                                        put(buf[2]);
-                                        put(buf[3]);
-                                        put(buf[4]);
-
-                                    }
+            thread = new Thread(() -> {
+                try {
+                    if (info != null) {
+                        data.open(format);
+                        data.start();
+                        byte[] buf = new byte[4];
+                        int channels = stream.getFormat().getChannels();
+                        float rate = stream.getFormat().getSampleRate();
+                        while (stream.read(buf) != -1 && playing) {
+                            if (channels == 2) {//立体声
+                                if (rate == 16) {
+                                    put((short) ((buf[1] << 8) | buf[0]));//左声道
+                                    //waveformGraph.put((short) ((buf[3] << 8) | buf[2]));//右声道
+                                } else {
+                                    put(buf[1]);//左声道
+                                    put(buf[3]);//左声道
+                                    //waveformGraph.put(buf[2]);//右声道
+                                    //waveformGraph.put(buf[4]);//右声道
                                 }
-                                data.write(buf, 0, 4);
+                            } else {//单声道
+                                if (rate == 16) {
+                                    put((short) ((buf[1] << 8) | buf[0]));
+                                    put((short) ((buf[3] << 8) | buf[2]));
+                                } else {
+                                    put(buf[1]);
+                                    put(buf[2]);
+                                    put(buf[3]);
+                                    put(buf[4]);
+
+                                }
                             }
-                            new ControllerServer().endLyricPlayer(new Controller());// 结束歌词和频谱
-                            System.out.println("解码器 结束歌词和频谱");
-                            end();// 结束播放流
-                            System.out.println("解码器 结束播放流");
+                            data.write(buf, 0, 4);
                         }
-                    } catch (Exception e) {
-                        e.printStackTrace();
+                        new ControllerServer().endLyricPlayer(new Controller());// 结束歌词和频谱
+                        System.out.println("解码器 结束歌词和频谱");
+                        end();// 结束播放流
+                        System.out.println("解码器 结束播放流");
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
             thread.setDaemon(true);
