@@ -5,21 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e661583-a1eb-4e77-b438-6c2ff7636bc8" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/lib/org.osgi.core-6.0.0-sources.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/org.osgi.core-6.0.0.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/MusicPlayer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MusicPlayer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/config/SongChoiceWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/config/SongChoiceWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/config/Writing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/config/Writing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/download/Asynchronous.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/download/Asynchronous.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LoadLocalLyric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LoadLocalLyric.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/SpectrumThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/SpectrumThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/main/MusicPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/main/MusicPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/player/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/player/XMusic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/player/XMusic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/system/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/system/Constant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/test/MusicPlayerDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/test/MusicPlayerDemo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/test/MusicPlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/test/MusicPlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/tray/MusicPlayerTray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/tray/MusicPlayerTray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/org/eclipse/wb/swt/SWTResourceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/eclipse/wb/swt/SWTResourceManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -177,7 +174,7 @@
       <workItem from="1578646587602" duration="1946000" />
       <workItem from="1578648748609" duration="299000" />
       <workItem from="1578669673460" duration="746000" />
-      <workItem from="1578670638483" duration="99000" />
+      <workItem from="1578670638483" duration="810000" />
     </task>
     <servers />
   </component>
@@ -217,27 +214,31 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="552" y="178" key="#项目结构/0.0.1920.1040@0.0.1920.1040" timestamp="1578670736801" />
-    <state x="607" y="317" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1578670815681">
+    <state x="607" y="317" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1578671194884">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state x="432" y="222" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1578648786943" />
-    <state x="607" y="317" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1578670815681" />
-    <state width="1308" height="115" key="GridCell.Tab.0.bottom" timestamp="1578670545645">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state x="607" y="317" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1578671194884" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1578671457694">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1308" height="115" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1578670545645" />
-    <state width="1308" height="115" key="GridCell.Tab.0.center" timestamp="1578670545644">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1578671457694" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1578671457694">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1308" height="115" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1578670545644" />
-    <state width="1308" height="115" key="GridCell.Tab.0.left" timestamp="1578670545643">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1578671457694" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1578671457693">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1308" height="115" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1578670545643" />
-    <state width="1308" height="115" key="GridCell.Tab.0.right" timestamp="1578670545644">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1578671457693" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1578671457694">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1308" height="115" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1578670545644" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1578671457694" />
     <state x="214" y="8" key="SettingsEditor" timestamp="1578022777732">
       <screen x="0" y="0" width="1366" height="728" />
     </state>

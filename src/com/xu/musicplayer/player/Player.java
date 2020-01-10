@@ -99,12 +99,11 @@ public interface Player {
     /**
      * Java Music 开始播放
      *
-     * @throws Exception
      * @Title: start
      * @Description: Java Music 结束播放
      * @date 2019年10月31日19:06:39
      */
-    void start() throws Exception;
+    void start();
 
     /**
      * Java Music 是否打开

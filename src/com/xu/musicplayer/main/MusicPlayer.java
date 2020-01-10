@@ -30,15 +30,11 @@ public class MusicPlayer {
 
     public static boolean playing = true;// 播放按钮
     private static Player player = null;//播放器
-    private static int merchant = 0;
-    private static int remainder = 0;
-    private static String format = "";
     protected Shell shell;
     private Display display;
     private Tray tray;// 播放器托盘
     private Table lists;
     private Table lyrics;
-    private Composite top;
     private Composite foot; // 频谱面板
     private ProgressBar progress; // 进度条
     private Label ttime;
@@ -66,8 +62,9 @@ public class MusicPlayer {
     }
 
     private static String format(int time) {
-        merchant = time / 60;
-        remainder = time % 60;
+        int merchant = time / 60;
+        int remainder = time % 60;
+        String format = "";
         if (time < 10) {
             format = "00:0" + time;
         } else if (time < 60) {
@@ -75,11 +72,11 @@ public class MusicPlayer {
         } else {
             if (merchant < 10 && remainder < 10) {
                 format = "0" + merchant + ":0" + remainder;
-            } else if (merchant < 10 && remainder < 60) {
+            } else if (merchant < 10) {
                 format = "0" + merchant + ":" + remainder;
-            } else if (merchant >= 10 && remainder < 10) {
+            } else if (remainder < 10) {
                 format = merchant + ":0" + remainder;
-            } else if (merchant >= 10 && remainder < 60) {
+            } else {
                 format = merchant + ":0" + remainder;
             }
         }
@@ -128,7 +125,7 @@ public class MusicPlayer {
 
         SashForm mform = new SashForm(mpanel, SWT.VERTICAL);
 
-        top = new Composite(mform, SWT.NONE);
+        Composite top = new Composite(mform, SWT.NONE);
         top.setBackgroundMode(SWT.INHERIT_FORCE);
 
         Label exit = new Label(top, SWT.NONE);
@@ -585,6 +582,11 @@ public class MusicPlayer {
             } else {
                 items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
             }
+        }
+        if (index <= 7) {
+            table.setTopIndex(index);
+        } else {
+            table.setTopIndex(index - 7);
         }
         if (index <= 7) {
             table.setTopIndex(index);

@@ -15,7 +15,7 @@ import java.util.LinkedList;
 
 public class XMusic implements Player {
 
-    public static LinkedList<Short> deque = new LinkedList<Short>();
+    public static final LinkedList<Short> deque = new LinkedList<Short>();
     private static DataLine.Info info = null;
     private static AudioFormat format = null;
     private static SourceDataLine data = null;
