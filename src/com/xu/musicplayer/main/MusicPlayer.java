@@ -269,14 +269,6 @@ public class MusicPlayer {
 			public void mouseUp(MouseEvent e) {
 				click = false;
 			}
-			@Override
-			public void mouseDoubleClick(MouseEvent e) {
-				Color color = COLORS.get(new Random().nextInt(COLORS.size()));
-				if (color != Constant.SPECTRUM_BACKGROUND_COLOR && color != Color.BLACK) {
-					Constant.SPECTRUM_BACKGROUND_COLOR = color;
-					changePanelImage(color);
-				}
-			}
 		});
 		top.addMouseMoveListener(new MouseMoveListener() {
 			public void mouseMove(MouseEvent arg0) {//当鼠标按下的时候执行这条语句
@@ -737,6 +729,7 @@ public class MusicPlayer {
 		return format;
 	}
 
+	@SuppressWarnings("unused")
 	private void changePanelImage(Color color) {
 		BufferedImage image = new BufferedImage(5, 5, BufferedImage.TYPE_INT_RGB);
 		Graphics2D graphics = image.createGraphics();
