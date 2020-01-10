@@ -964,24 +964,7 @@ public class MusicPlayerTest {
                                 }
                             }
                         }
-<<<<<<< HEAD
                     }
-
-                    text.setText((autoAddShowTime) / 60 + " : " + (autoAddShowTime) % 60 + "/" + (totalPlayTime) / 60 + " : " + (totalPlayTime) % 60);//在文本框中显示剩余时间
-                    progressBar.setSelection(autoAddprogressBarTime * 100 / totalPlayTime);//进度条递增
-                    if (autoAddShowTime == 0) {//如果歌曲播放时间为0时
-                        progressBar.setSelection(0);
-                        text.setText("00:00/00:00");
-                        player.stop();
-                    }
-
-                });
-            }
-        }
-    }
-=======
-                    }
->>>>>>> 7ee467d9b5de721a70581111b6a9c65b36eec4c3
 
                     text.setText((autoAddShowTime) / 60 + " : " + (autoAddShowTime) % 60 + "/" + (totalPlayTime) / 60 + " : " + (totalPlayTime) % 60);//在文本框中显示剩余时间
                     progressBar.setSelection(autoAddprogressBarTime * 100 / totalPlayTime);//进度条递增

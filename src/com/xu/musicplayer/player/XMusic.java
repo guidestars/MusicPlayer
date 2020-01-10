@@ -204,18 +204,10 @@ public class XMusic implements Player {
                                     put((short) ((buf[1] << 8) | buf[0]));
                                     put((short) ((buf[3] << 8) | buf[2]));
                                 } else {
-<<<<<<< HEAD
-                                    put(buf[1]);
-                                    put(buf[2]);
-                                    put(buf[3]);
-                                    put(buf[4]);
-
-=======
                                     put(buf[0]);
                                     put(buf[1]);
                                     put(buf[2]);
                                     put(buf[3]);
->>>>>>> 7ee467d9b5de721a70581111b6a9c65b36eec4c3
                                 }
                             }
                             data.write(buf, 0, 4);
@@ -226,11 +218,7 @@ public class XMusic implements Player {
                         System.out.println("解码器 结束播放流");
                     }
                 } catch (Exception e) {
-<<<<<<< HEAD
-                    e.printStackTrace();
-=======
                     throw new RuntimeException(e.getMessage());
->>>>>>> 7ee467d9b5de721a70581111b6a9c65b36eec4c3
                 }
             });
             thread.setDaemon(true);
