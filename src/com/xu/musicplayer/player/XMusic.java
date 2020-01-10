@@ -252,13 +252,13 @@ public class XMusic implements Player {
 
 	@Override
 	public double length() {
-		return Integer.parseInt(Constant.PLAYING_SONG.split(Constant.SPLIT)[3]);
+		return Integer.parseInt(Constant.PLAYING_SONG_NAME.split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[3]);
 	}
 
 	public void put(short v) {
 		synchronized (deque) {
 			deque.add(v);
-			if (deque.size() > Constant.SPECTRUM_NUMBER) {
+			if (deque.size() > Constant.SPECTRUM_TOTAL_NUMBER) {
 				deque.removeFirst();
 			}
 		}

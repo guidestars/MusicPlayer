@@ -31,10 +31,10 @@ public class LyricyThread extends Thread {
 
     @Override
     public void run() {
-        length = Constant.PLAY_LYRIC.size();
+        length = Constant.PLAYING_SONG_LYRIC.size();
         while (XMusic.isPlaying() && index <= length) {
-            for (int i = 0, len = Constant.PLAY_LYRIC.size(); i < len; i++) {
-                secounds = Constant.PLAY_LYRIC.get(i).split(Constant.SPLIT)[0];
+            for (int i = 0, len = Constant.PLAYING_SONG_LYRIC.size(); i < len; i++) {
+                secounds = Constant.PLAYING_SONG_LYRIC.get(i).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[0];
                 if (secounds.startsWith("0")) {
                     secounds = secounds.substring(0, secounds.lastIndexOf("."));
                     if (secounds.equalsIgnoreCase(format_time(time))) {

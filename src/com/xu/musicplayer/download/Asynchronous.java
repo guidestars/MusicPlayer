@@ -87,17 +87,17 @@ public class Asynchronous {
     }
 
     public void task(DownloadNotify notify, String url, String path, long length) {
-        ThreadPoolExecutor executor = new ThreadPoolExecutor(Constant.DOWNLOAD_CORE_POOL_SIZE, Constant.DOWNLOAD_MAX_POOL_SIZE, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
+        ThreadPoolExecutor executor = new ThreadPoolExecutor(Constant.MUSIC_PLAYER_DOWNLOAD_CORE_POOL_SIZE, Constant.MUSIC_PLAYER_DOWNLOAD_MAX_POOL_SIZE, 10, TimeUnit.MILLISECONDS, new ArrayBlockingQueue<Runnable>(5), Executors.defaultThreadFactory(), new ThreadPoolExecutor.AbortPolicy());
         if (length <= 10 * 1024 * 1024) {
             executor.execute(new DownLoadTask(notify, url, path, 0, length));
         } else {
-            for (long i = 0, len = length / Constant.DOWNLOAD_FILE_SIZE_PER_THREAD; i <= len; i++) {
+            for (long i = 0, len = length / Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD; i <= len; i++) {
                 if (i == len && i > 0) {
-                    System.out.println("A-->" + length + "\t" + i * Constant.DOWNLOAD_FILE_SIZE_PER_THREAD + "--" + i + "--" + length);
-                    executor.execute(new DownLoadTask(notify, url, path, i * Constant.DOWNLOAD_FILE_SIZE_PER_THREAD, length));
+                    System.out.println("A-->" + length + "\t" + i * Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD + "--" + i + "--" + length);
+                    executor.execute(new DownLoadTask(notify, url, path, i * Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD, length));
                 } else {
-                    System.out.println("B-->" + length + "\t" + i * Constant.DOWNLOAD_FILE_SIZE_PER_THREAD + "--" + i + "--" + ((i + 1) * Constant.DOWNLOAD_FILE_SIZE_PER_THREAD - 1));
-                    executor.execute(new DownLoadTask(notify, url, path, i * Constant.DOWNLOAD_FILE_SIZE_PER_THREAD, (i + 1) * Constant.DOWNLOAD_FILE_SIZE_PER_THREAD - 1));
+                    System.out.println("B-->" + length + "\t" + i * Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD + "--" + i + "--" + ((i + 1) * Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD - 1));
+                    executor.execute(new DownLoadTask(notify, url, path, i * Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD, (i + 1) * Constant.MUSIC_PLAYER_DOWNLOAD_FILE_SIZE_PER_THREAD - 1));
                 }
             }
         }

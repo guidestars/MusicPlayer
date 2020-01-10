@@ -103,7 +103,7 @@ public class MusicPlayer {
 		shell = new Shell(SWT.NONE);
 		shell.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/main.png"));
 		shell.setSize(new Point(1000, 645));
-		shell.setSize(890, 486);
+		shell.setSize(900, 486);
 		shell.setText("MusicPlayer");
 		shell.setLocation((display.getClientArea().width - shell.getSize().x) / 2,
 				(display.getClientArea().height - shell.getSize().y) / 2);
@@ -147,9 +147,9 @@ public class MusicPlayer {
 				//}
 				//combo.setListVisible(true);
 				combo.clearSelection();
-				for (int i = 0; i < Constant.PLAY_LIST.size(); i++) {
-					if (Constant.PLAY_LIST.get(i).contains(combo.getText())) {
-						combo.add(Constant.PLAY_LIST.get(i).split(Constant.SPLIT)[1]);
+				for (int i = 0; i < Constant.MUSIC_PLAYER_SONGS_LIST.size(); i++) {
+					if (Constant.MUSIC_PLAYER_SONGS_LIST.get(i).contains(combo.getText())) {
+						combo.add(Constant.MUSIC_PLAYER_SONGS_LIST.get(i).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[1]);
 					}
 				}
 				combo.setListVisible(true);
@@ -189,7 +189,7 @@ public class MusicPlayer {
 		tableColumn_2.setText("歌词");
 
 		TableColumn tableColumn_3 = new TableColumn(lyrics, SWT.CENTER);
-		tableColumn_3.setWidth(728);
+		tableColumn_3.setWidth(738);
 		tableColumn_3.setText("歌词");
 
 		COLORS.add(Color.BLACK);
@@ -221,7 +221,7 @@ public class MusicPlayer {
 		label_3.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				playing = Constant.PLAY_STATE;
+				playing = Constant.MUSIC_PLAYER_PLAYING_STATE;
 				if (playing && !XMusic.isPlaying()) {
 					//TODO:
 					label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/start.png"));
@@ -389,7 +389,7 @@ public class MusicPlayer {
 			public void mouseDoubleClick(MouseEvent e) {
 				Color color = COLORS.get(new Random().nextInt(COLORS.size()));
 				if (color != Constant.SPECTRUM_BACKGROUND_COLOR) {
-					Constant.SPECTRUM_COLOR = color;
+					Constant.SPECTRUM_FOREGROUND_COLOR = color;
 				}
 			}
 		});
@@ -444,11 +444,11 @@ public class MusicPlayer {
 	public void initMusicPlayer(Shell shell, Table table) {
 		SongChoiceWindow choice = new SongChoiceWindow();
 		new Reading().read();
-		if (Constant.PLAY_LIST == null || Constant.PLAY_LIST.size() <= 0) {
+		if (Constant.MUSIC_PLAYER_SONGS_LIST == null || Constant.MUSIC_PLAYER_SONGS_LIST.size() <= 0) {
 			Toolkit.getDefaultToolkit().beep();
 			choice.open_choise_windows(shell);
 		}
-		updatePlayerSongLists(Constant.PLAY_LIST, table);
+		updatePlayerSongLists(Constant.MUSIC_PLAYER_SONGS_LIST, table);
 		readMusicPlayerPlayingSong();
 	}
 
@@ -468,7 +468,7 @@ public class MusicPlayer {
 		TableItem item;
 		for (int i = 0; i < lists.size(); i++) {
 			item = new TableItem(table, SWT.NONE);
-			item.setText(new String[]{"" + (i + 1), lists.get(i).split(Constant.SPLIT)[1]});
+			item.setText(new String[]{"" + (i + 1), lists.get(i).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[1]});
 		}
 	}
 
@@ -512,12 +512,12 @@ public class MusicPlayer {
 	 * @date: 2019年12月26日 下午7:33:36
 	 */
 	public void changePlayingSong(int index, int mode) {
-		System.out.println(Constant.PLAY_INDEX + "\t" + Constant.PLAY_LIST.get(Constant.PLAY_INDEX));
+		System.out.println(Constant.PLAYING_SONG_INDEX + "\t" + Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX));
 
-		Constant.PLAY_INDEX = index == -1 ? Constant.PLAY_INDEX : index;
-		Constant.PLAYING_SONG = Constant.PLAY_LIST.get(Constant.PLAY_INDEX);
+		Constant.PLAYING_SONG_INDEX = index == -1 ? Constant.PLAYING_SONG_INDEX : index;
+		Constant.PLAYING_SONG_NAME = Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX);
 
-		if (Constant.PLAY_LIST.size() <= 0) {
+		if (Constant.MUSIC_PLAYER_SONGS_LIST.size() <= 0) {
 			Toolkit.getDefaultToolkit().beep();
 			MessageBox message = new MessageBox(shell,SWT.YES|SWT.ICON_WARNING|SWT.NO);
 			message.setText("提示");
@@ -533,26 +533,26 @@ public class MusicPlayer {
 			}
 		}
 
-		player.load(Constant.PLAYING_SONG.split(Constant.SPLIT)[0]);
+		player.load(Constant.PLAYING_SONG_NAME.split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[0]);
 
 		try {
 			player.start();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		Constant.PLAY_STATE = true;
-		updatePlayerSongListsColor(lists, Constant.PLAY_INDEX);
+		Constant.MUSIC_PLAYER_PLAYING_STATE = true;
+		updatePlayerSongListsColor(lists, Constant.PLAYING_SONG_INDEX);
 		if (mode == 0) {//上一曲
-			if (Constant.PLAY_INDEX <= 0) {
-				Constant.PLAY_INDEX = Constant.PLAY_LIST.size();
+			if (Constant.PLAYING_SONG_INDEX <= 0) {
+				Constant.PLAYING_SONG_INDEX = Constant.MUSIC_PLAYER_SONGS_LIST.size();
 			} else {
-				Constant.PLAY_INDEX--;
+				Constant.PLAYING_SONG_INDEX--;
 			}
 		} else {//下一曲
-			if (Constant.PLAY_INDEX >= Constant.PLAY_LIST.size()) {
-				Constant.PLAY_INDEX = 0;
+			if (Constant.PLAYING_SONG_INDEX >= Constant.MUSIC_PLAYER_SONGS_LIST.size()) {
+				Constant.PLAYING_SONG_INDEX = 0;
 			} else {
-				Constant.PLAY_INDEX++;
+				Constant.PLAYING_SONG_INDEX++;
 			}
 		}
 	}
@@ -571,9 +571,9 @@ public class MusicPlayer {
 	private void updatePlayerSongListsColor(Table table, int index) {
 		label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/start.png"));
 
-		Constant.HAVE_LYRIC = false;
-		Constant.SONG_LENGTH = Integer.parseInt(Constant.PLAYING_SONG.split(Constant.SPLIT)[3]);
-		text.setText(format(Constant.SONG_LENGTH));
+		Constant.PLAYING_SONG_HAVE_LYRIC = false;
+		Constant.PLAYING_SONG_LENGTH = Integer.parseInt(Constant.PLAYING_SONG_NAME.split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[3]);
+		text.setText(format(Constant.PLAYING_SONG_LENGTH));
 
 		TableItem[] items = table.getItems();
 		for (int i = 0; i < items.length; i++) {
@@ -583,24 +583,24 @@ public class MusicPlayer {
 				items[i].setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
 			}
 		}
-		if (Constant.PLAY_LIST.get(Constant.PLAY_INDEX).split(Constant.SPLIT)[4].equalsIgnoreCase("Y")) {
-			Constant.HAVE_LYRIC = true;
+		if (Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[4].equalsIgnoreCase("Y")) {
+			Constant.PLAYING_SONG_HAVE_LYRIC = true;
 			LoadLocalLyric lyric = new LoadLocalLyric();
-			String path = Constant.PLAY_LIST.get(Constant.PLAY_INDEX).split(Constant.SPLIT)[0];
+			String path = Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[0];
 			path = path.substring(0, path.lastIndexOf(".")) + ".lrc";
 			lyric.lyric(path);
 			lyrics.removeAll();
-			if (Constant.PLAY_LYRIC != null && Constant.PLAY_LYRIC.size() > 0) {
+			if (Constant.PLAYING_SONG_LYRIC != null && Constant.PLAYING_SONG_LYRIC.size() > 0) {
 				TableItem item;
-				for (int i = 0, len = Constant.PLAY_LYRIC.size() + 8; i < len; i++) {
+				for (int i = 0, len = Constant.PLAYING_SONG_LYRIC.size() + 8; i < len; i++) {
 					item = new TableItem(lyrics, SWT.NONE);
 					if (i < len - 8) {
-						item.setText(new String[]{"", Constant.PLAY_LYRIC.get(i).split(Constant.SPLIT)[1]});
+						item.setText(new String[]{"", Constant.PLAYING_SONG_LYRIC.get(i).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[1]});
 					}
 				}
 				PlayerEntity.setBar(progressBar);
 				PlayerEntity.setText(text_1);
-				PlayerEntity.setSong(Constant.PLAYING_SONG);
+				PlayerEntity.setSong(Constant.PLAYING_SONG_NAME);
 				PlayerEntity.setTable(lyrics);
 			}
 			PlayerEntity.setSpectrum(foot);
@@ -627,9 +627,9 @@ public class MusicPlayer {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Constant.PLAY_STATE = false;
+		Constant.MUSIC_PLAYER_PLAYING_STATE = false;
 		label_3.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/stop.png"));
-		updatePlayerSongListsColor(lists, Constant.PLAY_INDEX);
+		updatePlayerSongListsColor(lists, Constant.PLAYING_SONG_INDEX);
 	}
 
 

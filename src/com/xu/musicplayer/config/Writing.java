@@ -19,7 +19,7 @@ public class Writing {
         List<String> list = new ArrayList<String>();
         list.add("F:\\KuGou\\丸子呦 - 广寒宫.mp3<-->Y");
         writing.write(list);
-        for (String l : Constant.PLAY_LIST) {
+        for (String l : Constant.MUSIC_PLAYER_SONGS_LIST) {
             System.out.println(l);
         }
     }
@@ -33,13 +33,13 @@ public class Writing {
             String content = "";
             String[] splits = null;
             for (String list : lists) {
-                splits = list.split(Constant.SPLIT);
+                splits = list.split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT);
                 content = splits[0];
                 try {
-                    content += Constant.SPLIT + get_song_name(splits[0]);
-                    content += Constant.SPLIT + get_song_name(splits[0]);
-                    content += Constant.SPLIT + get_song_Length(splits[0]);
-                    content += Constant.SPLIT + splits[1];
+                    content += Constant.MUSIC_PLAYER_SYSTEM_SPLIT + get_song_name(splits[0]);
+                    content += Constant.MUSIC_PLAYER_SYSTEM_SPLIT + get_song_name(splits[0]);
+                    content += Constant.MUSIC_PLAYER_SYSTEM_SPLIT + get_song_Length(splits[0]);
+                    content += Constant.MUSIC_PLAYER_SYSTEM_SPLIT + splits[1];
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
@@ -55,13 +55,13 @@ public class Writing {
             String content = "";
             String[] splits = null;
             for (String list : lists) {
-                splits = list.split(Constant.SPLIT);
+                splits = list.split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT);
                 content = splits[0];
                 try {
-                    content += Constant.SPLIT + get_song_name(splits[0]);
-                    content += Constant.SPLIT + get_song_name(splits[0]);
-                    content += Constant.SPLIT + get_song_Length(splits[0]);
-                    content += Constant.SPLIT + splits[1];
+                    content += Constant.MUSIC_PLAYER_SYSTEM_SPLIT + get_song_name(splits[0]);
+                    content += Constant.MUSIC_PLAYER_SYSTEM_SPLIT + get_song_name(splits[0]);
+                    content += Constant.MUSIC_PLAYER_SYSTEM_SPLIT + get_song_Length(splits[0]);
+                    content += Constant.MUSIC_PLAYER_SYSTEM_SPLIT + splits[1];
                 } catch (Exception e1) {
                     e1.printStackTrace();
                 }
@@ -73,10 +73,10 @@ public class Writing {
         try {
             FWriter = new FileWriter(new File(Constant.MUSIC_PLAYER_SONG_LISTS_FULL_PATH));
             BWriter = new BufferedWriter(FWriter);
-            Constant.PLAY_LIST.clear();
+            Constant.MUSIC_PLAYER_SONGS_LIST.clear();
             for (String song : songs) {
                 BWriter.write(song);
-                Constant.PLAY_LIST.add(song);
+                Constant.MUSIC_PLAYER_SONGS_LIST.add(song);
                 BWriter.newLine();
             }
             BWriter.flush();
