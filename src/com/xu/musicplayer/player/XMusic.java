@@ -15,18 +15,23 @@ import java.util.LinkedList;
 
 public class XMusic implements Player {
 
-	public static LinkedList<Short> deque = new LinkedList<Short>();
+	private static Thread thread = null;
 	private static DataLine.Info info = null;
 	private static AudioFormat format = null;
 	private static SourceDataLine data = null;
 	private static AudioInputStream stream = null;
-	private static Thread thread = null;
 	private static volatile boolean playing = false;
+	
+	public static LinkedList<Short> deque = new LinkedList<Short>();
 
 	private static class Music{
 		private static XMusic modle = new XMusic();
 	}
 
+	/**
+	 * 静态内部内模式 创建播放器实例
+	 * @return 播放器实例
+	 */
 	public static XMusic player() {
 		return Music.modle;
 	}
