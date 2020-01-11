@@ -30,9 +30,11 @@ import java.util.TimerTask;
 
 public class MusicPlayerDemo {
 
+    private static int totalPlayTime;
     protected Shell shell;
     private Display display;
     private Player player = XMusic.player();
+    private Button button;
     private Table table;
     private Tray tray;
     private String playPath;
@@ -45,12 +47,14 @@ public class MusicPlayerDemo {
     private Label label_5;
     private int judeg = 0;
     private StringBuilder BufferPlayList;
+    private Text text_2;
     private Text text_3;
     private int lyricTimes = 0;
     private String[] lyrics = new String[200];
     private boolean haslyric = false;
     private Table table_1;
     private String[] playlist;
+    private GC gc;
 
     /**
      * Launch the application.
@@ -103,7 +107,7 @@ public class MusicPlayerDemo {
         composite.setLayout(new FormLayout());
 
 
-        Button button = new Button(composite, SWT.NONE);
+        button = new Button(composite, SWT.NONE);
         button.setImage(SWTResourceManager.getImage(MusicPlayerDemo.class, "/com/xu/musicplayer/image/addMusic.png"));
         FormData fd_button = new FormData();
         fd_button.right = new FormAttachment(100, -803);
@@ -149,7 +153,7 @@ public class MusicPlayerDemo {
         Label label = new Label(composite_1, SWT.NONE);
         label.setImage(SWTResourceManager.getImage(MusicPlayerDemo.class, "/com/xu/musicplayer/image/hand.png"));
         label.setBounds(0, 0, 56, 56);
-        GC gc = new GC(label);
+        gc = new GC(label);
         gc.fillOval(0, 0, 56, 56);
         gc.setBackground(SWTResourceManager.getColor(new RGB(11, 22, 22)));
         gc.dispose();
@@ -177,7 +181,7 @@ public class MusicPlayerDemo {
         fd_composite_3.bottom = new FormAttachment(100);
         fd_composite_3.right = new FormAttachment(composite_1, 0, SWT.RIGHT);
 
-        Text text_2 = new Text(composite_1, SWT.NONE);
+        text_2 = new Text(composite_1, SWT.NONE);
         text_2.setForeground(SWTResourceManager.getColor(SWT.COLOR_CYAN));
         text_2.setText("111");
         text_2.setFont(SWTResourceManager.getFont("Microsoft YaHei UI", 16, SWT.NORMAL));
@@ -639,7 +643,6 @@ public class MusicPlayerDemo {
         File file = new File(playPath);
         if (file.exists()) {
             if (!"".equals(playPath) && playPath != null) {
-                int totalPlayTime;
                 if (playPath.trim().substring(playPath.lastIndexOf(".") + 1).equalsIgnoreCase("wav")) {
                     try {
                         player.load(file);
@@ -791,6 +794,8 @@ public class MusicPlayerDemo {
                     }
                     bufferedReader.close();
                     reader.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

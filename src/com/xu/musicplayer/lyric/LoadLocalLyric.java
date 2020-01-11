@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  */
 public class LoadLocalLyric {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         LoadLocalLyric lyric = new LoadLocalLyric();
         lyric.lyric("F:\\KuGou\\丸子呦 - 广寒宫.lrc");
         for (String s : Constant.PLAYING_SONG_LYRIC) {
@@ -30,7 +30,7 @@ public class LoadLocalLyric {
     /**
      * 获取本地歌曲歌词
      */
-    public void lyric(String path) {
+    public List<String> lyric(String path) {
         Constant.PLAYING_SONG_LYRIC.clear();
         File file = new File(path);
         if (file.exists()) {
@@ -81,6 +81,7 @@ public class LoadLocalLyric {
                 }
             }
         }
+        return Constant.PLAYING_SONG_LYRIC;
     }
 
     @SuppressWarnings("unused")

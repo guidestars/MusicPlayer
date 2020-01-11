@@ -30,11 +30,15 @@ public class MusicPlayer {
 
     public static boolean playing = true;// 播放按钮
     private static Player player = null;//播放器
+    private static int merchant = 0;
+    private static int remainder = 0;
+    private static String format = "";
     protected Shell shell;
     private Display display;
     private Tray tray;// 播放器托盘
     private Table lists;
     private Table lyrics;
+    private Composite top;
     private Composite foot; // 频谱面板
     private ProgressBar progress; // 进度条
     private Label ttime;
@@ -62,9 +66,8 @@ public class MusicPlayer {
     }
 
     private static String format(int time) {
-        int merchant = time / 60;
-        int remainder = time % 60;
-        String format = "";
+        merchant = time / 60;
+        remainder = time % 60;
         if (time < 10) {
             format = "00:0" + time;
         } else if (time < 60) {
@@ -72,15 +75,33 @@ public class MusicPlayer {
         } else {
             if (merchant < 10 && remainder < 10) {
                 format = "0" + merchant + ":0" + remainder;
-            } else if (merchant < 10) {
+            } else if (merchant < 10 && remainder < 60) {
                 format = "0" + merchant + ":" + remainder;
-            } else if (remainder < 10) {
+            } else if (merchant >= 10 && remainder < 10) {
                 format = merchant + ":0" + remainder;
-            } else {
+            } else if (merchant >= 10 && remainder < 60) {
                 format = merchant + ":0" + remainder;
             }
         }
         return format;
+    }
+
+    public static void JVMinfo() {
+        long vmFree;
+        long vmUse;
+        long vmTotal;
+        long vmMax;
+        int byteToMb = 1024;
+        Runtime rt = Runtime.getRuntime();
+        vmTotal = rt.totalMemory() / byteToMb;
+        vmFree = rt.freeMemory() / byteToMb;
+        vmMax = rt.maxMemory() / byteToMb;
+        vmUse = vmTotal - vmFree;
+        System.out.println("JVM 已用内存为：" + vmUse + "\tKB");
+        System.out.println("JVM 空闲内存为：" + vmFree + "\tKB");
+        System.out.println("JVM 可用内存为：" + vmTotal + "\tKB");
+        System.out.println("JVM 最大内存为：" + vmMax + "\tKB");
+        System.gc();
     }
 
     /**
@@ -125,7 +146,7 @@ public class MusicPlayer {
 
         SashForm mform = new SashForm(mpanel, SWT.VERTICAL);
 
-        Composite top = new Composite(mform, SWT.NONE);
+        top = new Composite(mform, SWT.NONE);
         top.setBackgroundMode(SWT.INHERIT_FORCE);
 
         Label exit = new Label(top, SWT.NONE);
@@ -412,7 +433,10 @@ public class MusicPlayer {
             }
         });
 
+
         initMusicPlayer(shell, lists);
+
+        System.gc();
 
     }
 
@@ -588,11 +612,6 @@ public class MusicPlayer {
         } else {
             table.setTopIndex(index - 7);
         }
-        if (index <= 7) {
-            table.setTopIndex(index);
-        } else {
-            table.setTopIndex(index - 7);
-        }
         if (Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[4].equalsIgnoreCase("Y")) {
             Constant.PLAYING_SONG_HAVE_LYRIC = true;
             LoadLocalLyric lyric = new LoadLocalLyric();
@@ -621,7 +640,6 @@ public class MusicPlayer {
         JVMinfo();
     }
 
-
     /**
      * Java MusicPlayer 退出音乐播放器
      *
@@ -637,7 +655,6 @@ public class MusicPlayer {
         player.stop();
         shell.dispose();
     }
-
 
     /**
      * Java MusicPlayer 将正在播放的歌曲存在注册表中
@@ -673,8 +690,8 @@ public class MusicPlayer {
      * @date: 2019年12月29日 下午2:58:24
      */
     private void readMusicPlayerPlayingSong() {
-        Preferences preferences = Preferences.userNodeForPackage(MusicPlayer.class);
-        String index = preferences.get("MusicPlayer", null);
+        //Preferences preferences = Preferences.userNodeForPackage(MusicPlayer.class);
+        //String index = preferences.get("MusicPlayer", null);
         //next_song(Integer.parseInt(index));
     }
 
@@ -696,24 +713,6 @@ public class MusicPlayer {
         Constant.MUSIC_PLAYER_PLAYING_STATE = false;
         start.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/stop.png"));
         updatePlayerSongListsColor(lists, Constant.PLAYING_SONG_INDEX);
-    }
-
-    public void JVMinfo() {
-        long vmFree;
-        long vmUse;
-        long vmTotal;
-        long vmMax;
-        int byteToMb = 1024;
-        Runtime rt = Runtime.getRuntime();
-        vmTotal = rt.totalMemory() / byteToMb;
-        vmFree = rt.freeMemory() / byteToMb;
-        vmMax = rt.maxMemory() / byteToMb;
-        vmUse = vmTotal - vmFree;
-        System.out.println("JVM 已用内存为：" + vmUse + "\tKB");
-        System.out.println("JVM 空闲内存为：" + vmFree + "\tKB");
-        System.out.println("JVM 可用内存为：" + vmTotal + "\tKB");
-        System.out.println("JVM 最大内存为：" + vmMax + "\tKB");
-        System.gc();
     }
 
 }

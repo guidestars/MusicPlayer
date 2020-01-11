@@ -14,7 +14,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Objects;
 
 /**
  * Java MusicPlayer 音频线程
@@ -129,12 +128,12 @@ public class SpectrumThread extends Thread {
             spectrum.setBackgroundImage(new Image(null, new ImageData(inputStream).scaledTo(width, height)));
         }
         try {
-            Objects.requireNonNull(stream).close();
+            stream.close();
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
         try {
-            Objects.requireNonNull(inputStream).close();
+            inputStream.close();
         } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }

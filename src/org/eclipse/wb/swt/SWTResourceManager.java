@@ -262,7 +262,7 @@ public class SWTResourceManager {
                 gc.drawImage(decorator, bib.width - dib.width, 0);
             } else if (corner == BOTTOM_LEFT) {
                 gc.drawImage(decorator, 0, bib.height - dib.height);
-            } else {
+            } else if (corner == BOTTOM_RIGHT) {
                 gc.drawImage(decorator, bib.width - dib.width, bib.height - dib.height);
             }
             gc.dispose();

@@ -17,7 +17,10 @@ public class LyricyThread extends Thread {
     private LyricyNotify notify;
     private long time = 0;
     private int index = 0;
+    private int length = 0;
 
+    private long merchant = 0;
+    private long remainder = 0;
     private String format = "";
     private boolean add = true;
 
@@ -27,7 +30,7 @@ public class LyricyThread extends Thread {
 
     @Override
     public void run() {
-        int length = Constant.PLAYING_SONG_LYRIC.size();
+        length = Constant.PLAYING_SONG_LYRIC.size();
         while (XMusic.isPlaying() && index <= length) {
             for (int i = 0, len = Constant.PLAYING_SONG_LYRIC.size(); i < len; i++) {
                 String secounds = Constant.PLAYING_SONG_LYRIC.get(i).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[0];
@@ -60,8 +63,8 @@ public class LyricyThread extends Thread {
      * @return
      */
     private String format_time(long time) {
-        long merchant = time / 60;
-        long remainder = time % 60;
+        merchant = time / 60;
+        remainder = time % 60;
         if (time < 10) {
             format = "00:0" + time;
         } else if (time < 60) {

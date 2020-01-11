@@ -26,7 +26,7 @@ public class Writing {
     }
 
 
-    public void write(List<String> lists) {
+    public boolean write(List<String> lists) {
         File file = new File(Constant.MUSIC_PLAYER_SONG_LISTS_FULL_PATH);
         HashSet<String> songs = new HashSet<String>();
         if (file.exists()) {
@@ -84,6 +84,7 @@ public class Writing {
             BWriter.close();
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         } finally {
             try {
                 if (FWriter != null) {
@@ -93,6 +94,7 @@ public class Writing {
                 e.printStackTrace();
             }
         }
+        return true;
     }
 
     private String get_song_name(String song) {

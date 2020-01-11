@@ -21,7 +21,7 @@ public class SongChoiceWindow {
         }
     }
 
-    public void open_choise_windows(Shell shell) {
+    public LinkedList<String> open_choise_windows(Shell shell) {
         FileDialog dialog = new FileDialog(shell, SWT.OPEN | SWT.MULTI);
         dialog.setFilterNames(new String[]{"*.mp3", "*.MP3", "*.wav", "*.WAV", "*.flac", "*.FLAC", "*.pcm", "*.PCM"});
         dialog.open();
@@ -37,6 +37,7 @@ public class SongChoiceWindow {
             }
         }
         new Writing().write(Constant.MUSIC_PLAYER_SONGS_TEMP_LIST);
+        return Constant.MUSIC_PLAYER_SONGS_TEMP_LIST;
     }
 
     private String have_lyric(String path) {

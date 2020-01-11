@@ -18,7 +18,7 @@ public class Asynchronous {
     private long length = 0;
     private int index = 1;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         new Asynchronous().download(object -> {
         }, "http://localhost:8080/WEB/a/a.pdf", "kk");
     }
