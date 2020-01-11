@@ -10,17 +10,33 @@ import com.xu.musicplayer.player.Player;
 import com.xu.musicplayer.player.XMusic;
 import com.xu.musicplayer.system.Constant;
 import com.xu.musicplayer.tray.MusicPlayerTray;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.SashForm;
-import org.eclipse.swt.events.*;
+import org.eclipse.swt.events.ControlAdapter;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseTrackAdapter;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.widgets.Combo;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.*;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.ProgressBar;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Tray;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Toolkit;
 import java.util.LinkedList;
 import java.util.Random;
 import java.util.prefs.BackingStoreException;
@@ -84,6 +100,24 @@ public class MusicPlayer {
             }
         }
         return format;
+    }
+
+    public static void JVMinfo() {
+        long vmFree;
+        long vmUse;
+        long vmTotal;
+        long vmMax;
+        int byteToMb = 1024;
+        Runtime rt = Runtime.getRuntime();
+        vmTotal = rt.totalMemory() / byteToMb;
+        vmFree = rt.freeMemory() / byteToMb;
+        vmMax = rt.maxMemory() / byteToMb;
+        vmUse = vmTotal - vmFree;
+        System.out.println("JVM 已用内存为：" + vmUse + "\tKB");
+        System.out.println("JVM 空闲内存为：" + vmFree + "\tKB");
+        System.out.println("JVM 可用内存为：" + vmTotal + "\tKB");
+        System.out.println("JVM 最大内存为：" + vmMax + "\tKB");
+        System.gc();
     }
 
     /**
@@ -414,12 +448,12 @@ public class MusicPlayer {
                 cform.setWeights(new int[]{156, 728});
             }
         });
-        
-        
+
+
         initMusicPlayer(shell, lists);
 
         System.gc();
-        
+
     }
 
     /**
@@ -622,7 +656,6 @@ public class MusicPlayer {
         JVMinfo();
     }
 
-
     /**
      * Java MusicPlayer 退出音乐播放器
      *
@@ -638,7 +671,6 @@ public class MusicPlayer {
         player.stop();
         shell.dispose();
     }
-
 
     /**
      * Java MusicPlayer 将正在播放的歌曲存在注册表中
@@ -697,24 +729,6 @@ public class MusicPlayer {
         Constant.MUSIC_PLAYER_PLAYING_STATE = false;
         start.setImage(SWTResourceManager.getImage(MusicPlayer.class, "/com/xu/musicplayer/image/stop.png"));
         updatePlayerSongListsColor(lists, Constant.PLAYING_SONG_INDEX);
-    }
-
-    public static void JVMinfo() {
-        long vmFree;
-        long vmUse;
-        long vmTotal;
-        long vmMax;
-        int byteToMb = 1024;
-        Runtime rt = Runtime.getRuntime();
-        vmTotal = rt.totalMemory() / byteToMb;
-        vmFree = rt.freeMemory() / byteToMb;
-        vmMax = rt.maxMemory() / byteToMb;
-        vmUse = vmTotal - vmFree;
-        System.out.println("JVM 已用内存为：" + vmUse + "\tKB");
-        System.out.println("JVM 空闲内存为：" + vmFree + "\tKB");
-        System.out.println("JVM 可用内存为：" + vmTotal + "\tKB");
-        System.out.println("JVM 最大内存为：" + vmMax + "\tKB");
-        System.gc();
     }
 
 }
