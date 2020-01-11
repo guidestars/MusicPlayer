@@ -69,6 +69,7 @@ public class Controller implements Observer {
             System.out.println("观察者 结束所有 频谱线程");
             endSpectrumPlayer();
         }
+        System.gc();
     }
 
     @Override

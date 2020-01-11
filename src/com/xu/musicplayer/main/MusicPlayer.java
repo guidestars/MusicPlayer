@@ -414,9 +414,12 @@ public class MusicPlayer {
                 cform.setWeights(new int[]{156, 728});
             }
         });
-
+        
+        
         initMusicPlayer(shell, lists);
 
+        System.gc();
+        
     }
 
     /**
@@ -696,7 +699,7 @@ public class MusicPlayer {
         updatePlayerSongListsColor(lists, Constant.PLAYING_SONG_INDEX);
     }
 
-    public void JVMinfo() {
+    public static void JVMinfo() {
         long vmFree;
         long vmUse;
         long vmTotal;
