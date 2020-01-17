@@ -1,6 +1,5 @@
 package com.xu.musicplayer.fft;
 
-import java.util.Arrays;
 import java.util.stream.Stream;
 
 /*************************************************************************
@@ -127,23 +126,35 @@ public class FFT {
 
 		return cconvolve(a, b);
 	}
-	
-	// Complex[] to double array
-	public static Double[] array(Complex[] x) {
-		int len = x.length;
+
+	// Complex[] to double array for MusicPlayer
+	public static Double[] array(Complex[] x) {//for MusicPlayer
+		int len = x.length;//修正幅过小 输出幅值 * 2 / length * 50
 		return Stream.of(x).map(a->a.abs()*2/len*50).toArray(Double[]::new);
+	}
+
+	// display an array of Complex numbers to standard output
+	public static void show(Double[] x, String... title) {
+		for (String s:title) {
+			System.out.print(s);
+		}
+		System.out.println();
+		System.out.println("-------------------");
+		for (int i = 0,len = x.length; i < len; i++) {
+			System.out.println(x[i]);
+		}
+		System.out.println();
 	}
 
 	// display an array of Complex numbers to standard output
 	public static void show(Complex[] x, String title) {
 		System.out.println(title);
 		System.out.println("-------------------");
-		int complexLength = x.length;
-		for (int i = 0; i < complexLength; i++) {
+		for (int i = 0,len = x.length; i < len; i++) {
 			// 输出复数
 			// System.out.println(x[i]);
 			// 输出幅值需要 * 2 / length
-			System.out.println(x[i].abs() * 2 / complexLength);
+			System.out.println(x[i].abs() * 2 / len);
 		}
 		System.out.println();
 	}
@@ -178,7 +189,6 @@ public class FFT {
 		}
 
 		return newData;
-
 	}
 
 	/**
@@ -240,8 +250,9 @@ public class FFT {
 		// FFT of original data
 
 		Complex[] y = fft(x);
-		Double[] yy = array(y);
-		System.out.println(Arrays.toString(yy));
+
+		show(array(y),"MusicPlayer"," Test Data");
+
 		show(y, "y = fft(x)");
 
 		// take inverse FFT
@@ -256,4 +267,5 @@ public class FFT {
 		Complex[] d = convolve(x, x);
 		show(d, "d = convolve(x, x)");
 	}
+
 }
