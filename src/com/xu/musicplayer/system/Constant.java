@@ -122,6 +122,14 @@ public class Constant {
      */
     public static volatile int SPECTRUM_STYLE = 0;// 频谱 样式 0 条形 1方块
     /**
+     * 频谱 FFT
+     */
+    public static volatile boolean SPECTRUM_REAL_FFT = false;// 频谱 FFT
+    /**
+     * 频谱 刷新时间间隔
+     */
+    public static volatile long SPECTRUM_REFLASH_TIME = 100;// 频谱 刷新时间间隔
+    /**
      * 频谱 宽度
      */
     public static volatile int SPECTRUM_SPLIT_WIDTH = 5;// 频谱 宽度
