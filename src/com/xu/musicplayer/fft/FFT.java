@@ -1,5 +1,8 @@
 package com.xu.musicplayer.fft;
 
+import java.util.Arrays;
+import java.util.stream.Stream;
+
 /*************************************************************************
  * Compilation: javac FFT.java Execution: java FFT N Dependencies: Complex.java
  *
@@ -92,17 +95,17 @@ public class FFT {
 
         int N = x.length;
 
-        // compute FFT of each sequence����ֵ
+        // compute FFT of each sequence，求值
         Complex[] a = fft(x);
         Complex[] b = fft(y);
 
-        // point-wise multiply����ֵ�˷�
+        // point-wise multiply，点值乘法
         Complex[] c = new Complex[N];
         for (int i = 0; i < N; i++) {
             c[i] = a[i].times(b[i]);
         }
 
-        // compute inverse FFT����ֵ
+        // compute inverse FFT，插值
         return ifft(c);
     }
 
@@ -110,17 +113,25 @@ public class FFT {
     public static Complex[] convolve(Complex[] x, Complex[] y) {
         Complex ZERO = new Complex(0, 0);
 
-        Complex[] a = new Complex[2 * x.length];// 2n�����磬�߽�ϵ��Ϊ0.
-        System.arraycopy(x, 0, a, 0, x.length);
+        Complex[] a = new Complex[2 * x.length];// 2n次数界，高阶系数为0.
+        for (int i = 0; i < x.length; i++)
+            a[i] = x[i];
         for (int i = x.length; i < 2 * x.length; i++)
             a[i] = ZERO;
 
         Complex[] b = new Complex[2 * y.length];
-        System.arraycopy(y, 0, b, 0, y.length);
+        for (int i = 0; i < y.length; i++)
+            b[i] = y[i];
         for (int i = y.length; i < 2 * y.length; i++)
             b[i] = ZERO;
 
         return cconvolve(a, b);
+    }
+
+    // Complex[] to double array
+    public static Double[] array(Complex[] x) {
+        int len = x.length;
+        return Stream.of(x).map(a -> a.abs() * 2 / len * 50).toArray(Double[]::new);
     }
 
     // display an array of Complex numbers to standard output
@@ -129,23 +140,23 @@ public class FFT {
         System.out.println("-------------------");
         int complexLength = x.length;
         for (int i = 0; i < complexLength; i++) {
-            // �������
+            // 输出复数
             // System.out.println(x[i]);
-            // �����ֵ��Ҫ * 2 / length
+            // 输出幅值需要 * 2 / length
             System.out.println(x[i].abs() * 2 / complexLength);
         }
         System.out.println();
     }
 
     /**
-     * ���������������2���ݴη����
+     * 将数组数据重组成2的幂次方输出
      *
      * @param data
      * @return
      */
     public static Double[] pow2DoubleArr(Double[] data) {
 
-        // ����������
+        // 创建新数组
         Double[] newData = null;
 
         int dataLength = data.length;
@@ -171,30 +182,30 @@ public class FFT {
     }
 
     /**
-     * ȥƫ����
+     * 去偏移量
      *
-     * @param originalArr ԭ����
-     * @return Ŀ������
+     * @param originalArr 原数组
+     * @return 目标数组
      */
     public static Double[] deskew(Double[] originalArr) {
-        // ���˲���ȷ�Ĳ���
+        // 过滤不正确的参数
         if (originalArr == null || originalArr.length <= 0) {
             return null;
         }
 
-        // ����Ŀ������
+        // 定义目标数组
         Double[] resArr = new Double[originalArr.length];
 
-        // �������ܺ�
+        // 求数组总和
         Double sum = 0D;
         for (int i = 0; i < originalArr.length; i++) {
             sum += originalArr[i];
         }
 
-        // ������ƽ��ֵ
+        // 求数组平均值
         Double aver = sum / originalArr.length;
 
-        // ȥ��ƫ��ֵ
+        // 去除偏移值
         for (int i = 0; i < originalArr.length; i++) {
             resArr[i] = originalArr[i] - aver;
         }
@@ -205,16 +216,16 @@ public class FFT {
 
     public static void main(String[] args) {
         // int N = Integer.parseInt(args[0]);
-        Double[] data = {-0.35668879080953375, -0.6118094913035987, 0.8534269560320435, -0.6699697478438837, 0.35425500561437717,
-                0.8910250650549392, -0.025718699518642918, 0.07649691490732002};
+        Double[] data = {-8.35668879080953375, 4.6118094913035987, 5.8534269560320435, -4.6699697478438837, 3.35425500561437717,
+                1.8910250650549392, -9.025718699518642918, 2.07649691490732002};
 
-        // ȥ��ƫ����
+        // 去除偏移量
         data = deskew(data);
-        // ����Ϊ2���ݴη�
+        // 个数为2的幂次方
         data = pow2DoubleArr(data);
 
         int N = data.length;
-        System.out.println(N + "����N������....");
+        System.out.println(N + "数组N中数量....");
         Complex[] x = new Complex[N];
         // original data
         for (int i = 0; i < N; i++) {
@@ -228,6 +239,9 @@ public class FFT {
         // FFT of original data
 
         Complex[] y = fft(x);
+
+        System.out.println(Arrays.toString(array(y)));
+
         show(y, "y = fft(x)");
 
         // take inverse FFT

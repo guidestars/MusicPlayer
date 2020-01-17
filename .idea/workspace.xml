@@ -5,36 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3e661583-a1eb-4e77-b438-6c2ff7636bc8" name="默认更改列表" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/config/Reading.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/config/Reading.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/config/SongChoiceWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/config/SongChoiceWindow.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/config/Writing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/config/Writing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/download/Asynchronous.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/download/Asynchronous.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/download/DownloadNotify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/download/DownloadNotify.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/entity/PlayerEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/entity/PlayerEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/fft/Complex.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/fft/Complex.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/fft/FFT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/fft/FFT.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LoadLocalLyric.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LoadLocalLyric.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyNotify.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyNotify.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/LyricyThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/SpectrumThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/lyric/SpectrumThread.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/main/MusicPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/main/MusicPlayer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Controller.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/ControllerServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/ControllerServer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Observed.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Observed.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Observer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/modle/Observer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/player/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/player/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/player/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/player/Test.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/player/XMusic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/player/XMusic.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/search/APISearchTipsEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/search/APISearchTipsEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/search/Search.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/search/Search.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/search/WEBSearchTipsEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/search/WEBSearchTipsEntity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/system/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/system/Constant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/test/MusicPlayerDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/test/MusicPlayerDemo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/test/MusicPlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/test/MusicPlayerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/tray/MusicPlayerTray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/tray/MusicPlayerTray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/org/eclipse/wb/swt/SWTResourceManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/org/eclipse/wb/swt/SWTResourceManager.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

@@ -1,5 +1,7 @@
 package com.xu.musicplayer.lyric;
 
+import com.xu.musicplayer.fft.Complex;
+import com.xu.musicplayer.fft.FFT;
 import com.xu.musicplayer.player.XMusic;
 import com.xu.musicplayer.system.Constant;
 import org.eclipse.swt.graphics.Image;
@@ -14,6 +16,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 
 /**
  * Java MusicPlayer 音频线程
@@ -47,7 +50,7 @@ public class SpectrumThread extends Thread {
                 draw(1, twidth, theight);
             });
             try {
-                Thread.sleep(100);
+                Thread.sleep(Constant.SPECTRUM_REFLASH_TIME);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -70,19 +73,29 @@ public class SpectrumThread extends Thread {
         graphics.setColor(Constant.SPECTRUM_FOREGROUND_COLOR);
         graphics.setStroke(new BasicStroke(1f));
 
-        if (Constant.SPECTRUM_STYLE == 0) {
-            if (XMusic.deque.size() >= Constant.SPECTRUM_SAVE_INIT_SIZE) {
-                for (int i = 0, len = XMusic.deque.size(); i < Constant.SPECTRUM_TOTAL_NUMBER; i++) {
-                    try {
-                        if (i < len) {
-                            sheight = Math.abs(Integer.parseInt(XMusic.deque.get(i) + ""));
-                            sheight = Math.min(sheight, height);
-                        }
-                    } catch (Exception e) {
-                        sheight = 0;
+        if (Constant.SPECTRUM_STYLE == 0) {//直接打印 PCM 或 FFT
+            if (Constant.SPECTRUM_REAL_FFT) {//使用快速傅里叶变换(FFT)解码音频 PCM 默认不使用FFT(Constant.SPECTRUM_REAL_FFT = false)
+                if (XMusic.deque.size() >= Constant.SPECTRUM_SAVE_INIT_SIZE) {
+                    Double[] data = list2array(XMusic.deque);
+                    for (int i = 0, length = data.length; i < length; i++) {
+                        sheight = (int) Math.abs(data[i]);
+                        graphics.fillRect(i * Constant.SPECTRUM_SPLIT_WIDTH, height - sheight, Constant.SPECTRUM_SPLIT_WIDTH, sheight);
                     }
-                    graphics.fillRect(i * Constant.SPECTRUM_SPLIT_WIDTH, height - sheight, Constant.SPECTRUM_SPLIT_WIDTH, sheight);
-                    //graphics.fillRect(i*5, height/2-spectrum_height, 5, -spectrum_height);//双谱
+                }
+            } else {//直接打印 PCM
+                if (XMusic.deque.size() >= Constant.SPECTRUM_SAVE_INIT_SIZE) {
+                    for (int i = 0, len = XMusic.deque.size(); i < Constant.SPECTRUM_TOTAL_NUMBER; i++) {
+                        try {
+                            if (i < len) {
+                                sheight = (int) Math.abs(Double.parseDouble(XMusic.deque.get(i) + ""));
+                                sheight = Math.min(sheight, height);
+                            }
+                        } catch (Exception e) {
+                            sheight = 0;
+                        }
+                        graphics.fillRect(i * Constant.SPECTRUM_SPLIT_WIDTH, height - sheight, Constant.SPECTRUM_SPLIT_WIDTH, sheight);
+                        //graphics.fillRect(i*5, height/2-spectrum_height, 5, -spectrum_height);//双谱
+                    }
                 }
             }
             stream = new ByteArrayOutputStream();
@@ -98,7 +111,7 @@ public class SpectrumThread extends Thread {
             } catch (IOException e) {
                 throw new RuntimeException(e.getMessage());
             }
-        } else if (Constant.SPECTRUM_STYLE == 1) {
+        } else if (Constant.SPECTRUM_STYLE == 1) {//直接打印 PCM
             int indexs = 0;
             if (XMusic.deque.size() >= Constant.SPECTRUM_SAVE_INIT_SIZE) {
                 for (int i = 0, len = XMusic.deque.size(); i < Constant.SPECTRUM_TOTAL_NUMBER; i++) {
@@ -140,5 +153,27 @@ public class SpectrumThread extends Thread {
         graphics.dispose();
     }
 
+    private Double[] list2array(List<Double> lists) {
+        //Double[] c = Stream.of(lists).map(a->a.toString()).collect(Collectors.toList()).stream().map(b->Double.parseDouble(b)).toArray(Double[]::new);
+        Double[] c = new Double[lists.size()];
+        synchronized (lists) {
+            for (int i = 0; i < lists.size(); i++) {
+                try {
+                    c[i] = Double.valueOf((lists.get(i) == null ? "0.0" : lists.get(i).toString()));
+                } catch (Exception e) {
+                    c[i] = 0.0;
+                }
+            }
+        }
+        Complex[] x = new Complex[c.length];
+        for (int i = 0; i < x.length; i++) {
+            try {
+                x[i] = new Complex(c[i], 0);
+            } catch (Exception e) {
+                x[i] = new Complex(0, 0);
+            }
+        }
+        return FFT.array(x);
+    }
 
 }

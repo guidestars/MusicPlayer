@@ -15,7 +15,7 @@ import java.util.LinkedList;
 
 public class XMusic implements Player {
 
-    public static LinkedList<Short> deque = new LinkedList<Short>();
+    public static volatile LinkedList<Double> deque = new LinkedList<Double>();
     private static DataLine.Info info = null;
     private static AudioFormat format = null;
     private static SourceDataLine data = null;
@@ -191,23 +191,23 @@ public class XMusic implements Player {
                         while (stream.read(buf) != -1 && playing) {
                             if (channels == 2) {//立体声
                                 if (rate == 16) {
-                                    put((short) ((buf[1] << 8) | buf[0]));//左声道
-                                    //waveformGraph.put((short) ((buf[3] << 8) | buf[2]));//右声道
+                                    put((double) ((buf[1] << 8) | buf[0]));//左声道
+                                    //put((double) ((buf[3] << 8) | buf[2]));//右声道
                                 } else {
-                                    put(buf[1]);//左声道
-                                    put(buf[3]);//左声道
-                                    //waveformGraph.put(buf[2]);//右声道
-                                    //waveformGraph.put(buf[4]);//右声道
+                                    put((double) buf[1]);//左声道
+                                    put((double) buf[3]);//左声道
+                                    //put((double) buf[2]);//右声道
+                                    //put((double) buf[4]);//右声道
                                 }
                             } else {//单声道
                                 if (rate == 16) {
-                                    put((short) ((buf[1] << 8) | buf[0]));
-                                    put((short) ((buf[3] << 8) | buf[2]));
+                                    put((double) ((buf[1] << 8) | buf[0]));
+                                    put((double) ((buf[3] << 8) | buf[2]));
                                 } else {
-                                    put(buf[0]);
-                                    put(buf[1]);
-                                    put(buf[2]);
-                                    put(buf[3]);
+                                    put((double) buf[0]);
+                                    put((double) buf[1]);
+                                    put((double) buf[2]);
+                                    put((double) buf[3]);
                                 }
                             }
                             data.write(buf, 0, 4);
@@ -264,7 +264,7 @@ public class XMusic implements Player {
         }
     }
 
-    public void put(short v) {
+    public void put(Double v) {
         synchronized (deque) {
             deque.add(v);
             if (deque.size() > Constant.SPECTRUM_TOTAL_NUMBER) {
