@@ -1,5 +1,7 @@
 package com.xu.music.player.download;
 
+import com.xu.music.player.system.Constant;
+
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.RandomAccessFile;
@@ -9,8 +11,6 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import com.xu.music.player.system.Constant;
 
 
 public class Asynchronous {

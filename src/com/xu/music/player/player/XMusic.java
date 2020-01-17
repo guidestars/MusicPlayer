@@ -3,7 +3,6 @@ package com.xu.music.player.player;
 import com.xu.music.player.modle.Controller;
 import com.xu.music.player.modle.ControllerServer;
 import com.xu.music.player.system.Constant;
-
 import javazoom.spi.mpeg.sampled.file.MpegAudioFileReader;
 
 import javax.sound.sampled.*;

@@ -1,9 +1,8 @@
 package com.xu.music.player.config;
 
+import com.xu.music.player.system.Constant;
 import org.jaudiotagger.audio.AudioFile;
 import org.jaudiotagger.audio.AudioFileIO;
-
-import com.xu.music.player.system.Constant;
 
 import java.io.BufferedWriter;
 import java.io.File;

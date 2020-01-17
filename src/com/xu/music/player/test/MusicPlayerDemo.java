@@ -3,7 +3,6 @@ package com.xu.music.player.test;
 import com.xu.music.player.player.Player;
 import com.xu.music.player.player.XMusic;
 import com.xu.music.player.tray.MusicPlayerTray;
-
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
