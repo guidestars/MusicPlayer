@@ -4,9 +4,24 @@
     <option name="SPLITTER_PROPORTION" value="0.3750985" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3e661583-a1eb-4e77-b438-6c2ff7636bc8" name="默认更改列表" comment="">
+    <list default="true" id="a89d772d-fcb5-4853-8767-787c6a9fef8d" name="默认更改列表" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_fastjson_1_2_62.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_alibaba_fastjson_1_2_62.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_soundlibs_jlayer_1_0_1_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_soundlibs_jlayer_1_0_1_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_soundlibs_mp3spi_1_9_5_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_soundlibs_mp3spi_1_9_5_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_soundlibs_tritonus_share_0_3_7_4.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_soundlibs_tritonus_share_0_3_7_4.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_3_8_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_3_8_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jaudiotagger_2_0_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jaudiotagger_2_0_3.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_18_0_0.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jetbrains_annotations_18_0_0.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_jflac_jflac_codec_1_5_2.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jflac_jflac_codec_1_5_2.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/com/xu/musicplayer/fft/FFT.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/musicplayer/fft/FFT.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MusicPlayer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/MusicPlayer.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/music/player/main/MusicPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/music/player/main/MusicPlayer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/music/player/test/MusicPlayerDemo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/music/player/test/MusicPlayerDemo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/com/xu/music/player/test/MusicPlayerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/xu/music/player/test/MusicPlayerTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +62,7 @@
     <ConfirmationsSetting value="2" id="添加" />
   </component>
   <component name="ProjectViewState">
+    <option name="flattenPackages" value="true" />
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -68,9 +84,9 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="模块" />
     <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="project.structure.side.proportion" value="0.3460972" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.Spring EL" />
   </component>
@@ -79,13 +95,26 @@
       <recent name="E:\SourceCode\Intellij\MusicPlayer\src" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.FFT">
+  <component name="RunManager" selected="Application.MusicPlayer (1)">
     <configuration name="FFT" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.xu.musicplayer.fft.FFT" />
       <module name="MusicPlayer" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.xu.musicplayer.fft.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="MusicPlayer (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.xu.music.player.main.MusicPlayer" />
+      <module name="MusicPlayer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.xu.music.player.main.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -122,21 +151,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="所有在 MusicPlayer" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="MusicPlayer" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.MusicPlayer (1)" />
         <item itemvalue="Application.FFT" />
         <item itemvalue="Application.MusicPlayer" />
         <item itemvalue="JUnit.所有在 MusicPlayer (2)" />
         <item itemvalue="JUnit.所有在 MusicPlayer (1)" />
-        <item itemvalue="JUnit.所有在 MusicPlayer" />
       </list>
     </recent_temporary>
   </component>
@@ -214,35 +235,35 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="275" y="23" key="#Inspections/0.0.1366.728@0.0.1366.728" timestamp="1578018972976" />
-    <state x="552" y="178" key="#项目结构" timestamp="1578670736801">
+    <state x="552" y="178" key="#项目结构" timestamp="1579356965320">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="552" y="178" key="#项目结构/0.0.1920.1040@0.0.1920.1040" timestamp="1578670736801" />
+    <state x="552" y="178" key="#项目结构/0.0.1920.1040@0.0.1920.1040" timestamp="1579356965320" />
     <state x="432" y="222" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1" timestamp="1579232952527">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="432" y="222" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1366.728@0.0.1366.728" timestamp="1579232952527" />
     <state x="607" y="317" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.0.1920.1040@0.0.1920.1040" timestamp="1578671194884" />
-    <state width="1325" height="117" key="GridCell.Tab.0.bottom" timestamp="1579233151375">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom" timestamp="1579357167972">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1325" height="117" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1579233151375" />
-    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1578671555360" />
-    <state width="1325" height="117" key="GridCell.Tab.0.center" timestamp="1579233151375">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1579357167972" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center" timestamp="1579357167972">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1325" height="117" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1579233151375" />
-    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1578671555360" />
-    <state width="1325" height="117" key="GridCell.Tab.0.left" timestamp="1579233151375">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1579357167972" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left" timestamp="1579357167972">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1325" height="117" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1579233151375" />
-    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1578671555360" />
-    <state width="1325" height="117" key="GridCell.Tab.0.right" timestamp="1579233151375">
-      <screen x="0" y="0" width="1366" height="728" />
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1579357167972" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right" timestamp="1579357167972">
+      <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="1325" height="117" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1579233151375" />
-    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1578671555360" />
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1579357167972" />
     <state x="214" y="8" key="SettingsEditor" timestamp="1578022777732">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
