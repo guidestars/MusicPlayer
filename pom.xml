@@ -46,7 +46,12 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.7.0</version>
 				<configuration>
-					<release>1.8</release>
+					<source>1.8</source> <!-- 源代码使用的JDK版本 -->
+					<target>1.8</target> <!-- 需要生成的目标class文件的编译版本 -->
+					<encoding>UTF-8</encoding> <!-- 编码集 -->
+					<compilerArguments>
+						<extdirs>${project.basedir}/lib</extdirs> <!-- 项目内依赖包 -->
+					</compilerArguments>
 				</configuration>
 			</plugin>
 		</plugins>
