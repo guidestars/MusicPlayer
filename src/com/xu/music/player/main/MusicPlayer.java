@@ -612,7 +612,7 @@ public class MusicPlayer {
         } else {
             table.setTopIndex(index - 7);
         }
-        if (Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[4].equalsIgnoreCase("Y")) {
+        if ("Y".equalsIgnoreCase(Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[4])) {
             Constant.PLAYING_SONG_HAVE_LYRIC = true;
             LoadLocalLyric lyric = new LoadLocalLyric();
             String path = Constant.MUSIC_PLAYER_SONGS_LIST.get(Constant.PLAYING_SONG_INDEX).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[0];

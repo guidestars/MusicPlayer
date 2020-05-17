@@ -359,6 +359,7 @@ public class MusicPlayerTest {
         });
 
         progressBar.addMouseListener(new MouseAdapter() {
+            @Override
             public void mouseDown(MouseEvent e) {
                 System.out.println(e.widget);
             }
@@ -512,7 +513,7 @@ public class MusicPlayerTest {
     @SuppressWarnings("deprecation")
     public void endAll() {
         //结束现在所有
-        if (playProgress.getState().toString().equalsIgnoreCase("RUNNABLE")) {//在运行
+        if ("RUNNABLE".equalsIgnoreCase(playProgress.getState().toString())) {//在运行
             playProgress.stop();
         }
         try {
@@ -643,7 +644,7 @@ public class MusicPlayerTest {
         File file = new File(playPath);
         if (file.exists()) {
             if (!"".equals(playPath) && playPath != null) {
-                if (playPath.trim().substring(playPath.lastIndexOf(".") + 1).equalsIgnoreCase("wav")) {
+                if ("wav".equalsIgnoreCase(playPath.trim().substring(playPath.lastIndexOf(".") + 1))) {
                     try {
                         player.load(file);
                         player.start();
@@ -656,11 +657,11 @@ public class MusicPlayerTest {
                         progressBar.setSelection(100);
                         progressBar.setMinimum(0);//设置进度的条最小程度
 
-                        if (playProgress.getState().toString().equalsIgnoreCase("new")) {
+                        if ("new".equalsIgnoreCase(playProgress.getState().toString())) {
                             playProgress.start();
-                        } else if (playProgress.getState().toString().equalsIgnoreCase("runable")) {
+                        } else if ("runable".equalsIgnoreCase(playProgress.getState().toString())) {
 
-                        } else if (playProgress.getState().toString().equalsIgnoreCase("TERMINATED")) {//已销毁
+                        } else if ("TERMINATED".equalsIgnoreCase(playProgress.getState().toString())) {//已销毁
                             playProgress = new Thread(new PlayProgress(display));
                             playProgress.start();
                         } else {
@@ -688,11 +689,11 @@ public class MusicPlayerTest {
                         progressBar.setMaximum(100);//设置进度条的最大长度
                         progressBar.setMinimum(0);//设置进度的条最小程度
 
-                        if (playProgress.getState().toString().equalsIgnoreCase("new")) {
+                        if ("new".equalsIgnoreCase(playProgress.getState().toString())) {
                             playProgress.start();
-                        } else if (playProgress.getState().toString().equalsIgnoreCase("runable")) {
+                        } else if ("runable".equalsIgnoreCase(playProgress.getState().toString())) {
 
-                        } else if (playProgress.getState().toString().equalsIgnoreCase("TERMINATED")) {//已销毁
+                        } else if ("TERMINATED".equalsIgnoreCase(playProgress.getState().toString())) {//已销毁
                             playProgress = new Thread(new PlayProgress(display));
                             playProgress.start();
                         } else {
@@ -851,6 +852,7 @@ public class MusicPlayerTest {
         Toolkit toolkit = Toolkit.getDefaultToolkit();
         int time = 1;
 
+        @Override
         public void run() {
             if (time > 0) {
                 //toolkit.beep();
@@ -880,6 +882,7 @@ public class MusicPlayerTest {
             this.display = display;
         }
 
+        @Override
         @SuppressWarnings("static-access")
         public void run() {
             for (int i = 0; i < totalPlayTime; i++) {
@@ -889,7 +892,7 @@ public class MusicPlayerTest {
                     e.printStackTrace();
                 }
                 //这个是同步主线程的资源而不发生异常
-                display.getDefault().asyncExec(() -> {
+                Display.getDefault().asyncExec(() -> {
                     autoAddprogressBarTime++;//进度条的时间
                     autoAddLyricTime++;      //歌词的时间
                     autoAddShowTime--;       //文本框显示的歌曲播放的时间
@@ -939,6 +942,7 @@ public class MusicPlayerTest {
             this.display = display;
         }
 
+        @Override
         @SuppressWarnings("static-access")
         public void run() {
             for (int i = 0; i < totalPlayTime; i++) {
@@ -948,7 +952,7 @@ public class MusicPlayerTest {
                     e.printStackTrace();
                 }
                 //这个是同步主线程的资源而不发生异常
-                display.getDefault().asyncExec(() -> {
+                Display.getDefault().asyncExec(() -> {
                     autoAddprogressBarTime++;//进度条的时间
                     autoAddLyricTime++;      //歌词的时间
                     autoAddShowTime--;       //文本框显示的歌曲播放的时间

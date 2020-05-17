@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
+  <component name="CheckStyle-IDEA-Module">
+    <option name="configuration">
+      <map />
+    </option>
+  </component>
   <component name="EclipseModuleManager">
     <libelement value="jar://$MODULE_DIR$/lib/com.ibm.icu_64.2.0.v20190507-1337.jar!/" />
     <libelement value="jar://$MODULE_DIR$/lib/org.eclipse.core.commands_3.9.400.v20190516-1358.jar!/" />
@@ -135,6 +140,6 @@
     <orderEntry type="library" name="Maven: org:jaudiotagger:2.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.jflac:jflac-codec:1.5.2" level="project" />
     <orderEntry type="library" name="Maven: com.alibaba:fastjson:1.2.62" level="project" />
-    <orderEntry type="library" name="Maven: org.jetbrains:annotations:18.0.0" level="project" />
+    <orderEntry type="library" name="Maven: org.jetbrains:annotations:19.0.0" level="project" />
   </component>
 </module>

@@ -23,8 +23,9 @@ public class FFT {
         int N = x.length;
 
         // base case
-        if (N == 1)
+        if (N == 1) {
             return new Complex[]{x[0]};
+        }
 
         // radix 2 Cooley-Tukey FFT
         if (N % 2 != 0) {
@@ -113,16 +114,20 @@ public class FFT {
         Complex ZERO = new Complex(0, 0);
 
         Complex[] a = new Complex[2 * x.length];// 2n次数界，高阶系数为0.
-        for (int i = 0; i < x.length; i++)
+        for (int i = 0; i < x.length; i++) {
             a[i] = x[i];
-        for (int i = x.length; i < 2 * x.length; i++)
+        }
+        for (int i = x.length; i < 2 * x.length; i++) {
             a[i] = ZERO;
+        }
 
         Complex[] b = new Complex[2 * y.length];
-        for (int i = 0; i < y.length; i++)
+        for (int i = 0; i < y.length; i++) {
             b[i] = y[i];
-        for (int i = y.length; i < 2 * y.length; i++)
+        }
+        for (int i = y.length; i < 2 * y.length; i++) {
             b[i] = ZERO;
+        }
 
         return cconvolve(a, b);
     }

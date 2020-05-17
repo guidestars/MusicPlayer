@@ -41,6 +41,7 @@ public class MusicPlayerTray {
             MenuItem mini = new MenuItem(menu, SWT.PUSH);
             mini.setText("缩小");
             mini.addSelectionListener(new SelectionAdapter() {
+                @Override
                 public void widgetSelected(SelectionEvent arg0) {
                     shell.setMaximized(true);
                 }
@@ -50,6 +51,7 @@ public class MusicPlayerTray {
             MenuItem close = new MenuItem(menu, SWT.PUSH);
             close.setText("关闭");
             close.addSelectionListener(new SelectionAdapter() {
+                @Override
                 public void widgetSelected(SelectionEvent arg0) {
                     tray.dispose();
                     shell.dispose();
