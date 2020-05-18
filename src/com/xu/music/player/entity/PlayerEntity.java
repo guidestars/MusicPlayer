@@ -33,8 +33,8 @@ public class PlayerEntity {
         return text;
     }
 
-    public static void setText(org.eclipse.swt.widgets.Label text_1) {
-        PlayerEntity.text = text_1;
+    public static void setText(org.eclipse.swt.widgets.Label text) {
+        PlayerEntity.text = text;
     }
 
     public static ProgressBar getBar() {

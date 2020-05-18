@@ -26,6 +26,15 @@ import java.util.Random;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
+/**
+ * Java MusicPlayer 观察者
+ *
+ * @Author: hyacinth
+ * @ClassName: LyricPlayer
+ * @Description: TODO
+ * @Date: 2020年5月18日22:21:13
+ * @Copyright: hyacinth
+ */
 public class MusicPlayer {
 
     public static boolean playing = true;// 播放按钮
@@ -456,7 +465,7 @@ public class MusicPlayer {
         new Reading().read();
         if (Constant.MUSIC_PLAYER_SONGS_LIST == null || Constant.MUSIC_PLAYER_SONGS_LIST.size() <= 0) {
             Toolkit.getDefaultToolkit().beep();
-            choice.open_choise_windows(shell);
+            choice.openChoiseWindows(shell);
         }
         updatePlayerSongLists(Constant.MUSIC_PLAYER_SONGS_LIST, table);
         readMusicPlayerPlayingSong();

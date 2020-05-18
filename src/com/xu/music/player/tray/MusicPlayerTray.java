@@ -7,6 +7,15 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.wb.swt.SWTResourceManager;
 
+/**
+ * Java MusicPlayer 观察者
+ *
+ * @Author: hyacinth
+ * @ClassName: LyricPlayer
+ * @Description: TODO
+ * @Date: 2020年5月18日22:21:21
+ * @Copyright: hyacinth
+ */
 public class MusicPlayerTray {
 
     private Shell shell;

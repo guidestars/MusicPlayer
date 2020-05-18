@@ -91,12 +91,12 @@ public class SWTResourceManager {
     /**
      * Returns the system {@link Color} matching the specific ID.
      *
-     * @param systemColorID the ID value for the color
+     * @param id the ID value for the color
      * @return the system {@link Color} matching the specific ID
      */
-    public static Color getColor(int systemColorID) {
+    public static Color getColor(int id) {
         Display display = Display.getCurrent();
-        return display.getSystemColor(systemColorID);
+        return display.getSystemColor(id);
     }
 
     /**

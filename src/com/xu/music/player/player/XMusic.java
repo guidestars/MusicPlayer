@@ -50,12 +50,12 @@ public class XMusic implements Player {
         try {
             stream = AudioSystem.getAudioInputStream(url);
             format = stream.getFormat();
-            if (format.getEncoding().toString().contains("MPEG")) {//mp3
+            if (format.getEncoding().toString().toLowerCase().contains("mpeg")) {//mp3
                 MpegAudioFileReader mp = new MpegAudioFileReader();
                 stream = mp.getAudioInputStream(url);
                 format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.getSampleRate(), 16, format.getChannels(), format.getChannels() * 2, format.getSampleRate(), false);
                 stream = AudioSystem.getAudioInputStream(format, stream);
-            } else if (format.getEncoding().toString().contains("FLAc")) {
+            } else if (format.getEncoding().toString().toLowerCase().contains("flac")) {//flac
                 format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.getSampleRate(), 16, format.getChannels(), format.getChannels() * 2, format.getSampleRate(), false);
                 stream = AudioSystem.getAudioInputStream(format, stream);
             }
@@ -76,12 +76,12 @@ public class XMusic implements Player {
         try {
             stream = AudioSystem.getAudioInputStream(file);
             format = stream.getFormat();
-            if (format.getEncoding().toString().contains("MPEG")) {//mp3
+            if (format.getEncoding().toString().toLowerCase().contains("mpeg")) {//mp3
                 MpegAudioFileReader mp = new MpegAudioFileReader();
                 stream = mp.getAudioInputStream(file);
                 format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.getSampleRate(), 16, format.getChannels(), format.getChannels() * 2, format.getSampleRate(), false);
                 stream = AudioSystem.getAudioInputStream(format, stream);
-            } else if (format.getEncoding().toString().contains("FLAC")) {
+            } else if (format.getEncoding().toString().toLowerCase().contains("flac")) {
                 format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.getSampleRate(), 16, format.getChannels(), format.getChannels() * 2, format.getSampleRate(), false);
                 stream = AudioSystem.getAudioInputStream(format, stream);
             }
@@ -102,12 +102,12 @@ public class XMusic implements Player {
         try {
             stream = AudioSystem.getAudioInputStream(streams);
             format = stream.getFormat();
-            if (format.getEncoding().toString().contains("MPEG")) {//mp3
+            if (format.getEncoding().toString().toLowerCase().contains("mpeg")) {//mp3
                 MpegAudioFileReader mp = new MpegAudioFileReader();
                 stream = mp.getAudioInputStream(streams);
                 format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.getSampleRate(), 16, format.getChannels(), format.getChannels() * 2, format.getSampleRate(), false);
                 stream = AudioSystem.getAudioInputStream(format, stream);
-            } else if (format.getEncoding().toString().contains("FLAC")) {
+            } else if (format.getEncoding().toString().toLowerCase().contains("flac")) {
                 format = new AudioFormat(AudioFormat.Encoding.PCM_SIGNED, format.getSampleRate(), 16, format.getChannels(), format.getChannels() * 2, format.getSampleRate(), false);
                 stream = AudioSystem.getAudioInputStream(format, stream);
             }
