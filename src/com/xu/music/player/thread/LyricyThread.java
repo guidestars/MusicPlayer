@@ -37,7 +37,7 @@ public class LyricyThread extends Thread {
                 String secounds = Constant.PLAYING_SONG_LYRIC.get(i).split(Constant.MUSIC_PLAYER_SYSTEM_SPLIT)[0];
                 if (secounds.startsWith("0")) {
                     secounds = secounds.substring(0, secounds.lastIndexOf("."));
-                    if (secounds.equalsIgnoreCase(format_time(time))) {
+                    if (secounds.equalsIgnoreCase(formatTime(time))) {
                         index = i;
                         add = false;
                     } else {
@@ -62,8 +62,9 @@ public class LyricyThread extends Thread {
      *
      * @param time
      * @return
+     * @date 2020年5月18日22:23:14
      */
-    private String format_time(long time) {
+    private String formatTime(long time) {
         merchant = time / 60;
         remainder = time % 60;
         if (time < 10) {

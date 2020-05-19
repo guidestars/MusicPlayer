@@ -11,6 +11,11 @@ package com.xu.music.player.lyric;
  */
 public interface LyricyNotify {
 
+    /**
+     * Java MusicPlayer 歌词线程通知
+     * @param lrc
+     * @param pro
+     */
     void lyric(double lrc, double pro);
 
 }

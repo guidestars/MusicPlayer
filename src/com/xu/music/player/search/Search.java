@@ -77,9 +77,9 @@ public class Search {
 
     public static <T> List<T> search(String name, String type) {
         List<T> songs = new ArrayList<T>();
-        if (type.equalsIgnoreCase("API")) {
+        if ("API".equalsIgnoreCase(type)) {
             url = "http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword=" + name + "&page=1&pagesize=20&showtype=1";
-        } else if (type.equalsIgnoreCase("WEB")) {
+        } else if ("WEB".equalsIgnoreCase(type)) {
             url = "http://searchtip.kugou.com/getSearchTip?MusicTipCount=5&MVTipCount=2&albumcount=2&keyword=" + name + "&callback=jQuery180014477266089871377_1523886180659&_=1523886" + RandomCode();
         }
         try {
@@ -90,7 +90,7 @@ public class Search {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        if (type.equalsIgnoreCase("API")) {
+        if ("API".equalsIgnoreCase(type)) {
             JSONObject ojsons = JSONObject.parseObject(json);
             ojsons = JSONObject.parseObject(ojsons.getString("data"));
             JSONArray array = JSONArray.parseArray(ojsons.getString("info"));
@@ -101,7 +101,7 @@ public class Search {
                 entity.setS320privilege(JSON.parseObject(array.get(i).toString()).get("320privilege").toString());
                 songs.add((T) entity);
             }
-        } else if (type.equalsIgnoreCase("WEB")) {
+        } else if ("WEB".equalsIgnoreCase(type)) {
             json = json.substring(json.indexOf("(") + 1, json.lastIndexOf(")"));
             JSONObject ojsons = JSONObject.parseObject(json);
             JSONArray arrays = JSONArray.parseArray(ojsons.getString("data"));
